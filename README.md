@@ -1,2 +1,2 @@
 # GENetLib
- A python library for Gene–environment interaction analysis via deep learning
+A Python Library for Gene–environment Interaction Analysis via Deep Learning
