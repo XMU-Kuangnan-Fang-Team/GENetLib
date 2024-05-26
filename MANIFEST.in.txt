@@ -1,0 +1,5 @@
+include GENetLib/__init__.py
+include GENetLib/LICENSE.txt
+include GENetLib/requirements.txt
+include GENetLib/README.md
+global-exclude __pycache__
