@@ -13,10 +13,10 @@ def FD(coef=None, basisobj=None, fdnames=None):
         coef = np.array(coef)
         if btype == "constant":
             coef = coef.T
-        coefd = coef.shape
+        coefd = coef.reshape(len(coef),-1).shape
         ndim = len(coefd)
     elif isinstance(coef, np.ndarray):
-        coefd = coef.shape
+        coefd = coef.reshape(len(coef),-1).shape
         ndim = len(coefd)
     else:
         raise ValueError("Type of 'coef' is not correct")
@@ -61,4 +61,3 @@ def FD(coef=None, basisobj=None, fdnames=None):
             coef = np.array(coef, dtype={'names':dnms, 'formats':['f8']*len(dnms)})
     fdobj = {"coefs": coef, "basis": basisobj, "fdnames": fdnames}
     return fdobj
-
