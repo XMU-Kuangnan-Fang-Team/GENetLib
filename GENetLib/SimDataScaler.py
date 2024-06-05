@@ -38,18 +38,16 @@ def SimDataScaler(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Surv
         for i in range(dim_E):
             for j in range(dim_G):
                 INTERACTION[:,k] = CLINICAL[:,i] * X[:,j]
-                k = k + 1
-        X = StandardScaler().fit(X).transform(X)
-        CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
-        INTERACTION = StandardScaler().fit(INTERACTION).transform(INTERACTION)
-        if ytype == 'Survival':
-            if n_inter == None:
-                raise ValueError("Please enter n_inter")
-            else:
-                pos = []
-                for i in range(dim_E):
-                    pos += list(range(dim_G * i, dim_G * i + n_inter))
-                interactionPos = np.random.choice(pos, size = n_inter, replace=False)
+                k = k + 1      
+        if n_inter == None:
+            raise ValueError("Please enter n_inter")
+        else:
+            pos = []
+            for i in range(dim_E):
+                pos += list(range(dim_G * i, dim_G * i + n_inter))
+            interactionPos = np.random.choice(pos, size = n_inter, replace=False)
+            
+            if ytype == 'Survival':
                 if linear == True:
                     coef = np.random.uniform(0.5, 0.8, size = n_inter*2+dim_E)
                     h = np.sum(X[:,0:n_inter] * coef[0:n_inter], axis = 1) + np.sum(INTERACTION[:,interactionPos] * coef[n_inter:n_inter*2], axis = 1) + np.sum(CLINICAL * coef[n_inter*2:n_inter*2+dim_E], axis = 1)
@@ -59,25 +57,37 @@ def SimDataScaler(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Surv
                     raise ValueError("Please enter True or False")
                 Y_TIME, Y_EVENT = censorData(h, n)
                 print('Censor rate is: ',(sum(Y_EVENT)/n)[0])
+                X = StandardScaler().fit(X).transform(X)
+                CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
+                INTERACTION = StandardScaler().fit(INTERACTION).transform(INTERACTION)
                 DATA = np.hstack((X, INTERACTION, CLINICAL, Y_TIME, Y_EVENT))
                 data = pd.DataFrame(DATA)
                 data.rename(columns={dim_G+dim_E+dim_G*dim_E:'time',dim_G+dim_E+dim_G*dim_E+1:'event'},inplace = True)
-        elif ytype == 'Continuous':
-            weights = np.random.rand(dim_E+dim_G+dim_E*dim_G).reshape(-1,1)
-            bias = np.random.rand(n).reshape(-1,1)
-            Y = np.hstack((X, INTERACTION, CLINICAL)).dot(weights) + bias
-            DATA = np.hstack((X, INTERACTION, CLINICAL, Y))
-            data = pd.DataFrame(DATA)
-            data.rename(columns={dim_G+dim_E+dim_G*dim_E:'y_continuous'},inplace = True)
-        elif ytype == 'Binary':
-            weights = np.random.rand(dim_E+dim_G+dim_E*dim_G).reshape(-1,1)
-            prob = 1 / (1 + np.exp(-np.hstack((X, INTERACTION, CLINICAL)).dot(weights)))
-            Y = np.random.binomial(1, prob)
-            DATA = np.hstack((X, INTERACTION, CLINICAL, Y))
-            data = pd.DataFrame(DATA)
-            data.rename(columns={dim_G+dim_E+dim_G*dim_E:'y_binary'},inplace = True)
-        else:
-            raise ValueError("Invalid ytype")
-        return data
+            
+            elif ytype == 'Continuous':
+                coef = np.random.uniform(0.5, 0.8, size = n_inter*2+dim_E)
+                bias = np.random.rand(n).reshape(-1,1)
+                Y = (np.sum(X[:,0:n_inter] * coef[0:n_inter], axis = 1) + np.sum(INTERACTION[:,interactionPos] * coef[n_inter:n_inter*2], axis = 1) + np.sum(CLINICAL * coef[n_inter*2:n_inter*2+dim_E], axis = 1)).reshape(-1,1) + bias
+                X = StandardScaler().fit(X).transform(X)
+                CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
+                INTERACTION = StandardScaler().fit(INTERACTION).transform(INTERACTION)
+                DATA = np.hstack((X, INTERACTION, CLINICAL, Y))
+                data = pd.DataFrame(DATA)
+                data.rename(columns={dim_G+dim_E+dim_G*dim_E:'y_continuous'},inplace = True)
+            
+            elif ytype == 'Binary':
+                coef = np.random.uniform(0.5, 0.8, size = n_inter*2+dim_E)
+                bias = np.random.rand(n).reshape(-1,1)
+                Y_ = (np.sum(X[:,0:n_inter] * coef[0:n_inter], axis = 1) + np.sum(INTERACTION[:,interactionPos] * coef[n_inter:n_inter*2], axis = 1) + np.sum(CLINICAL * coef[n_inter*2:n_inter*2+dim_E], axis = 1)).reshape(-1,1) + bias
+                Y = (Y_ >= np.mean(Y_)).astype(int)
+                X = StandardScaler().fit(X).transform(X)
+                CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
+                INTERACTION = StandardScaler().fit(INTERACTION).transform(INTERACTION)
+                DATA = np.hstack((X, INTERACTION, CLINICAL, Y))
+                data = pd.DataFrame(DATA)
+                data.rename(columns={dim_G+dim_E+dim_G*dim_E:'y_binary'},inplace = True)
+            else:
+                raise ValueError("Invalid ytype")
+        return data,interactionPos
     return generateGE(seed, ytype)
 
