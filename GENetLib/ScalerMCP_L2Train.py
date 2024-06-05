@@ -19,12 +19,12 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
     net = GE_Net(In_Nodes, Interaction_Nodes, Clinical_Nodes, num_hidden_layers, nodes_hidden_layer, ytype)
     if model != None:
         net.load_state_dict(model.state_dict(), strict=False)
-    ###optimizer
     hidden_layers = getattr(net, 'hidden_layers')
     opt = optim.Adam([
-        {'params': layer.parameters(), 'weight_decay': L2, 'lr': Learning_Rate2} for layer in hidden_layers] + 
-        [{'params': getattr(net, 'sparse{}'.format(i+1)).parameters(), 'weight_decay': 0, 'lr': Learning_Rate1} 
-        for i in range(2)])    
+    {'params': net.sparse1.parameters(), 'weight_decay': 0, 'lr': Learning_Rate1 },
+    {'params': net.sparse2.parameters(), 'weight_decay': 0, 'lr': Learning_Rate1 }] + [
+    {'params': layer.parameters(), 'weight_decay': L2, 'lr': Learning_Rate2 }
+    for layer in hidden_layers])   
     loss_train_list = []
     loss_test_list = []
     for epoch in range(Num_Epochs + 1):
@@ -36,9 +36,9 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
             for j in range(Clinical_Nodes):
                 temp += torch.abs(net.sparse2.weight.data[i + j * In_Nodes])
             b[i] = torch.abs(net.sparse1.weight.data[i]) + temp
-        a = d * L - b/torch.tensor([3])  #L越大，惩罚越大，压缩越多
+        a = d * L - b/torch.tensor([3])
         zero = torch.zeros([In_Nodes])
-        Pb = torch.where(a<0, zero, a) #MCP惩罚的导数
+        Pb = torch.where(a<0, zero, a)
         w1 = Pb / (2 * b ** 2)
         for param in net.sparse1.parameters():
             regularization_loss += torch.sum(param ** 2 * torch.abs(param.data) * w1)
@@ -61,11 +61,9 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
             loss = loss_fn(pred, train_y) + regularization_loss
         else:
             raise ValueError('Invalid ytype')
-        loss.backward() ###calculate gradients
-        opt.step() ###update weights and biases
-        ###serializing net 
+        loss.backward()
+        opt.step() 
         net_state_dict = net.state_dict()
-        ###calculate final rate
         net.train()
         train_pred = net(train_x, train_interaction, train_clinical)
         if ytype == 'Survival':
