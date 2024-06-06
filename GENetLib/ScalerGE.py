@@ -7,7 +7,7 @@ import pandas as pd
 
 pd.set_option('mode.chained_assignment', None)
 def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer,
-             Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, model = None, 
+             Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, 
              split_type = 0, ratio = [7, 3], important_feature = True, plot = True):
     In_Nodes = dim_G
     Clinical_Nodes = dim_E
