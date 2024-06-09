@@ -3,7 +3,6 @@ from Knotmultchk import knotmultchk
 from FDchk import FDchk
 from CreateBasis import create_bspline_basis, create_fourier_basis, create_constant_basis
 from FD import FD
-from inprod_bspline import inprod_bspline
 from eval_basis_fd import eval_fd
 
 
@@ -38,9 +37,6 @@ def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0
     btype2 = basisobj2['btype']
     if rng[0] < range1[0] or rng[1] > range1[1]:
         raise ValueError("Limits of integration are inadmissible.")
-    if btype1 == "bspline" and btype2 == "bspline" and basisobj1 == basisobj2 and len(basisobj1['dropind']) == 0 and len(basisobj1['dropind']) == 0 and wtfd == 0:
-        inprodmat = inprod_bspline(fdobj1, fdobj2, 0, 0)
-        return inprodmat
     iter = 0
     rngvec = rng
     knotmult = []
