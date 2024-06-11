@@ -13,10 +13,11 @@ dtype = torch.FloatTensor
 def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
                       eval_x, eval_clinical, eval_interaction, eval_y,
                       In_Nodes, Interaction_Nodes, Clinical_Nodes, 
-                      num_hidden_layers, nodes_hidden_layer, ytype,
-                      Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, plot = True, model = None):
+                      num_hidden_layers, nodes_hidden_layer, ytype, issnp,
+                      Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, 
+                      plot = True, model = None, model_reg = None):
     d = np.sqrt(Clinical_Nodes + 1)
-    net = GE_Net(In_Nodes, Interaction_Nodes, Clinical_Nodes, num_hidden_layers, nodes_hidden_layer, ytype)
+    net = GE_Net(In_Nodes, Interaction_Nodes, Clinical_Nodes, num_hidden_layers, nodes_hidden_layer, ytype, issnp, model_reg)
     if model != None:
         net.load_state_dict(model.state_dict(), strict=False)
     hidden_layers = getattr(net, 'hidden_layers')
@@ -24,7 +25,7 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
     {'params': net.sparse1.parameters(), 'weight_decay': 0, 'lr': Learning_Rate1 },
     {'params': net.sparse2.parameters(), 'weight_decay': 0, 'lr': Learning_Rate1 }] + [
     {'params': layer.parameters(), 'weight_decay': L2, 'lr': Learning_Rate2 }
-    for layer in hidden_layers])   
+    for layer in hidden_layers])
     loss_train_list = []
     loss_test_list = []
     for epoch in range(Num_Epochs + 1):
@@ -48,11 +49,10 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
             zero = torch.zeros(Interaction_Nodes)
             Pbeta = torch.where(a<0, zero, a)
             regularization_loss += torch.sum(param ** 2 * (torch.abs(param.data) * bInter + Pbeta / (2 * torch.abs(param.data))))
-        pred = net(train_x, train_interaction, train_clinical) ###Forward
-        opt.zero_grad() ###reset gradients to zeros
+        pred = net(train_x, train_interaction, train_clinical)
+        opt.zero_grad()
         if ytype == 'Survival':
-            loss_fn = neg_par_log_likelihood
-            loss = loss_fn(pred, train_y[0], train_y[1]) + regularization_loss
+            loss = neg_par_log_likelihood(pred, train_y[0], train_y[1]) + regularization_loss
         elif ytype == 'Binary':
             loss_fn = BCELoss()
             loss = loss_fn(pred, train_y) + regularization_loss
@@ -62,7 +62,7 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
         else:
             raise ValueError('Invalid ytype')
         loss.backward()
-        opt.step() 
+        opt.step()
         net_state_dict = net.state_dict()
         net.train()
         train_pred = net(train_x, train_interaction, train_clinical)
@@ -117,4 +117,3 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
         train_cindex = c_index(train_pred, train_y[0], train_y[1])
         eval_cindex = c_index(eval_pred, eval_y[0], eval_y[1])
         return (train_loss, eval_loss, train_cindex, eval_cindex, net)
-

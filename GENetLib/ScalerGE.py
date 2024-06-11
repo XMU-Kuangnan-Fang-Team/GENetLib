@@ -8,7 +8,8 @@ import pandas as pd
 pd.set_option('mode.chained_assignment', None)
 def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer,
              Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, 
-             split_type = 0, ratio = [7, 3], important_feature = True, plot = True):
+             split_type = 0, ratio = [7, 3], important_feature = True, plot = True, 
+             model_reg = None, issnp = False):
     In_Nodes = dim_G
     Clinical_Nodes = dim_E
     Interaction_Nodes = dim_G * dim_E
@@ -52,8 +53,8 @@ def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_
     ScalerMCP_L2trainRes = ScalerMCP_L2train(x_train, clinical_train, interaction_train, y_train,
                                              x_valid, clinical_valid, interaction_valid, y_valid,
                                              In_Nodes, Interaction_Nodes, Clinical_Nodes, 
-                                             num_hidden_layers, nodes_hidden_layer, ytype,
-                                             Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, plot, model)
+                                             num_hidden_layers, nodes_hidden_layer, ytype, issnp,
+                                             Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, plot, model, model_reg)
     if t != None:
         ifs_G = important_features(ScalerMCP_L2trainRes[4].sparse1.weight.data, t)
         ifs_GE = important_features(ScalerMCP_L2trainRes[4].sparse2.weight.data, t)
@@ -85,4 +86,3 @@ def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_
         return(ScalerMCP_L2trainRes, ifs_G, ifs_GE)
     else:
         return(ScalerMCP_L2trainRes)
-

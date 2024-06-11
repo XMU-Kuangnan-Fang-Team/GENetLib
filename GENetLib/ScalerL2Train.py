@@ -12,9 +12,9 @@ dtype = torch.FloatTensor
 def ScalerL2train(train_x, train_clinical, train_interaction, train_y,
                   eval_x, eval_clinical, eval_interaction, eval_y,
                   In_Nodes, Interaction_Nodes, Clinical_Nodes,
-                  num_hidden_layers, nodes_hidden_layer, ytype,
-                  Learning_Rate2, L2, Num_Epochs):
-    net = GE_Net(In_Nodes, Interaction_Nodes, Clinical_Nodes, num_hidden_layers, nodes_hidden_layer, ytype)
+                  num_hidden_layers, nodes_hidden_layer, ytype, issnp,
+                  Learning_Rate2, L2, Num_Epochs, model_reg = None):
+    net = GE_Net(In_Nodes, Interaction_Nodes, Clinical_Nodes, num_hidden_layers, nodes_hidden_layer, ytype, issnp, model_reg)
     opt = optim.Adam(net.parameters(), lr= Learning_Rate2, weight_decay = L2)
     for epoch in range(Num_Epochs + 1):
         net.train()
@@ -77,4 +77,3 @@ def ScalerL2train(train_x, train_clinical, train_interaction, train_y,
         train_cindex = c_index(train_pred, train_y[0], train_y[1])
         eval_cindex = c_index(eval_pred, eval_y[0], eval_y[1])
         return (loss, eval_loss, train_cindex, eval_cindex, net)
-

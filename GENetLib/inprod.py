@@ -3,6 +3,7 @@ from Knotmultchk import knotmultchk
 from FDchk import FDchk
 from CreateBasis import create_bspline_basis, create_fourier_basis, create_constant_basis
 from FD import FD
+from inprod_bspline import inprod_bspline
 from eval_basis_fd import eval_fd
 
 
