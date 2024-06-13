@@ -43,7 +43,10 @@ def GridSNPGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_l
             INTERACTION[:,k] = z[:,i] * U.iloc[:,j]
             k = k + 1
     data_reg = pd.DataFrame(np.hstack((U,INTERACTION,z)))
-    model_reg = LinearRegression().fit(data_reg, y)
+    if ytype == 'Survival':
+        model_reg = LinearRegression().fit(data_reg, y[:,0])
+    else:
+        model_reg = LinearRegression().fit(data_reg, y)
     GridSNPGE_res = GridScalerGE([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
                                  Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, model, 
                                  split_type, ratio, True, plot_res, model_reg, True)
