@@ -41,9 +41,9 @@ def SimDataSNP(n, m, ytype, seed = 0):
     region2 = t[(t > 0.3) & (t <= 0.7)]
     region3 = t[t > 0.7]
     
-    Betapart1 = -16*(region1 - 0.3)**2
+    Betapart1 = -36*(region1 - 0.3)**2
     Betapart2 = np.zeros(len(region2))
-    Betapart3 = 16*(region3 - 0.7)**2
+    Betapart3 = 36*(region3 - 0.7)**2
     
     beta0value = np.concatenate((Betapart1, Betapart2, Betapart3))
     beta1value = np.concatenate((Betapart1, Betapart2, np.zeros(len(Betapart3))))
