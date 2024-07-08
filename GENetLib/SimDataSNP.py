@@ -15,7 +15,7 @@ output is a dict
 def SimDataSNP(n, m, ytype, seed = 0):    
     np.random.seed(seed + 123)
     norder = 4
-    nknots = 15
+    nknots = 20
     t = np.linspace(1e-2, 1, m)
     k = norder - 1
     breaks = list(np.linspace(0, 1, nknots))
