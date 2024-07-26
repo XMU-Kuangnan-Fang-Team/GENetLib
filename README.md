@@ -21,7 +21,7 @@ pip install GENetLib
 ```
 ### Mirror
 ```c
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple GENetLib
+pip install GENetLib -i https://pypi.tuna.tsinghua.edu.cn/simple 
 ```
 ## Functions
 ### Menu
