@@ -11,7 +11,6 @@ Ren, R., Fang, K., Zhang, Q., & Ma, S. (2023). FunctanSNP: an R package for func
 matplotlib==3.7.1<br />
 numpy==1.24.3<br />
 pandas==1.5.3<br />
-scikit_learn==1.2.2<br />
 scipy==1.10.1<br />
 setuptools==67.8.0<br />
 torch==2.3.0<br />
