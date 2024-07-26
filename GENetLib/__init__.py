@@ -19,7 +19,7 @@ from .eval_basis_fd import eval_basis,eval_fd
 from .polyprod import polyprod
 from .SNPgvf import SNPgvf
 from .ScalerL2train import ScalerL2train
-from .ScalerMCP_L2train import ScalerMCP_L2train
+from .ScalerMCP_L2Train import ScalerMCP_L2train
 from .ScalerGE import ScalerGE
 from .GridScalerGE import GridScalerGE
 from .SNPGE import SNPGE
