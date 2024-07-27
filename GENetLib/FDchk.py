@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
-from FD import FD
+
+from GENetLib.FD import FD
 
 
 def FDchk(fdobj):
+    
     if 'coefs' in fdobj.keys():
         coef = fdobj['coefs']
     else:
@@ -15,10 +17,4 @@ def FDchk(fdobj):
         raise ValueError("Functional data object must be univariate")
     nrep = coefd[1]
     return [nrep, fdobj]
-
-
-'''test
-from BasisFD import BasisFD
-basisfd = BasisFD()
-fdchk_obj = FDchk(basisfd)'''
 

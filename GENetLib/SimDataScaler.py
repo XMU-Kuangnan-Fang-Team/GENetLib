@@ -2,11 +2,6 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-'''
-rho: coefficient; dim_G: dimension of gene; dim_E: dimension of clinical
-n: sample size; n_inter: number of interaction effect
-output is a dataframe
-'''
 
 def SimDataScaler(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Survival',
                   n_inter = None, linear = True, seed = 0):
@@ -95,13 +90,4 @@ def SimDataScaler(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Surv
                 raise ValueError("Invalid ytype")
         return data,interactionPos
     return generateGE(seed, ytype)
-
-
-'''test'''
-'''
-scaler_survival_linear = SimDataScaler(0.25, 0.3, 500, 5, 1500, 2, 'Survival', 30)
-scaler_survival_nonlinear = SimDataScaler(0.25, 0.3, 500, 5, 1500, 2, 'Survival', 30, linear = False)
-scaler_continuous = SimDataScaler(0.25, 0.3, 500, 5, 1500, 2, 'Continuous', 30, seed = 123)
-scaler_binary = SimDataScaler(0.75, 0.5, 500, 5, 1500, 3, 'Binary',30)
-'''
 

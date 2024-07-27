@@ -1,11 +1,13 @@
 import math
 import numpy as np
-from BasisFD import BasisFD
+
+from GENetLib.BasisFD import BasisFD
 
 
 def create_bspline_basis(rangeval=None, nbasis=None, norder=4, breaks=None, 
                          dropind=None, quadvals=None, values=None, basisvalues=None, 
                          names=["bspl"]):
+    
     btype = "bspline"
     if breaks is not None:
         Breaks = [float(b) for b in breaks]
@@ -88,15 +90,10 @@ def create_bspline_basis(rangeval=None, nbasis=None, norder=4, breaks=None,
         basisobj['names'] = new_names
     return basisobj
 
-'''test
-bspline_basis = create_bspline_basis(norder=3)
-bspline_basis = create_bspline_basis([0,1],1,1,breaks=[0,1])
-bspline_basis = create_bspline_basis(norder=2, breaks=[0,0.5,1])'''
-
-
 def create_expon_basis(rangeval = [0, 1], nbasis = None, ratevec = None, 
                        dropind = None, quadvals = None, values = None, basisvalues = None, 
                        names = ["exp"], axes = None):
+    
     if not isinstance(rangeval, (list, np.ndarray)):
         raise ValueError(f"rangeval must be numeric;  class(rangeval) = {type(rangeval)}")
     if len(rangeval) < 1:
@@ -168,14 +165,10 @@ def create_expon_basis(rangeval = [0, 1], nbasis = None, ratevec = None,
         basisobj['axes'] = axes
     return basisobj
 
-
-'''test
-expon_basis = create_expon_basis([0,5], 3, [0,-1,-5])'''
-
-
 def create_fourier_basis(rangeval = [0, 1], nbasis = 3, period = None, 
                          dropind = None, quadvals = None, values = None, basisvalues = None, 
                          names = None, axes = None):
+
     if period == None:
         period = float(np.diff(rangeval))
     btype = "fourier"
@@ -228,14 +221,10 @@ def create_fourier_basis(rangeval = [0, 1], nbasis = 3, period = None,
         basisobj['axes'] = axes
     return basisobj
 
-
-'''test
-fourier_basis = create_fourier_basis([0,12], 9, 12)'''
-
-
 def create_monomial_basis(rangeval = [0, 1], nbasis = None, exponents = None, 
                           dropind = None, quadvals = None, values = None, basisvalues = None, 
                           names = ["monomial"], axes = None):
+    
     btype = "monom"
     Rangeval = np.array(rangeval, dtype=float)
     if len(rangeval) < 1:
@@ -327,20 +316,10 @@ def create_monomial_basis(rangeval = [0, 1], nbasis = None, exponents = None,
         basisobj['axes'] = axes
     return basisobj
 
-
-'''test
-monomial_basis = create_monomial_basis([-1,1], 5)
-dates = ['1775-09-04', '1812-07-12']
-import pandas as pd
-invasion1 = pd.to_datetime(dates[0])
-invasion2 = pd.to_datetime(dates[1])
-earlyUS_Canada = pd.Series([invasion1, invasion2])
-BspInvade1  = create_monomial_basis(earlyUS_Canada)'''
-
-
 def create_power_basis(rangeval = [0, 1], nbasis = None, exponents = None, 
                        dropind = None, quadvals = None, values = None, basisvalues = None, 
                        names = ["power"], axes = None):
+    
     if not isinstance(rangeval, (list, np.ndarray)):
         raise ValueError(f"rangaval must be numeric;  class(rangeval) = {type(rangeval)}")
     if len(rangeval) < 1:
@@ -422,12 +401,8 @@ def create_power_basis(rangeval = [0, 1], nbasis = None, exponents = None,
         basisobj['axes'] = axes
     return basisobj
 
-
-'''test
-power_basis = create_power_basis([1e-7,1], 5, [-1,-0.5,0,0.5,1])'''
-
-
 def create_constant_basis(rangeval=[0, 1], names="const", axes=None):
+    
     if len(rangeval) == 1:
         if rangeval[0] <= 0:
             raise ValueError("RANGEVAL is a single value that is not positive.")
@@ -446,8 +421,4 @@ def create_constant_basis(rangeval=[0, 1], names="const", axes=None):
     if axes is not None:
         basisobj['axes'] = axes
     return basisobj
-
-
-'''test
-constant_basis = create_constant_basis([-1,1])'''
 

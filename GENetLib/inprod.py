@@ -1,12 +1,14 @@
 import numpy as np
-from Knotmultchk import knotmultchk
-from FDchk import FDchk
-from CreateBasis import create_bspline_basis, create_fourier_basis, create_constant_basis
-from FD import FD
-from eval_basis_fd import eval_fd
+
+from GENetLib.Knotmultchk import knotmultchk
+from GENetLib.FDchk import FDchk
+from GENetLib.CreateBasis import create_bspline_basis, create_fourier_basis, create_constant_basis
+from GENetLib.FD import FD
+from GENetLib.eval_basis_fd import eval_fd
 
 
 def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0):
+
     result1 = FDchk(fdobj1)
     nrep1 = result1[0]
     fdobj1 = result1[1]
@@ -129,26 +131,3 @@ def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0
     else:
         return inprodmat
     
-
-'''test'''
-'''
-norder = 4
-knots = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10]
-nbasis = norder + len(knots) - 2
-bs_basis = create_bspline_basis(knots, nbasis, norder)
-coefs_fd1 = np.array([1,2,3,4,5,6,7,8,9,10,11,12]).reshape(-1,1)
-coefs_fd2 = [13,14,15,16,17,18,19,20,21,22,23,24]
-fd1 = FD(coef = coefs_fd1, basisobj = bs_basis)
-fd2 = FD(coef = coefs_fd2, basisobj = bs_basis)
-inner_product = inprod(fd1, fd2)
-inner_product2 = inprod(fd1)
-
-from CreateBasis import create_expon_basis
-expon_basis = create_expon_basis([0,0.5], 3, [0,-1,-5])
-fd3 = FD(coef = np.array([1,2,3]).reshape(-1,1),basisobj = expon_basis)
-inner_product3 = inprod(fd3,fd1)
-
-fourier_basis = create_fourier_basis([0,12], 9, 12)
-fd4 = FD(np.array([0,1,2,3,4,5,6,7,8]).reshape(-1,1),basisobj=fourier_basis)
-inner_product4 = inprod(fd1,fd4)
-'''

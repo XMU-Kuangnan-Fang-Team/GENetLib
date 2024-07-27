@@ -1,13 +1,5 @@
 import torch
-from ScalerMCP_L2Train import ScalerMCP_L2train
-from PreData1 import PreData1
-from PreData2 import PreData2
 import pandas as pd
-
-
-'''
-data: list(Y, G, E, GE(optional)) or matrix(G, GE(optional), E, Y)
-'''
 
 
 pd.set_option('mode.chained_assignment', None)
@@ -15,6 +7,11 @@ def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_
              Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, 
              split_type = 0, ratio = [7, 3], important_feature = True, plot = True, 
              model_reg = None, issnp = False):
+    
+    from ScalerMCP_L2Train import ScalerMCP_L2train
+    from PreData1 import PreData1
+    from PreData2 import PreData2
+    
     In_Nodes = dim_G
     Clinical_Nodes = dim_E
     Interaction_Nodes = dim_G * dim_E
@@ -91,65 +88,3 @@ def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_
         return(ScalerMCP_L2trainRes, ifs_G, ifs_GE)
     else:
         return(ScalerMCP_L2trainRes)
-
-    
-'''test'''
-'''
-from SimDataScaler import SimDataScaler
-ytype = 'Survival'
-num_hidden_layers = 2
-nodes_hidden_layer = [1000, 100]
-Learning_Rate2 = 0.035
-L2 = 0.01
-Learning_Rate1 = 0.06
-L = 0.09
-Num_Epochs = 100
-t = 0.01
-scaler_survival_linear = SimDataScaler(0.25, 0.3, 500, 5, 1500, 2, ytype, 30)
-y = [scaler_survival_linear[0].iloc[:,-2], scaler_survival_linear[0].iloc[:,-1]]
-x = scaler_survival_linear[0].iloc[:,0:500]
-clinical = scaler_survival_linear[0].iloc[:,3000:3005]
-ScalerGERes1 = ScalerGE(scaler_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer,
-                        Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], 
-                        important_feature = True, plot = True)
-'''
-'''
-from SimDataScaler import SimDataScaler
-ytype = 'Continuous'
-num_hidden_layers = 2
-nodes_hidden_layer = [100,10]
-Learning_Rate2 = 0.035
-L2 = 0.2
-Learning_Rate1 = 0.06
-L = 0.09
-Num_Epochs = 50
-t = 0.01
-scaler_continuous = SimDataScaler(0.25, 0.3, 20, 5, 1500, 2, ytype, 5)
-y = scaler_continuous[0].iloc[:,-1]
-x = scaler_continuous[0].iloc[:,0:20]
-clinical = scaler_continuous[0].iloc[:,120:125]
-ScalerGERes2 = ScalerGE(scaler_continuous[0], ytype, 20, 5, True, num_hidden_layers, nodes_hidden_layer,
-                        Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], 
-                        important_feature = True, plot = True)
-'''
-'''
-from SimDataScaler import SimDataScaler
-ytype = 'Binary'
-num_hidden_layers = 2
-nodes_hidden_layer = [100,10]
-Learning_Rate2 = 0.035
-L2 = 0.01
-Learning_Rate1 = 0.07
-L = 0.07
-Num_Epochs = 50
-t = 0.01
-dim_G = 50
-n_inter = 3
-scaler_binary = SimDataScaler(0.25, 0.3, dim_G, 5, 50, 2, ytype, n_inter)
-y = scaler_binary[0].iloc[:,-1]
-x = scaler_binary[0].iloc[:,0:20]
-clinical = scaler_binary[0].iloc[:,120:125]
-ScalerGERes3 = ScalerGE(scaler_binary[0], ytype, dim_G, 5, True, num_hidden_layers, nodes_hidden_layer,
-                        Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], 
-                        important_feature = True, plot = True)
-'''

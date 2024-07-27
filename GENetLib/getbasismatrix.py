@@ -1,8 +1,10 @@
-from BasisFunc import bspline_func, expon_func, fourier_func, monomial_func, polyg_func, power_func
 import numpy as np
+
+from GENetLib.BasisFunc import bspline_func, expon_func, fourier_func, monomial_func, polyg_func, power_func
 
 
 def getbasismatrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
+    
     if isinstance(basisobj, (int, float)) and isinstance(evalarg, dict):
         temp = basisobj
         basisobj = evalarg
@@ -72,12 +74,3 @@ def getbasismatrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
     else:
         return np.asmatrix(basismat)
 
-
-'''test
-from BasisFD import BasisFD
-basisobj = BasisFD()
-basismatrix = getbasismatrix(np.linspace(0, 1, num=11), basisobj)
-
-from CreateBasis import create_bspline_basis
-basisobj = create_bspline_basis(norder=2, breaks=[0,0.5,1])
-basismatrix = getbasismatrix(np.linspace(0, 1, num=11), basisobj)'''

@@ -1,13 +1,15 @@
 import numpy as np
 from scipy.linalg import solve
-from CreateBasis import create_bspline_basis, create_expon_basis, create_fourier_basis, create_monomial_basis, create_power_basis
-from getbasismatrix import getbasismatrix
-from FD import FD
 import matplotlib.pyplot as plt
-from eval_basis_fd import eval_fd
+
+from GENetLib.CreateBasis import create_bspline_basis, create_expon_basis, create_fourier_basis, create_monomial_basis, create_power_basis
+from GENetLib.getbasismatrix import getbasismatrix
+from GENetLib.FD import FD
+from GENetLib.eval_basis_fd import eval_fd
 
 
 def SNPgvf(location, X, btype, nbasis, params, Plot = False):
+
     if not isinstance(location, list):
         raise ValueError("location should be of list type.")
     if btype == "Bspline":
@@ -39,12 +41,4 @@ def SNPgvf(location, X, btype, nbasis, params, Plot = False):
     if Plot:
         plt.plot(location, eval_fd(location, gvf))
     return gvf
-
-
-'''test
-from SimDataSNP import SimDataSNP
-simdata = SimDataSNP(20,10,'Continuous')
-location = list(simdata['location'])
-X = simdata['X']
-SNPgvf_res = SNPgvf(location, X, btype = "Bspline", nbasis = 5, params = 4, Plot = True)'''
 

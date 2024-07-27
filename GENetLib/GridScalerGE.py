@@ -1,15 +1,10 @@
-from PreData1 import PreData1
-from PreData2 import PreData2
-from ScalerL2Train import ScalerL2train
-from ScalerMCP_L2Train import ScalerMCP_L2train
 import pandas as pd
 import torch
 
-
-'''
-data: list(Y, G, E, GE(optional)) or matrix(G, GE(optional), E, Y)
-Learning_Rate2, L2, Learning_Rate1, L: list
-'''
+from GENetLib.PreData1 import PreData1
+from GENetLib.PreData2 import PreData2
+from GENetLib.ScalerL2Train import ScalerL2train
+from GENetLib.ScalerMCP_L2Train import ScalerMCP_L2train
 
 
 pd.set_option('mode.chained_assignment', None)
@@ -17,6 +12,7 @@ def GridScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hid
                  Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, 
                  split_type = 0, ratio = [7, 3], important_feature = True, plot = True, 
                  model_reg = None, issnp = False):
+    
     In_Nodes = dim_G
     Clinical_Nodes = dim_E
     Interaction_Nodes = dim_G * dim_E
@@ -120,99 +116,4 @@ def GridScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hid
         return([opt_L2, opt_Learning_Rate2, opt_lr, opt_l],opt_loss_train, opt_loss, opt_index_tr, opt_index_va, GENet, ifs_G, ifs_GE)
     else:
         return([opt_L2, opt_Learning_Rate2, opt_lr, opt_l],opt_loss_train, opt_loss, opt_index_tr, opt_index_va, GENet)
-
-
-
-'''test'''
-'''
-from SimDataScaler import SimDataScaler
-ytype = 'Survival'
-num_hidden_layers = 2
-nodes_hidden_layer = [1000, 100]
-Learning_Rate2 = [0.035]
-L2 = [0.1]
-Learning_Rate1 = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
-L = [0.04, 0.05, 0.06, 0.07, 0.08, 0.09]
-Num_Epochs = 100
-t = 0.01
-dim_E = 5
-dim_G = 500
-n_inter = 30
-n = 1500
-scaler_survival_linear = SimDataScaler(0.25, 0.3, dim_G, dim_E, n, 2, ytype, n_inter)
-y = scaler_survival_linear[0].iloc[:,-1]
-x = scaler_survival_linear[0].iloc[:,0:dim_G]
-clinical = scaler_survival_linear[0].iloc[:,dim_G*dim_E+dim_G:dim_G*dim_E+dim_G+dim_E]
-GridScalerGERes = GridScalerGE(scaler_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer,
-                               Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
-def TPFP(tensor_, truePos, t):
-    maxNum = max(abs(tensor_))
-    resultPos = torch.where(abs(tensor_) > maxNum * t)[0].tolist()
-    TPN = len(set(truePos) & set(resultPos))
-    FPN = len(set(resultPos) - set(truePos))
-    return TPN, FPN
-print(TPFP(GridScalerGERes[5].sparse1.weight.data,list(range(n_inter)), 0.02))
-print(TPFP(GridScalerGERes[5].sparse2.weight.data, list(scaler_survival_linear[1]), 0.01))
-'''
-'''
-from SimDataScaler import SimDataScaler
-ytype = 'Continuous'
-num_hidden_layers = 1
-nodes_hidden_layer = [7]
-Learning_Rate2 = [0.001, 0.035, 0.045]
-L2 = [0.1, 0.2]
-Learning_Rate1 = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
-L = [0.07, 0.08, 0.09]
-Num_Epochs = 100
-t = 0.01
-dim_E = 5
-dim_G = 500
-n_inter = 30
-scaler_continuous = SimDataScaler(0.25, 0.3, dim_G, dim_E, 1500, 2, ytype, n_inter)
-y = scaler_continuous[0].iloc[:,-1]
-x = scaler_continuous[0].iloc[:,0:dim_G]
-clinical = scaler_continuous[0].iloc[:,dim_G*dim_E+dim_G:dim_G*dim_E+dim_G+dim_E]
-GridScalerGERes2 = GridScalerGE(scaler_continuous[0], ytype, dim_G, dim_E, True, num_hidden_layers, nodes_hidden_layer,
-                                Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
-def TPFP(tensor_, truePos, t):
-    maxNum = max(abs(tensor_))
-    resultPos = torch.where(abs(tensor_) > maxNum * t)[0].tolist()
-    TPN = len(set(truePos) & set(resultPos))
-    FPN = len(set(resultPos) - set(truePos))
-    return TPN, FPN
-print(TPFP(GridScalerGERes2[5].sparse1.weight.data,list(range(n_inter)), t)[0])
-print(TPFP(GridScalerGERes2[5].sparse1.weight.data,list(range(n_inter)), t)[1])
-print(TPFP(GridScalerGERes2[5].sparse2.weight.data,list(scaler_continuous[1]), t)[0])
-print(TPFP(GridScalerGERes2[5].sparse2.weight.data,list(scaler_continuous[1]), t)[1])
-'''
-'''
-from SimDataScaler import SimDataScaler
-ytype = 'Binary'
-num_hidden_layers = 1
-nodes_hidden_layer = [50]
-Learning_Rate2 = [0.001, 0.035, 0.045]
-L2 = [0.01]
-Learning_Rate1 = [0.04, 0.05, 0.06]
-L = [0.07, 0.08, 0.09]
-Num_Epochs = 100
-t = 0.02
-dim_E = 5
-dim_G = 500
-n_inter = 30
-n = 1500
-scaler_binary = SimDataScaler(0.25, 0.3, dim_G, dim_E, n, 2, ytype, n_inter)
-y = scaler_binary[0].iloc[:,-1]
-x = scaler_binary[0].iloc[:,0:dim_G]
-clinical = scaler_binary[0].iloc[:,dim_G*dim_E+dim_G:dim_G*dim_E+dim_G+dim_E]
-GridScalerGERes3 = GridScalerGE(scaler_binary[0], ytype, dim_G, dim_E, True, num_hidden_layers, nodes_hidden_layer,
-                                Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
-def TPFP(tensor_, truePos, t):
-    maxNum = max(abs(tensor_))
-    resultPos = torch.where(abs(tensor_) > maxNum * t)[0].tolist()
-    TPN = len(set(truePos) & set(resultPos))
-    FPN = len(set(resultPos) - set(truePos))
-    return TPN, FPN
-print(TPFP(GridScalerGERes3[5].sparse1.weight.data,list(range(n_inter)), 0.01))
-print(TPFP(GridScalerGERes3[5].sparse2.weight.data, list(scaler_binary[1]), 0.01))
-'''
 

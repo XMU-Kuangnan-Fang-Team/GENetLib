@@ -1,18 +1,14 @@
 import numpy as np
 import pandas as pd
-from BasisFunc import bspline_func
 from scipy.stats import multivariate_normal
 from scipy import integrate
 from scipy.interpolate import BSpline, UnivariateSpline
 
-
-'''
-n: sample size; m: the sequence length of each sample; dim_z: dimension of z
-output is a dict
-'''
+from GENetLib.BasisFunc import bspline_func
 
 
-def SimDataSNP(n, m, ytype, seed = 0):    
+def SimDataSNP(n, m, ytype, seed = 0):
+
     np.random.seed(seed + 123)
     norder = 4
     nknots = 20
@@ -98,11 +94,3 @@ def SimDataSNP(n, m, ytype, seed = 0):
         y_class = np.where(y_prob > 0.5, 1, 0)
         simData = {'y': y_class, 'z': z, 'location': list(t), 'X': dataX}
         return simData
-
-
-'''test
-snp_survival = SimDataSNP(300, 30, 'Survival', seed = 0)
-snp_continuous = SimDataSNP(300, 30, 'Continuous', seed = 1)
-snp_binary = SimDataSNP(400, 50, 'Binary')'''
-
-

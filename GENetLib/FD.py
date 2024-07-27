@@ -1,9 +1,11 @@
-from BasisFD import BasisFD
 import numpy as np
-from CreateBasis import create_bspline_basis
+
+from GENetLib.CreateBasis import create_bspline_basis
+from GENetLib.BasisFD import BasisFD
 
 
 def FD(coef=None, basisobj=None, fdnames=None):
+    
     if coef is None and basisobj is None:
         basisobj = BasisFD()
     if coef is None:
@@ -61,7 +63,3 @@ def FD(coef=None, basisobj=None, fdnames=None):
             coef = np.array(coef, dtype={'names':dnms, 'formats':['f8']*len(dnms)})
     fdobj = {"coefs": coef, "basis": basisobj, "fdnames": fdnames}
     return fdobj
-
-
-'''test
-fd = FD()'''

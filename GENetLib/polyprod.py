@@ -31,8 +31,3 @@ def polyprod(Coeff1, Coeff2):
         convmat = convmat.reshape((norder1, norder2, ndegree1+ndegree2+1))
     return convmat
 
-
-'''test
-Coeff1 = np.array([[1], [2], [3]])
-Coeff2 = np.array([[4], [5], [6]])
-poly = polyprod(Coeff1, Coeff2)'''

@@ -4,13 +4,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-'''
-Data preprocessing for a matrix contains G/E or G/GE/E
-split_type = 0: train and valid; split_type = 1: train, valid and test
-'''
-
-
 def PreData1(data, dim_G, dim_E, dim_GE = 0, ytype = 'Survival', split_type = 0, ratio = [7, 3]):
+
     if (split_type == 0 and len(ratio) !=2) or (split_type == 1 and len(ratio) !=3):
         raise ValueError("Split_type and ratio don't match")
     n = data.shape[0]
@@ -130,14 +125,3 @@ def PreData1(data, dim_G, dim_E, dim_GE = 0, ytype = 'Survival', split_type = 0,
     else:
         raise ValueError("Invalid split_type")
 
-
-'''
-test
-
-from SimDataScaler import SimDataScaler
-ytype = 'Survival'
-scaler_survival_linear = SimDataScaler(0.25, 0.3, 500, 5, 1500, 2, ytype, 30)
-x_train, y_train, clinical_train, interaction_train,\
-x_valid, y_valid, clinical_valid, interaction_valid,\
-x_test, y_test, clinical_test, interaction_test = PreData1(scaler_survival_linear, 500, 5, 2500, ytype, split_type = 1, ratio = [3, 1, 1])
-'''

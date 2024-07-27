@@ -1,10 +1,12 @@
 import numpy as np
 import pandas as pd
-from PPFunc import ppBspline, ppDeriv
-from polyprod import polyprod
+
+from GENetLib.PPFunc import ppBspline, ppDeriv
+from GENetLib.polyprod import polyprod
 
 
 def inprod_bspline(fdobj1, fdobj2=None, nderiv1=0, nderiv2=0):
+    
     def outer_product(a, b):
         a = np.array(a)[:, np.newaxis]
         b = np.array(b)[np.newaxis, :]
@@ -101,16 +103,3 @@ def inprod_bspline(fdobj1, fdobj2=None, nderiv1=0, nderiv2=0):
         prodmat = prodmat + prodmati
     return prodmat
     
-
-'''test    
-from CreateBasis import create_bspline_basis
-from FD import FD
-norder = 4
-knots = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10]
-nbasis = norder + len(knots) - 2
-bs_basis = create_bspline_basis(knots, nbasis, norder)
-coefs_fd1 = [1,2,3,4,5,6,7,8,9,10,11]
-coefs_fd2 = [13,14,15,16,17,18,19,20,21,22,23]
-fd1 = FD(coef = coefs_fd1, basisobj = bs_basis)
-fd2 = FD(coef = coefs_fd2, basisobj = bs_basis)
-inner_product = inprod_bspline(fd1, fd2)'''
