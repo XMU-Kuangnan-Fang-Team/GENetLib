@@ -6,7 +6,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='GENetLib',
-    version='1.0.4',
+    version='1.0.6',
     description='A Python Library for Gene–environment Interaction Analysis via Deep Learning',
     author='Yuhao Zhong',
     author_email='Barry57@163.com',
