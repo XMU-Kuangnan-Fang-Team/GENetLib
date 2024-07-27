@@ -63,3 +63,63 @@ def GridSNPGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_l
             plt.ylabel(f'beta{i}(t)')
             plt.show()
     return GridSNPGE_res, b, betat
+
+
+'''test'''
+'''
+from SimDataSNP import SimDataSNP
+num_hidden_layers = 2
+nodes_hidden_layer = [100, 10]
+Learning_Rate2 = [0.005, 0.01, 0.015]
+L2 = [0.005, 0.01, 0.015]
+Learning_Rate1 = [0.001, 0.005]
+L = [0.005, 0.006, 0.007]
+Num_Epochs = 50
+nbasis1 = 5
+params1 = 4
+snp_continuous = SimDataSNP(1000, 30, 'Continuous', seed = 1)
+y = snp_continuous['y']
+z = snp_continuous['z']
+location = snp_continuous['location']
+X = snp_continuous['X']
+GridSNPGE_Res2 = GridSNPGE(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer,
+                           Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, 
+                           nbasis1, params1, Bsplines = 5, norder1 = 4, 
+                           model = None, split_type = 0, ratio = [7,3], plot_res = True)
+print(GridSNPGE_Res2[0][5].sparse1.weight.data)
+print(GridSNPGE_Res2[0][5].sparse2.weight.data)
+'''
+'''
+from SimDataSNP import SimDataSNP
+num_hidden_layers = 2
+nodes_hidden_layer = [50,10]
+Learning_Rate2 = [0.001, 0.005, 0.01]
+L2 = [0.001, 0.005, 0.01]
+Learning_Rate1 = [0.001, 0.005, 0.01]
+L = [0.005, 0.006, 0.007]
+Num_Epochs = 100
+nbasis1 = 5
+params1 = 4
+seed = 123
+snp_survival = SimDataSNP(1000, 30, 'Survival', seed = seed)
+y = snp_survival['y']
+z = snp_survival['z']
+location = list(snp_survival['location'])
+X = snp_survival['X']
+GridSNPGE_Res1 = GridSNPGE(y, z, location, X, 'Survival', 'Bspline', num_hidden_layers, nodes_hidden_layer,
+                           Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, 
+                           nbasis1, params1, Bsplines = 5, norder1 = 4, 
+                           model = None, split_type = 0, ratio = [7, 3], plot_res = True)
+'''
+'''
+snp_binary = SimDataSNP(1500, 50, 'Binary')
+y = list(snp_binary['y'])
+z = snp_binary['z']
+location = list(snp_binary['location'])
+X = snp_binary['X']
+params1 =[-1,-0.5,0,0.5,1]
+GridSNPGE_Res3 = GridSNPGE(y, z, location, X, 'Binary', 'Power', num_hidden_layers, nodes_hidden_layer,
+                           Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, 
+                           nbasis1, params1, Bsplines = 5, norder1 = 4, 
+                           model = None, split_type = 0, ratio = [7, 3], plot_res = True)
+'''

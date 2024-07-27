@@ -1,6 +1,11 @@
 import torch
 import torch.nn as nn
 
+'''
+num_hidden_layers: number of layer
+nodes_hidden_layer: list, number of nodes per hidden layer
+ytype: Binary, Continuous or Survival
+'''
 
 class weight_sparse(nn.Module):    
     def __init__(self, in_features):
@@ -42,24 +47,28 @@ class GE_Net(nn.Module):
         self.relu = nn.ReLU()
         self.sigmoid = nn.Sigmoid()
         self.ytype = ytype
+        # gene&interaction layer --> sparse layer
         if issnp == True:
             self.sparse1 = weight_sparse1(In_Nodes, model_reg)
             self.sparse2 = weight_sparse2(In_Nodes, Clinical_Nodes, model_reg)
         else:
             self.sparse1 = weight_sparse(In_Nodes)
             self.sparse2 = weight_sparse(Interaction_Nodes)
+        # sparse layer + clinical variable--> hidden layer
         self.hidden_layers = nn.ModuleList()
         self.hidden_layers.append(nn.Linear(In_Nodes + Interaction_Nodes + Clinical_Nodes, nodes_hidden_layer[0]))
         for i in range(1,num_hidden_layers):
             self.hidden_layers.append(nn.Linear(nodes_hidden_layer[i-1], nodes_hidden_layer[i]))
         self.hidden_layers.append(nn.Linear(nodes_hidden_layer[-1], 1, bias = False))
+        # hidden layer --> Cox layer
         self.hidden_layers[-1].weight.data.uniform_(-0.001, 0.001)
-    
     def forward(self, x_1, x_2, x_3):
         x_1 = self.sparse1(x_1)
         x_2 = self.sparse2(x_2)
-        x = torch.cat((x_1, x_2),1)
-        x = torch.cat((x, x_3),1)   
+        # combine interaction, gene and clinical
+        x = torch.cat((x_1, x_2),1) #按行并
+        x = torch.cat((x, x_3),1)
+        # sparse layer --> hidden layers     
         for i in range(len(self.hidden_layers) - 1):
             x = self.relu(self.hidden_layers[i](x))
         if self.ytype == 'Binary':
@@ -67,3 +76,4 @@ class GE_Net(nn.Module):
         else:
             lin_pred = self.hidden_layers[-1](x)
         return lin_pred
+

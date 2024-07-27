@@ -16,3 +16,9 @@ def FDchk(fdobj):
     nrep = coefd[1]
     return [nrep, fdobj]
 
+
+'''test
+from BasisFD import BasisFD
+basisfd = BasisFD()
+fdchk_obj = FDchk(basisfd)'''
+

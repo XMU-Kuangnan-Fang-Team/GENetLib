@@ -9,6 +9,11 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import accuracy_score
 
 
+'''
+train_y/evel_y: for cox model, y is a list, first column is ytime, second column is yevent
+'''
+
+
 dtype = torch.FloatTensor
 def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
                       eval_x, eval_clinical, eval_interaction, eval_y,
@@ -20,6 +25,7 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
     net = GE_Net(In_Nodes, Interaction_Nodes, Clinical_Nodes, num_hidden_layers, nodes_hidden_layer, ytype, issnp, model_reg)
     if model != None:
         net.load_state_dict(model.state_dict(), strict=False)
+    ###optimizer
     hidden_layers = getattr(net, 'hidden_layers')
     opt = optim.Adam([
     {'params': net.sparse1.parameters(), 'weight_decay': 0, 'lr': Learning_Rate1 },
@@ -37,9 +43,9 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
             for j in range(Clinical_Nodes):
                 temp += torch.abs(net.sparse2.weight.data[i + j * In_Nodes])
             b[i] = torch.abs(net.sparse1.weight.data[i]) + temp
-        a = d * L - b/torch.tensor([3])
+        a = d * L - b/torch.tensor([3])  #L越大，惩罚越大，压缩越多
         zero = torch.zeros([In_Nodes])
-        Pb = torch.where(a<0, zero, a)
+        Pb = torch.where(a<0, zero, a) #MCP惩罚的导数
         w1 = Pb / (2 * b ** 2)
         for param in net.sparse1.parameters():
             regularization_loss += torch.sum(param ** 2 * torch.abs(param.data) * w1)
@@ -49,8 +55,8 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
             zero = torch.zeros(Interaction_Nodes)
             Pbeta = torch.where(a<0, zero, a)
             regularization_loss += torch.sum(param ** 2 * (torch.abs(param.data) * bInter + Pbeta / (2 * torch.abs(param.data))))
-        pred = net(train_x, train_interaction, train_clinical)
-        opt.zero_grad()
+        pred = net(train_x, train_interaction, train_clinical) ###Forward
+        opt.zero_grad() ###reset gradients to zeros
         if ytype == 'Survival':
             loss = neg_par_log_likelihood(pred, train_y[0], train_y[1]) + regularization_loss
         elif ytype == 'Binary':
@@ -61,9 +67,11 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
             loss = loss_fn(pred, train_y) + regularization_loss
         else:
             raise ValueError('Invalid ytype')
-        loss.backward()
-        opt.step()
+        loss.backward() ###calculate gradients
+        opt.step() ###update weights and biases
+        ###serializing net 
         net_state_dict = net.state_dict()
+        ###calculate final rate
         net.train()
         train_pred = net(train_x, train_interaction, train_clinical)
         if ytype == 'Survival':
@@ -117,3 +125,34 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
         train_cindex = c_index(train_pred, train_y[0], train_y[1])
         eval_cindex = c_index(eval_pred, eval_y[0], eval_y[1])
         return (train_loss, eval_loss, train_cindex, eval_cindex, net)
+
+
+
+'''
+test
+
+from SimDataScaler import SimDataScaler
+from PreData1 import PreData1
+ytype = 'Survival'
+scaler_survival_linear = SimDataScaler(0.25, 0.3, 500, 5, 1500, 2, ytype, 30)
+x_train, y_train, clinical_train, interaction_train,\
+x_valid, y_valid, clinical_valid, interaction_valid,\
+x_test, y_test, clinical_test, interaction_test = PreData1(scaler_survival_linear, 500, 5, 2500, ytype, split_type = 1, ratio = [3, 1, 1])
+In_Nodes = 500
+Interaction_Nodes = 2500 
+Clinical_Nodes = 5
+num_hidden_layers = 2
+nodes_hidden_layer = [1000, 100]
+Learning_Rate2 = 0.035
+L2 = 0.1
+Learning_Rate1 = 0.06
+L = 0.09
+Num_Epochs = 100
+ScalerMCP_L2trainRes = ScalerMCP_L2train(x_train, clinical_train, interaction_train, y_train,
+                                         x_valid, clinical_valid, interaction_valid, y_valid,
+                                         In_Nodes, Interaction_Nodes, Clinical_Nodes, 
+                                         num_hidden_layers, nodes_hidden_layer, ytype,
+                                         Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs)
+
+print(ScalerMCP_L2trainRes)
+'''

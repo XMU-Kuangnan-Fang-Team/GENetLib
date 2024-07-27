@@ -96,3 +96,21 @@ def eval_fd(evalarg, fdobj, Lfdobj = 0, returnMatrix = False):
     else:
         return evalarray
 
+'''test
+from CreateBasis import create_bspline_basis,create_fourier_basis
+bspl1 = create_bspline_basis(norder=1, breaks = [0,1])
+eval_bspl1 = eval_basis([0,0.2,0.4,0.6,0.8,1], bspl1)
+
+bspl2 = create_bspline_basis(norder=1, breaks=[0,0.5,1])
+eval_bspl2 = eval_basis([0,0.2,0.4,0.6,0.8,1], bspl2)
+
+
+bspl23 = create_bspline_basis(norder=2, breaks=[0,.5, 1])
+eval_bspl23 = eval_basis([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1], bspl23)
+
+
+falseFourierBasis = create_fourier_basis(nbasis=1)
+eval_fFB = eval_basis([0,0.2,0.4,0.6,0.8,1], falseFourierBasis)
+
+fourier3 = create_fourier_basis()
+eval_fourier3 = eval_basis([0,0.2,0.4,0.6,0.8,1], fourier3)'''

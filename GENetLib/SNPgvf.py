@@ -40,3 +40,11 @@ def SNPgvf(location, X, btype, nbasis, params, Plot = False):
         plt.plot(location, eval_fd(location, gvf))
     return gvf
 
+
+'''test
+from SimDataSNP import SimDataSNP
+simdata = SimDataSNP(20,10,'Continuous')
+location = list(simdata['location'])
+X = simdata['X']
+SNPgvf_res = SNPgvf(location, X, btype = "Bspline", nbasis = 5, params = 4, Plot = True)'''
+

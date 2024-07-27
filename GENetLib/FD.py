@@ -61,3 +61,7 @@ def FD(coef=None, basisobj=None, fdnames=None):
             coef = np.array(coef, dtype={'names':dnms, 'formats':['f8']*len(dnms)})
     fdobj = {"coefs": coef, "basis": basisobj, "fdnames": fdnames}
     return fdobj
+
+
+'''test
+fd = FD()'''

@@ -48,6 +48,11 @@ def ppBspline(t):
         index = np.array([[1]])
     return [Coeff, index]
 
+
+'''test
+ppBspline_res = ppBspline(list(range(1,6)))'''
+
+
 def ppDeriv(Coeff, Deriv=0):
     if np.all(np.isnan(Coeff)) == True:
         return pd.DataFrame([[len(Coeff)], [0]])
@@ -67,3 +72,6 @@ def ppDeriv(Coeff, Deriv=0):
             CoeffD.iloc[:,bound1-1:bound2] = (k-j)*CoeffD.iloc[:,bound1-1:bound2] 
         return CoeffD
 
+
+'''test
+PPderiv_res = ppDeriv(ppBspline_res[0],1)'''

@@ -31,3 +31,13 @@ def spline_design(knots, x, norder=4, outer_ok=False):
             design.loc[m-1, n] = 1
         return design
 
+
+'''test
+knots = [0.0, 0.0 ,0.0 ,0.0 ,0.2, 0.4 ,0.6, 0.8,1.0 ,1.0 ,1.0]
+x = np.linspace(0, 1, num=11)
+design_matrix1 = spline_design(knots, x, 1 ,True)
+
+knots = [1,2,3,4,5,6,7,8,9,10]
+x = [4,5,6,7]
+design_matrix2 = spline_design(knots, x)'''
+

@@ -42,6 +42,12 @@ def bspline_func(x, breaks, norder=4, nderiv=0, returnMatrix=False):
     else:
         raise ValueError("NBASIS is less than NORDER.")
 
+'''test
+x = np.linspace(0, 1, num=11)
+breaks = np.linspace(0, 1, num=5)
+bspline_res = bspline_func(x, breaks)'''
+
+
 def expon_func(x, ratevec = [1], nderiv = 0):
     n = len(x)
     nrate = len(ratevec)
@@ -50,6 +56,11 @@ def expon_func(x, ratevec = [1], nderiv = 0):
         rate = ratevec[irate]
         expval[:, irate] = rate**nderiv * np.exp(rate * x)
     return expval
+
+'''test
+x = np.linspace(0, 1, num=11)
+exp_res = expon_func(x,[1,3])'''
+
 
 def fourier_func(x, nbasis = None , period = None , nderiv = 0):
     n = len(x)
@@ -107,6 +118,11 @@ def fourier_func(x, nbasis = None , period = None , nderiv = 0):
     basismat.columns = fNames
     return basismat
 
+'''test
+x = np.linspace(0, 1, num=11)
+fourier_res = fourier_func(x, 5, None, 1)'''
+
+
 def monomial_func(evalarg, exponents=1, nderiv=0, argtrans=[0, 1]):
     evalarg = np.array(evalarg)
     evalarg = (evalarg - argtrans[0]) / argtrans[1]
@@ -137,6 +153,11 @@ def monomial_func(evalarg, exponents=1, nderiv=0, argtrans=[0, 1]):
                 monommat[:, ibasis] = fac * evalarg**(degree - nderiv)
     return monommat
 
+'''test
+x = np.linspace(-1, 1, num=21)
+monomial_res = monomial_func(x, [1,2,3,4,5], 1 , [0,2])'''
+
+
 def polyg_func(x, argvals):
     x = np.array(x)
     argvals = np.array(argvals)
@@ -150,6 +171,12 @@ def polyg_func(x, argvals):
     knots = np.concatenate(([argvals[0]], argvals, [argvals[nbasis-1]]))
     basismat = spline_design(knots, x, 2)
     return basismat
+
+'''test
+x = np.linspace(0, 1, num=21)
+argvals = np.linspace(0, 1, num=11)
+polyg_res = polyg_func(x, argvals)'''
+
 
 def power_func(x, exponents, nderiv=0):
     x = np.array(x)
@@ -176,4 +203,12 @@ def power_func(x, exponents, nderiv=0):
                         fac = fac * (degree - ideriv + 1)
                     powermat[:, ibasis] = fac * x**(degree - nderiv)
     return powermat
+
+'''test
+x = np.linspace(0.1, 1, num=10)
+exponents = [0, 1, 2]
+power_res = power_func(x, exponents, 2)'''
+
+
+
 

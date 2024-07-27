@@ -25,3 +25,14 @@ def plotRawdata(location, X, color = None, pch = 4, cex = 0.9):
     plt.legend()
     plt.show()
 
+
+'''test
+from SimDataSNP import SimDataSNP
+import pandas as pd
+seed = 123
+snp_survival = SimDataSNP(5, 50, 'Survival', seed = seed)
+y = [snp_survival['y']['time'],snp_survival['y']['event']]
+z = pd.DataFrame(snp_survival['z'])
+location = list(snp_survival['location'])
+X = snp_survival['X']
+plotRawdata(location, X)'''

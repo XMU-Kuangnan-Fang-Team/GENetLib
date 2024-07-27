@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from eval_basis_fd import eval_fd
 
 
+'x: FD'
 def plotFD(x, y = None, xlab = None, ylab = None):
     fdobj = x
     coef = fdobj['coefs']
@@ -42,4 +43,7 @@ def plotFD(x, y = None, xlab = None, ylab = None):
         plt.xlabel(xlab)
         plt.ylabel(ylab)
         plt.show()
+    
+    
+    
     

@@ -72,3 +72,12 @@ def getbasismatrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
     else:
         return np.asmatrix(basismat)
 
+
+'''test
+from BasisFD import BasisFD
+basisobj = BasisFD()
+basismatrix = getbasismatrix(np.linspace(0, 1, num=11), basisobj)
+
+from CreateBasis import create_bspline_basis
+basisobj = create_bspline_basis(norder=2, breaks=[0,0.5,1])
+basismatrix = getbasismatrix(np.linspace(0, 1, num=11), basisobj)'''
