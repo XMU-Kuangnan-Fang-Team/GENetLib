@@ -60,7 +60,8 @@ The function "SimDataScaler" outputs a tuple including generated data and the po
 See also as [ScalerGE](#ScalerGE), [GridScalerGE](#GridScalerGE).
 ##### Examples
 ```c
-rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Survival', n_inter = None, linear = True, seed = 0
+import GENetLib
+from GENetLib.SimDataScaler import SimDataScaler
 scaler_survival_linear = SimDataScaler(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
 scaler_survival_linear_data = scaler_survival_linear[0]
 scaler_survival_linear_inter = scaler_survival_linear[1]
@@ -93,6 +94,8 @@ The function "SimDataScaler" outputs a dictionary including response variable y,
 See also as [SNPGE](#SNPGE), [GridSNPGE](#GridSNPGE).
 ##### Examples
 ```c
+import GENetLib
+from GENetLib.SimDataSNP import SimDataSNP
 snp_continuous = SimDataSNP(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
 x = snp_continuous['X']
 y = snp_continuous['y']
@@ -144,7 +147,9 @@ The function "ScalerGE" outputs a tuple including training results of the neural
 See also as [SimDataScaler](#SimDataScaler), [GridScalerGE](#GridScalerGE).
 ##### Examples
 ```c
-from SimDataScaler import SimDataScaler
+import GENetLib
+from GENetLib.SimDataScaler import SimDataScaler
+from GENetLib.ScalerGE import ScalerGE
 ytype = 'Survival'
 num_hidden_layers = 2
 nodes_hidden_layer = [1000, 100]
@@ -203,7 +208,9 @@ The function "SNPGE" outputs a tuple including training results of the neural ne
 See also as [SimDataSNP](#SimDataSNP), [GridSNPGE](#GridSNPGE).
 ##### Examples
 ```c
-from SimDataSNP import SimDataSNP
+import GENetLib
+from GENetLib.SimDataSNP import SimDataSNP
+from GENetLib.SNPGE import SNPGE
 num_hidden_layers = 2
 nodes_hidden_layer = [100,10]
 Learning_Rate2 = 0.035
@@ -213,8 +220,7 @@ L = 0.01
 Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
-seed = 123
-snp_continuous = SimDataSNP(n = 1500, m = 30, ytype = 'Continuous', seed)
+snp_continuous = SimDataSNP(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
 y = snp_continuous['y']
 z = snp_continuous['z']
 location = snp_continuous['location']
@@ -267,7 +273,9 @@ The function "GridScalerGE" outputs a tuple including training results of the ne
 See also as [SimDataScaler](#SimDataScaler), [ScalerGE](#ScalerGE).
 ##### Examples
 ```c
-from SimDataScaler import SimDataScaler
+import GENetLib
+from GENetLib.SimDataScaler import SimDataScaler
+from GENetLib.GridScalerGE import GridScalerGE
 ytype = 'Survival'
 num_hidden_layers = 2
 nodes_hidden_layer = [1000, 100]
@@ -330,7 +338,9 @@ The function "GridSNPGE" outputs a tuple including training results of the neura
 See also as [SimDataSNP](#SimDataSNP), [SNPGE](#SNPGE).
 ##### Examples
 ```c
-from SimDataSNP import SimDataSNP
+import GENetLib
+from GENetLib.SimDataSNP import SimDataSNP
+from GENetLib.GridSNPGE import GridSNPGE
 num_hidden_layers = 2
 nodes_hidden_layer = [100, 10]
 Learning_Rate2 = [0.005, 0.01, 0.015]
@@ -340,7 +350,7 @@ L = [0.005, 0.006, 0.007]
 Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
-snp_continuous = SimDataSNP(n = 1000, m = 30, 'Continuous', seed = 1)
+snp_continuous = SimDataSNP(n = 1000, m = 30, ytype = 'Continuous', seed = 1)
 y = snp_continuous['y']
 z = snp_continuous['z']
 location = snp_continuous['location']
