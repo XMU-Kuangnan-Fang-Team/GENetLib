@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 
 from GENetLib.SNPgvf import SNPgvf
 import GENetLib.CreateBasis as cb
@@ -47,6 +47,8 @@ def GridSNPGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_l
     data_reg = pd.DataFrame(np.hstack((U,INTERACTION,z)))
     if ytype == 'Survival':
         model_reg = LinearRegression().fit(data_reg, y[:,0])
+    if ytype == 'Binary':
+        model_reg = LogisticRegression(max_iter=200).fit(data_reg, y)
     else:
         model_reg = LinearRegression().fit(data_reg, y)
     GridSNPGE_res = GridScalerGE([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
