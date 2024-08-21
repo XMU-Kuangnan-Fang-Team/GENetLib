@@ -92,7 +92,7 @@ def GridScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hid
     if ytype == 'Binary':
         print('opt_index: L2:', opt_L2, "LR2:", opt_Learning_Rate2, "LR_MCP:", opt_lr, 'L:', opt_l)
         print('Accuracy of train:', opt_loss_train, 'Accuracy of test:', opt_loss) 
-        print('R2 of train:', opt_index_tr, 'R2 of test:', opt_index_va)
+        print('AUC of train:', opt_index_tr, 'AUC of test:', opt_index_va)
         if t != None and important_feature == True:
             print('Important feature of gene:', ifs_G)
             print('Important feature of GE:', ifs_GE)

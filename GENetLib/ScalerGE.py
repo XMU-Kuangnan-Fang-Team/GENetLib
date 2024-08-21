@@ -63,8 +63,8 @@ def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_
     if ytype == 'Binary':
         print('Accuracy of train:', ScalerMCP_L2trainRes[0], 
               'Accuracy of test:', ScalerMCP_L2trainRes[1]) 
-        print('R2 of train:', ScalerMCP_L2trainRes[2], 
-              'R2 of test:', ScalerMCP_L2trainRes[3])
+        print('AUC of train:', ScalerMCP_L2trainRes[2], 
+              'AUC of test:', ScalerMCP_L2trainRes[3])
         if t != None and important_feature == True:
             print('Important feature of gene:', ifs_G)
             print('Important feature of GE:', ifs_GE)

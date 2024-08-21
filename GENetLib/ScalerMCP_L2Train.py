@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.optim as optim
 from torch.nn import BCELoss, MSELoss
-from sklearn.metrics import r2_score
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, roc_auc_score, r2_score
 
 from GENetLib.GENet import GE_Net
 from GENetLib.Survival_CostFunc_CIndex import neg_par_log_likelihood, c_index
@@ -104,13 +103,13 @@ def ScalerMCP_L2train(train_x, train_clinical, train_interaction, train_y,
         plt.legend(prop = {'size':18})
         plt.show()
     if ytype == 'Binary':
-        train_r2 = r2_score(train_y.detach().numpy(), train_pred.detach().numpy())
-        eval_r2 = r2_score(eval_y.detach().numpy(), eval_pred.detach().numpy())
         train_y_pred_labels = np.where(np.array(train_pred.detach().numpy()) > 0.5, 1, 0)
         test_y_pred_labels = np.where(np.array(eval_pred.detach().numpy()) > 0.5, 1, 0)
         train_accuracy = accuracy_score(train_y.detach().numpy(), train_y_pred_labels)
         test_accuracy = accuracy_score(eval_y.detach().numpy(), test_y_pred_labels)
-        return (train_accuracy, test_accuracy, train_r2, eval_r2, net)
+        train_auc = roc_auc_score(train_y.detach().numpy(), np.array(train_pred.detach().numpy()))
+        test_auc = roc_auc_score(eval_y.detach().numpy(), np.array(eval_pred.detach().numpy()))
+        return (train_accuracy, test_accuracy, train_auc, test_auc, net)
     elif ytype == 'Continuous':
         train_r2 = r2_score(train_y.detach().numpy(), train_pred.detach().numpy())
         eval_r2 = r2_score(eval_y.detach().numpy(), eval_pred.detach().numpy())
