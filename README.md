@@ -173,6 +173,8 @@ This function provides an approach based on deep neural network in conjunction w
 ```c
 SNPGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, t = None, Bsplines = 20, norder1 = 4, model = None, split_type = 0, ratio = [7, 3], plot_res = True, plot_beta = True)
 ```
+|Arguments|Description|
+|:---:|:---:|
 y|numeric, an array representing the response variables.
 z|numeric, a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
 location|list, a list defining the sampling sites of the sequence (genotypes) data.
