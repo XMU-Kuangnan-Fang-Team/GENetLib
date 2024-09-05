@@ -2,7 +2,7 @@
 ## Introduction
 GENetLib is a Python library that addresses the lack of portable and friendly software for analyzing gene-environment (G-E) interactions using a deep learning approach with penalization, as developed by Wu et al., 2023. It also tackles the challenge of high-dimensional SNP data analysis by employing a functional data analysis method that reduces data dimensionality, which builds upon with a G-E interaction approach proposed by Ren et al., 2023. 
 
-***References:***
+***References*** <br>
 Wu, S., Xu, Y., Zhang, Q., & Ma, S. (2023). Gene–environment interaction analysis via deep learning. Genetic Epidemiology, 1–26. https://doi.org/10.1002/gepi.22518 <br>
 Ren, R., Fang, K., Zhang, Q., & Ma, S. (2023). FunctanSNP: an R package for functional analysis of dense SNP data (with interactions). Bioinformatics, 39(12), btad741. https://doi.org/10.1093/bioinformatics/btad741
 
