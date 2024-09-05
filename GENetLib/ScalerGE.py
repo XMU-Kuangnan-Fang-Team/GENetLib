@@ -1,16 +1,15 @@
 import torch
 import pandas as pd
 
+from GENetLib.ScalerMCP_L2Train import ScalerMCP_L2train
+from GENetLib.PreData1 import PreData1
+from GENetLib.PreData2 import PreData2
 
 pd.set_option('mode.chained_assignment', None)
 def ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer,
              Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, 
              split_type = 0, ratio = [7, 3], important_feature = True, plot = True, 
              model_reg = None, issnp = False):
-    
-    from ScalerMCP_L2Train import ScalerMCP_L2train
-    from PreData1 import PreData1
-    from PreData2 import PreData2
     
     In_Nodes = dim_G
     Clinical_Nodes = dim_E
