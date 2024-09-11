@@ -1,6 +1,6 @@
 # GENetLib: A Python Library for Gene–environment Interaction Analysis via Deep Learning
 ## Introduction
-GENetLib is a Python library that addresses the lack of portable and friendly software for analyzing gene-environment (G-E) interactions using a deep learning approach with penalization, as developed by Wu et al., 2023. It also tackles the challenge of high-dimensional SNP data analysis by employing a functional data analysis method that reduces data dimensionality, which builds upon with a G-E interaction approach proposed by Ren et al., 2023. 
+GENetLib is a Python library that addresses the lack of portable and friendly software for analyzing gene-environment (G-E) interactions using a deep learning approach with penalization, as developed by Wu et al., 2023. It also provides a functional data analysis moethod based on neural network framework.
 
 ***References*** <br>
 Wu, S., Xu, Y., Zhang, Q., & Ma, S. (2023). Gene–environment interaction analysis via deep learning. Genetic Epidemiology, 1–26. https://doi.org/10.1002/gepi.22518 <br>
@@ -25,11 +25,11 @@ pip install GENetLib -i https://pypi.tuna.tsinghua.edu.cn/simple
 ## Functions
 ### Menu
 - [SimDataScaler](#SimDataScaler)
-- [SimDataSNP](#SimDataSNP)
+- [SimDataFunc](#SimDataFunc)
 - [ScalerGE](#ScalerGE)
-- [SNPGE](#SNPGE)
+- [FuncGE](#FuncGE)
 - [GridScalerGE](#GridScalerGE)
-- [GridSNPGE](#GridSNPGE)
+- [GridFuncGE](#GridFuncGE)
 
 #### SimDataScaler
 *Example data for method ScalerGE and GridScalerGE*
@@ -69,13 +69,13 @@ scaler_survival_linear_inter = scaler_survival_linear[1]
 <br />
 <br />
 
-#### SimDataSNP
-*Example data for method SNPGE and GridSNPGE*
+#### SimDataFunc
+*Example data for method FuncGE and GridFuncGE*
 ##### Description
-Example data for users to apply the method SNPGE and GridSNPGE.
+Example data for users to apply the method FuncGE and GridFuncGE.
 ##### Usage
 ```c
-SimDataSNP(n, m, ytype, seed = 0)
+SimDataFunc(n, m, ytype, seed = 0)
 ```
 ##### Arguments
 |Arguments|Description|
@@ -91,16 +91,16 @@ The function "SimDataScaler" outputs a dictionary including response variable y,
 - z: a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
 - location: a list defining the sampling sites of the sequence (genotypes) data.
 ##### See Also
-See also as [SNPGE](#SNPGE), [GridSNPGE](#GridSNPGE).
+See also as [FuncGE](#FuncGE), [GridFuncGE](#GridFuncGE).
 ##### Examples
 ```c
 import GENetLib
-from GENetLib.SimDataSNP import SimDataSNP
-snp_continuous = SimDataSNP(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
-x = snp_continuous['X']
-y = snp_continuous['y']
-z = snp_continuous['z']
-location = snp_continuous['location']
+from GENetLib.SimDataFunc import SimDataFunc
+Func_continuous = SimDataFunc(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
+x = Func_continuous['X']
+y = Func_continuous['y']
+z = Func_continuous['z']
+location = Func_continuous['location']
 ```
 <br />
 <br />
@@ -111,7 +111,7 @@ location = snp_continuous['location']
 This function provides an approach based on deep neural network in conjunction with MCP and L2 penalizations which can simultaneously conduct model estimation and selection of important main G effects and G–E interactions, while uniquely respecting the "main effects, interactions" variable selection hierarchy.
 ##### Usage
 ```c
-ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, issnp = False)
+ScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
 ```
 ##### Arguments
 |Arguments|Description|
@@ -165,20 +165,20 @@ ScalerGERes = ScalerGE(scaler_survival_linear[0], ytype, 500, 5, True, num_hidde
 <br />
 <br />
 
-#### SNPGE
-*G-E interaction analysis via deep leanring when the input X is SNP*
+#### FuncGE
+*G-E interaction analysis via deep leanring when the input X is functional data*
 ##### Description
-This function provides an approach based on deep neural network in conjunction with MCP and L2 penalizations, which treats dense SNP measurements as a realization of a genetic function and can "bypass" the dimensionality challenge.
+This function provides an approach based on deep neural network in conjunction with MCP and L2 penalizations which treats functional data or discrete realizations of functioanal data.
 ##### Usage
 ```c
-SNPGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, t = None, Bsplines = 20, norder1 = 4, model = None, split_type = 0, ratio = [7, 3], plot_res = True, plot_beta = True)
+FuncGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, t = None, Bsplines = 20, norder1 = 4, model = None, split_type = 0, ratio = [7, 3], plot_res = True, plot_beta = True)
 ```
 |Arguments|Description|
 |:---:|:---:|
 y|numeric, an array representing the response variables.
 z|numeric, a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
-location|list, a list defining the sampling sites of the sequence (genotypes) data.
-X|numeric, a matrix representing the sequence data, with the number of rows equal to the number of samples.
+location|list, a list defining the sampling sites of the sequence data.
+X|numeric or dict, a matrix representing the sequence data with the number of rows equal to the number of samples or a "FD" item which represents the functional data.
 ytype|character, "Survival", "Binary" or "Continuous" type of the output y.
 btype|character, "Bspline", "Exponential", "Fourier", "Monomial" or "power" type of spline.
 num_hidden_layers|numeric, number of hidden layers in the neural network.
@@ -198,7 +198,7 @@ ratio|list, the ratio of data split.
 plot_res|bool, "True" or "False", whether or not to show the line plot of residuals with the number of neural network epochs.
 plot_beta|bool, "True" or "False", whether or not to show the graph of predicted functions.
 ##### Value
-The function "SNPGE" outputs a tuple including training results of the neural network.
+The function "FuncGE" outputs a tuple including training results of the neural network.
 - Residual of the training set.
 - Residual of the validation set.
 - C index(y is survival) or R2(y is continuous or binary) of the training set.
@@ -207,12 +207,12 @@ The function "SNPGE" outputs a tuple including training results of the neural ne
 - Estimated coefficients of the chosen basis functions for the genetic effect function beta0(t) and interaction items betak(t).
 - The estimated genetic effect function beta(t) and interaction items betak(t).
 ##### See Also
-See also as [SimDataSNP](#SimDataSNP), [GridSNPGE](#GridSNPGE).
+See also as [SimDataFunc](#SimDataFunc), [GridFuncGE](#GridFuncGE).
 ##### Examples
 ```c
 import GENetLib
-from GENetLib.SimDataSNP import SimDataSNP
-from GENetLib.SNPGE import SNPGE
+from GENetLib.SimDataFunc import SimDataFunc
+from GENetLib.FuncGE import FuncGE
 num_hidden_layers = 2
 nodes_hidden_layer = [100,10]
 Learning_Rate2 = 0.035
@@ -222,12 +222,12 @@ L = 0.01
 Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
-snp_continuous = SimDataSNP(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
-y = snp_continuous['y']
-z = snp_continuous['z']
-location = snp_continuous['location']
-X = snp_continuous['X']
-SNPGE_Res = SNPGE(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
+Func_continuous = SimDataFunc(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
+y = Func_continuous['y']
+z = Func_continuous['z']
+location = Func_continuous['location']
+X = Func_continuous['X']
+FuncGE_Res = FuncGE(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
 ```
 <br />
 <br />
@@ -238,7 +238,7 @@ SNPGE_Res = SNPGE(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers,
 This function performs grid search for ScalerGE over a grid of values for the regularization parameter L, L2 and learning rate Learning_Rate1, Learning_Rate2.
 ##### Usage
 ```c
-GridScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, issnp = False)
+GridScalerGE(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
 ```
 ##### Arguments
 |Arguments|Description|
@@ -296,21 +296,21 @@ GridScalerGERes = GridScalerGE(scaler_survival_linear[0], ytype, dim_G, dim_E, h
 <br />
 <br />
 
-#### GridSNPGE
-*Grid search for SNPGE*
+#### GridFuncGE
+*Grid search for FuncGE*
 ##### Description
-This function performs grid search for SNPGE over a grid of values for the regularization parameter L, L2 and learning rate Learning_Rate1, Learning_Rate2.
+This function performs grid search for FuncGE over a grid of values for the regularization parameter L, L2 and learning rate Learning_Rate1, Learning_Rate2.
 ##### Usage
 ```c
-GridSNPGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, t = None, Bsplines = 20, norder1 = 4, model = None, split_type = 0, ratio = [7, 3], plot_res = True, plot_beta = True)
+GridFuncGE(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, t = None, Bsplines = 20, norder1 = 4, model = None, split_type = 0, ratio = [7, 3], plot_res = True, plot_beta = True)
 ```
 ##### Arguments
 |Arguments|Description|
 |:---:|:---:|
 y|numeric, an array representing the response variables.
 z|numeric, a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
-location|list, a list defining the sampling sites of the sequence (genotypes) data.
-X|numeric, a matrix representing the sequence data, with the number of rows equal to the number of samples.
+location|list, a list defining the sampling sites of the sequence data.
+X|numeric or dict, a matrix representing the sequence data with the number of rows equal to the number of samples or a "FD" item which represents the functional data.
 ytype|character, "Survival", "Binary" or "Continuous" type of the output y.
 btype|character, "Bspline", "Exponential", "Fourier", "Monomial" or "power" type of spline.
 num_hidden_layers|numeric, number of hidden layers in the neural network.
@@ -330,7 +330,7 @@ ratio|list, the ratio of data split.
 plot_res|bool, "True" or "False", whether or not to show the line plot of residuals with the number of neural network epochs.
 plot_beta|bool, "True" or "False", whether or not to show the graph of predicted functions.
 ##### Value
-The function "GridSNPGE" outputs a tuple including training results of the neural network.
+The function "GridFuncGE" outputs a tuple including training results of the neural network.
 - Values of tunning parameters after grid search.
 - Residual of the training set.
 - Residual of the validation set.
@@ -340,12 +340,12 @@ The function "GridSNPGE" outputs a tuple including training results of the neura
 - Estimated coefficients of the chosen basis functions for the genetic effect function beta0(t) and interaction items betak(t).
 - The estimated genetic effect function beta(t) and interaction items betak(t).
 ##### See Also
-See also as [SimDataSNP](#SimDataSNP), [SNPGE](#SNPGE).
+See also as [SimDataFunc](#SimDataFunc), [FuncGE](#FuncGE).
 ##### Examples
 ```c
 import GENetLib
-from GENetLib.SimDataSNP import SimDataSNP
-from GENetLib.GridSNPGE import GridSNPGE
+from GENetLib.SimDataFunc import SimDataFunc
+from GENetLib.GridFuncGE import GridFuncGE
 num_hidden_layers = 2
 nodes_hidden_layer = [100, 10]
 Learning_Rate2 = [0.005, 0.01, 0.015]
@@ -355,12 +355,12 @@ L = [0.005, 0.006, 0.007]
 Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
-snp_continuous = SimDataSNP(n = 1000, m = 30, ytype = 'Continuous', seed = 1)
-y = snp_continuous['y']
-z = snp_continuous['z']
-location = snp_continuous['location']
-X = snp_continuous['X']
-GridSNPGE_Res = GridSNPGE(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 0, ratio = [7,3], plot_res = True)
+Func_continuous = SimDataFunc(n = 1000, m = 30, ytype = 'Continuous', seed = 1)
+y = Func_continuous['y']
+z = Func_continuous['z']
+location = Func_continuous['location']
+X = Func_continuous['X']
+GridFuncGE_Res = GridFuncGE(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 0, ratio = [7,3], plot_res = True)
 ```
 <br />
 <br />
