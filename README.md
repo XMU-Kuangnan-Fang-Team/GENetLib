@@ -355,7 +355,7 @@ L = [0.005, 0.006, 0.007]
 Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
-Func_continuous = sim_data_func(n = 1000, m = 30, ytype = 'Continuous', seed = 1)
+func_continuous = sim_data_func(n = 1000, m = 30, ytype = 'Continuous', seed = 1)
 y = func_continuous['y']
 z = func_continuous['z']
 location = func_continuous['location']
