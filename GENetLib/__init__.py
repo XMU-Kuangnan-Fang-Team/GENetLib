@@ -1,39 +1,39 @@
-from .BasisFD import BasisFD
-from .CreateBasis import create_bspline_basis,create_expon_basis,create_fourier_basis,create_monomial_basis,create_power_basis,create_constant_basis
-from .BasisFunc import bspline_func,expon_func,fourier_func,monomial_func,polyg_func,power_func
-from .getbasismatrix import getbasismatrix
-from .PPFunc import ppBspline,ppDeriv
-from .GENet import GE_Net
-from .Survival_CostFunc_CIndex import neg_par_log_likelihood, c_index
+from .basis_fd import basis_fd
+from .create_basis import create_bspline_basis,create_expon_basis,create_fourier_basis,create_monomial_basis,create_power_basis,create_constant_basis
+from .basis_mat import bspline_mat,expon_mat,fourier_mat,monomial_mat,polyg_mat,power_mat
+from .get_basis_matrix import get_basis_matrix
+from .pp_func import ppbspline,ppderiv
+from .GE_Net import GE_Net
+from .survival_costfunc_cindex import neg_par_log_likelihood, c_index
 from .inprod import inprod
 from .inprod_bspline import inprod_bspline
-from .FD import FD
-from .PreData1 import PreData1
-from .PreData2 import PreData2
-from .SimDataScaler import SimDataScaler
-from .SimDataSNP import SimDataSNP
-from .SplineDesign import spline_design
-from .FDchk import FDchk
-from .Knotmultchk import knotmultchk
+from .fd import fd
+from .pre_data1 import pre_data1
+from .pre_data2 import pre_data2
+from .sim_data_scaler import sim_data_scaler
+from .sim_data_func import sim_data_func
+from .spline_design import spline_design
+from .fd_chk import fd_chk
+from .knotmultchk import knotmultchk
 from .eval_basis_fd import eval_basis,eval_fd
 from .polyprod import polyprod
-from .SNPgvf import SNPgvf
-from .ScalerL2Train import ScalerL2train
-from .ScalerMCP_L2Train import ScalerMCP_L2train
-from .ScalerGE import ScalerGE
-from .GridScalerGE import GridScalerGE
-from .SNPGE import SNPGE
-from .GridSNPGE import GridSNPGE
-from .plotFD import plotFD
-from .plotRawdata import plotRawdata
-from .plotGVF import plotGVF
+from .dense_to_func import dense_to_func
+from .scaler_l2train import scaler_l2train
+from .scaler_mcp_l2train import scaler_mcp_l2train
+from .scaler_ge import scaler_ge
+from .grid_scaler_ge import grid_scaler_ge
+from .func_ge import func_ge
+from .grid_func_ge import grid_func_ge
+from .plot_fd import plot_fd
+from .plot_rawdata import plot_rawdata
+from .plot_func import plot_func
 
 
-__all__ = ['BasisFD', 'create_bspline_basis','create_expon_basis','create_fourier_basis',
+__all__ = ['basis_fd', 'create_bspline_basis','create_expon_basis','create_fourier_basis',
            'create_monomial_basis','create_power_basis','create_constant_basis',
-           'bspline_func','expon_func','fourier_func','monomial_func','polyg_func','power_func',
-           'getbasismatrix','ppBspline','ppDeriv','GE_Net','neg_par_log_likelihood','c_index',
-           'inprod','inprod_bspline','FD','PreData1','PreData2','SimDataScaler','SimDataSNP',
-           'spline_design','FDchk','knotmultchk','eval_basis','eval_fd','polyprod','SNPgvf',
-           'ScalerL2train','ScalerMCP_L2train','ScalerGE','GridScalerGE','SNPGE','GridSNPGE',
-           'plotFD','plotRawdata','plotGVF']
+           'bspline_mat','expon_mat','fourier_mat','monomial_mat','polyg_mat','power_mat',
+           'get_basis_matrix','ppbspline','ppderiv','GE_Net','neg_par_log_likelihood','c_index',
+           'inprod','inprod_bspline','fd','pre_data1','pre_data2','sim_data_scaler','sim_data_func',
+           'spline_design','fd_chk','knotmultchk','eval_basis','eval_fd','polyprod','dense_to_func',
+           'scaler_l2train','scaler_mcp_l2train','scaler_ge','grid_scaler_ge','func_ge','grid_func_ge',
+           'plot_fd','plot_rawdata','plot_func']

@@ -1,13 +1,16 @@
 import numpy as np
 
-from GENetLib.getbasismatrix import getbasismatrix
+from GENetLib.get_basis_matrix import get_basis_matrix
 
 
+'''Calculate the value of basis functions and functional objects'''
+
+# Basis functions
 def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
 
     nderiv = 0
     bwtlist = 0
-    basismat = getbasismatrix(evalarg, basisobj, nderiv, returnMatrix)
+    basismat = get_basis_matrix(evalarg, basisobj, nderiv, returnMatrix)
     if nderiv > 0:
         nbasis = np.shape(basismat)[1]
         oneb = np.ones((1, nbasis))
@@ -22,13 +25,14 @@ def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
                 bfd = bwtlist[j]
                 if not np.all(bfd['coefs'] == 0):
                     wjarray = eval_fd(evalarg, bfd, 0, returnMatrix)
-                    Dbasismat = getbasismatrix(evalarg, basisobj, j - 1, returnMatrix)
+                    Dbasismat = get_basis_matrix(evalarg, basisobj, j - 1, returnMatrix)
                     basismat = basismat + np.dot(wjarray, oneb) * Dbasismat
     if not returnMatrix and len(np.shape(basismat)) == 2:
         return np.asmatrix(basismat)
     else:
         return basismat
 
+# Functional objects
 def eval_fd(evalarg, fdobj, Lfdobj = 0, returnMatrix = False):
     evaldim = np.shape(evalarg)
     if len(evaldim) >= 3:

@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 
-from GENetLib.PPFunc import ppBspline, ppDeriv
+from GENetLib.pp_func import ppbspline, ppderiv
 from GENetLib.polyprod import polyprod
 
+
+'''Calculate the inner product of B-spline functions'''
 
 def inprod_bspline(fdobj1, fdobj2=None, nderiv1=0, nderiv2=0):
     
@@ -63,11 +65,11 @@ def inprod_bspline(fdobj1, fdobj2=None, nderiv1=0, nderiv2=0):
     nrep1 = coef1.shape[0]
     polycoef1 = np.zeros((ninterval, norder1 - nderiv1, nrep1))
     for i in range(nbasis1):
-        ppBlist = ppBspline(knots1[i:(i + norder1 + 1)])
+        ppBlist = ppbspline(knots1[i:(i + norder1 + 1)])
         Coeff = ppBlist[0]
         index = ppBlist[1]
         index = index + i - norder1
-        CoeffD = ppDeriv(Coeff, nderiv1)
+        CoeffD = ppderiv(Coeff, nderiv1)
         if nrep1 == 1:
             polycoef1[index, :, 0] = outer_product(coef1.iloc[:,i], CoeffD) + polycoef1[index, :, 0]
         else:
@@ -77,11 +79,11 @@ def inprod_bspline(fdobj1, fdobj2=None, nderiv1=0, nderiv2=0):
     nrep2 = coef2.shape[0]
     polycoef2 = np.zeros((ninterval, norder2 - nderiv2, nrep2))
     for i in range(nbasis2):
-        ppBlist = ppBspline(knots2[i:(i + norder2 + 1)])
+        ppBlist = ppbspline(knots2[i:(i + norder2 + 1)])
         Coeff = ppBlist[0]
         index = ppBlist[1]
         index = index + i - norder2
-        CoeffD = ppDeriv(Coeff, nderiv2)
+        CoeffD = ppderiv(Coeff, nderiv2)
         if nrep2 == 1:
             polycoef2[index, :, 0] = outer_product(coef2.iloc[:,i], CoeffD) + polycoef2[index, :, 0]
         else:

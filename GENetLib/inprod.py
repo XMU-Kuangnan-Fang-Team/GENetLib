@@ -1,15 +1,17 @@
 import numpy as np
 
-from GENetLib.Knotmultchk import knotmultchk
-from GENetLib.FDchk import FDchk
-from GENetLib.CreateBasis import create_bspline_basis, create_fourier_basis, create_constant_basis
-from GENetLib.FD import FD
+from GENetLib.knotmultchk import knotmultchk
+from GENetLib.fd_chk import fd_chk
+from GENetLib.create_basis import create_bspline_basis, create_fourier_basis, create_constant_basis
+from GENetLib.fd import fd
 from GENetLib.eval_basis_fd import eval_fd
 
 
+'''Calculate the inner product of function data objects'''
+
 def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0):
 
-    result1 = FDchk(fdobj1)
+    result1 = fd_chk(fdobj1)
     nrep1 = result1[0]
     fdobj1 = result1[1]
     coef1 = fdobj1['coefs']
@@ -30,8 +32,8 @@ def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0
                 basis2 = create_fourier_basis(temprng, 1)
             else:
                 basis2 = create_constant_basis(temprng)
-        fdobj2 = FD(np.array([1]).reshape(-1,1), basis2)
-    result2 = FDchk(fdobj2)
+        fdobj2 = fd(np.array([1]).reshape(-1,1), basis2)
+    result2 = fd_chk(fdobj2)
     nrep2 = result2[0]
     fdobj2 = result2[1]
     coef2 = fdobj2['coefs']
