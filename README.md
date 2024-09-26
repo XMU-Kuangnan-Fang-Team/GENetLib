@@ -96,11 +96,11 @@ See also as [func_ge](#func_ge), [grid_func_ge](#grid_func_ge).
 ```c
 import GENetLib
 from GENetLib.sim_data_func import sim_data_func
-Func_continuous = sim_data_func(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
-x = Func_continuous['X']
-y = Func_continuous['y']
-z = Func_continuous['z']
-location = Func_continuous['location']
+func_continuous = sim_data_func(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
+x = func_continuous['X']
+y = func_continuous['y']
+z = func_continuous['z']
+location = func_continuous['location']
 ```
 <br />
 <br />
@@ -160,7 +160,7 @@ L = 0.09
 Num_Epochs = 100
 t = 0.01
 scaler_survival_linear = sim_data_scaler(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-scaler_geRes = scaler_ge(scaler_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
+scaler_ge_res = scaler_ge(scaler_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
 ```
 <br />
 <br />
@@ -222,12 +222,12 @@ L = 0.01
 Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
-Func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
-y = Func_continuous['y']
-z = Func_continuous['z']
-location = Func_continuous['location']
-X = Func_continuous['X']
-func_ge_Res = func_ge(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
+func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
+y = func_continuous['y']
+z = func_continuous['z']
+location = func_continuous['location']
+X = func_continuous['X']
+func_ge_res = func_ge(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
 ```
 <br />
 <br />
@@ -291,7 +291,7 @@ dim_E = 5
 dim_G = 500
 haveGE = True
 scaler_survival_linear = sim_data_scaler(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-grid_scaler_geRes = grid_scaler_ge(scaler_survival_linear[0], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
+grid_scaler_ge_res = grid_scaler_ge(scaler_survival_linear[0], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
 ```
 <br />
 <br />
@@ -356,11 +356,11 @@ Num_Epochs = 50
 nbasis1 = 5
 params1 = 4
 Func_continuous = sim_data_func(n = 1000, m = 30, ytype = 'Continuous', seed = 1)
-y = Func_continuous['y']
-z = Func_continuous['z']
-location = Func_continuous['location']
-X = Func_continuous['X']
-grid_func_ge_Res = grid_func_ge(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 0, ratio = [7,3], plot_res = True)
+y = func_continuous['y']
+z = func_continuous['z']
+location = func_continuous['location']
+X = func_continuous['X']
+grid_func_ge_res = grid_func_ge(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 0, ratio = [7,3], plot_res = True)
 ```
 <br />
 <br />
