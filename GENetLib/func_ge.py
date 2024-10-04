@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 from GENetLib.dense_to_func import dense_to_func
 import GENetLib.create_basis as cb
 from GENetLib.inprod import inprod
-from GENetLib.scaler_ge import scaler_ge
+from GENetLib.scalar_ge import scalar_ge
 from GENetLib.eval_basis_fd import eval_fd
 from GENetLib.fd import fd
 
@@ -63,7 +63,7 @@ def func_ge(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_lay
     else:
         model_reg = LinearRegression().fit(data_reg, y)
     # Put basic coefficient matrix into modeling
-    FuncGE_res = scaler_ge([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
+    FuncGE_res = scalar_ge([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
                            Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, model,
                            split_type, ratio, False, plot_res, model_reg, True)
     if t == None:

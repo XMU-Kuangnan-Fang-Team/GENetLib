@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 from GENetLib.dense_to_func import dense_to_func
 import GENetLib.create_basis as cb
 from GENetLib.inprod import inprod
-from GENetLib.grid_scaler_ge import grid_scaler_ge
+from GENetLib.grid_scalar_ge import grid_scalar_ge
 from GENetLib.eval_basis_fd import eval_fd
 from GENetLib.fd import fd
 
@@ -63,7 +63,7 @@ def grid_func_ge(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidde
     else:
         model_reg = LinearRegression().fit(data_reg, y)
     # Put basic coefficient matrix into modeling, grid search for parameters
-    GridFuncGE_res = grid_scaler_ge([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
+    GridFuncGE_res = grid_scalar_ge([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
                                     Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, model, 
                                     split_type, ratio, True, plot_res, model_reg, True)
     tensor1 = GridFuncGE_res[5].sparse1.weight.data.numpy()
