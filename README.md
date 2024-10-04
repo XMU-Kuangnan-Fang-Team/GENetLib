@@ -24,20 +24,20 @@ pip install GENetLib -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 ## Functions
 ### Menu
-- [sim_data_scaler](#sim_data_scaler)
+- [sim_data_scalar](#sim_data_scalar)
 - [sim_data_func](#sim_data_func)
-- [scaler_ge](#scaler_ge)
+- [scalar_ge](#scalar_ge)
 - [func_ge](#func_ge)
-- [grid_scaler_ge](#grid_scaler_ge)
+- [grid_scalar_ge](#grid_scalar_ge)
 - [grid_func_ge](#grid_func_ge)
 
-#### sim_data_scaler
-*Example data for method scaler_ge and grid_scaler_ge*
+#### sim_data_scalar
+*Example data for method scalar_ge and grid_scalar_ge*
 ##### Description
-Example data for users to apply the method scaler_ge and grid_scaler_ge.
+Example data for users to apply the method scalar_ge and grid_scalar_ge.
 ##### Usage
 ```c
-sim_data_scaler(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Survival', n_inter = None, linear = True, seed = 0)
+sim_data_scalar(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Survival', n_inter = None, linear = True, seed = 0)
 ```
 ##### Arguments
 |Arguments|Description|
@@ -53,18 +53,18 @@ n_inter|numeric, number of interaction effect variables.
 linear|bool, "True" or "False", whether or not to generate linear data. The default is True.
 seed|numeric, random seeds each time when data is generated.
 ##### Value
-The function "sim_data_scaler" outputs a tuple including generated data and the positions of interaction effect variables.
+The function "sim_data_scalar" outputs a tuple including generated data and the positions of interaction effect variables.
 - data: a dataframe contains gene variables, environment variables, interaction variables and output y.
 - interaction efecct variables: an array contains the positions of interaction effect variables.
 ##### See Also
-See also as [scaler_ge](#scaler_ge), [grid_scaler_ge](#grid_scaler_ge).
+See also as [scalar_ge](#scalar_ge), [grid_scalar_ge](#grid_scalar_ge).
 ##### Examples
 ```c
 import GENetLib
-from GENetLib.sim_data_scaler import sim_data_scaler
-scaler_survival_linear = sim_data_scaler(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-scaler_survival_linear_data = scaler_survival_linear[0]
-scaler_survival_linear_inter = scaler_survival_linear[1]
+from GENetLib.sim_data_scalar import sim_data_scalar
+scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
+scalar_survival_linear_data = scalar_survival_linear[0]
+scalar_survival_linear_inter = scalar_survival_linear[1]
 ```
 <br />
 <br />
@@ -85,7 +85,7 @@ m|numeric, the sequence length of each sample.
 ytype|character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is continuous.
 seed|numeric, random seeds each time when data is generated.
 ##### Value
-The function "sim_data_scaler" outputs a dictionary including response variable y, scalar variable z and sequence (genotypes) data X.
+The function "sim_data_scalar" outputs a dictionary including response variable y, scalar variable z and sequence (genotypes) data X.
 - x: a matrix representing the sequence data, with the number of rows equal to the number of samples.
 - y: an array representing the response variables.
 - z: a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
@@ -105,13 +105,13 @@ location = func_continuous['location']
 <br />
 <br />
 
-#### scaler_ge
-*G-E interaction analysis via deep leanring when the input X is scaler*
+#### scalar_ge
+*G-E interaction analysis via deep leanring when the input X is scalar*
 ##### Description
 This function provides an approach based on deep neural network in conjunction with MCP and L2 penalizations which can simultaneously conduct model estimation and selection of important main G effects and G–E interactions, while uniquely respecting the "main effects, interactions" variable selection hierarchy.
 ##### Usage
 ```c
-scaler_ge(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
+scalar_ge(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
 ```
 ##### Arguments
 |Arguments|Description|
@@ -135,7 +135,7 @@ ratio|list, the ratio of data split.
 important_feature|bool, "True" or "False", whether or not to show output features.
 plot|bool, "True" or "False", whether or not to show the line plot of residuals with the number of neural network epochs.
 ##### Value
-The function "scaler_ge" outputs a tuple including training results of the neural network.
+The function "scalar_ge" outputs a tuple including training results of the neural network.
 - Residual of the training set.
 - Residual of the validation set.
 - C index(y is survival) or R2(y is continuous or binary) of the training set.
@@ -144,12 +144,12 @@ The function "scaler_ge" outputs a tuple including training results of the neura
 - Important features of gene variables.
 - Important features of G-E interaction variables.
 ##### See Also
-See also as [sim_data_scaler](#sim_data_scaler), [grid_scaler_ge](#grid_scaler_ge).
+See also as [sim_data_scalar](#sim_data_scalar), [grid_scalar_ge](#grid_scalar_ge).
 ##### Examples
 ```c
 import GENetLib
-from GENetLib.sim_data_scaler import sim_data_scaler
-from GENetLib.scaler_ge import scaler_ge
+from GENetLib.sim_data_scalar import sim_data_scalar
+from GENetLib.scalar_ge import scalar_ge
 ytype = 'Survival'
 num_hidden_layers = 2
 nodes_hidden_layer = [1000, 100]
@@ -159,8 +159,8 @@ Learning_Rate1 = 0.06
 L = 0.09
 Num_Epochs = 100
 t = 0.01
-scaler_survival_linear = sim_data_scaler(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-scaler_ge_res = scaler_ge(scaler_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
+scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
+scalar_ge_res = scalar_ge(scalar_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
 ```
 <br />
 <br />
@@ -232,13 +232,13 @@ func_ge_res = func_ge(y, z, location, X, 'Continuous', 'Bspline', num_hidden_lay
 <br />
 <br />
 
-#### grid_scaler_ge
-*Grid search for scaler_ge*
+#### grid_scalar_ge
+*Grid search for scalar_ge*
 ##### Description
-This function performs grid search for scaler_ge over a grid of values for the regularization parameter L, L2 and learning rate Learning_Rate1, Learning_Rate2.
+This function performs grid search for scalar_ge over a grid of values for the regularization parameter L, L2 and learning rate Learning_Rate1, Learning_Rate2.
 ##### Usage
 ```c
-grid_scaler_ge(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
+grid_scalar_ge(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
 ```
 ##### Arguments
 |Arguments|Description|
@@ -262,7 +262,7 @@ ratio|list, the ratio of data split.
 important_feature|bool, "True" or "False", whether or not to show output features.
 plot|bool, "True" or "False", whether or not to show the line plot of residuals with the number of neural network epochs.
 ##### Value
-The function "grid_scaler_ge" outputs a tuple including training results of the neural network.
+The function "grid_scalar_ge" outputs a tuple including training results of the neural network.
 - Values of tunning parameters after grid search.
 - Residual of the training set.
 - Residual of the validation set.
@@ -272,12 +272,12 @@ The function "grid_scaler_ge" outputs a tuple including training results of the 
 - Important features of gene variables.
 - Important features of GE interaction variables.
 ##### See Also
-See also as [sim_data_scaler](#sim_data_scaler), [scaler_ge](#scaler_ge).
+See also as [sim_data_scalar](#sim_data_scalar), [scalar_ge](#scalar_ge).
 ##### Examples
 ```c
 import GENetLib
-from GENetLib.sim_data_scaler import sim_data_scaler
-from GENetLib.grid_scaler_ge import grid_scaler_ge
+from GENetLib.sim_data_scalar import sim_data_scalar
+from GENetLib.grid_scalar_ge import grid_scalar_ge
 ytype = 'Survival'
 num_hidden_layers = 2
 nodes_hidden_layer = [1000, 100]
@@ -290,8 +290,8 @@ t = 0.01
 dim_E = 5
 dim_G = 500
 haveGE = True
-scaler_survival_linear = sim_data_scaler(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-grid_scaler_ge_res = grid_scaler_ge(scaler_survival_linear[0], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
+scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
+grid_scalar_ge_res = grid_scalar_ge(scalar_survival_linear[0], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
 ```
 <br />
 <br />
