@@ -40,5 +40,5 @@ jobs:
           pip install .
       - name: Test
         run: |
-          pip install -r pytest/requirements.txt
+          python -m pip install pytest
           pytest pytest/
