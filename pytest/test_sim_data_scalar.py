@@ -5,4 +5,3 @@ def test_sim_data_scalar():
     assert scalar_survival_linear[0] is not None
     assert scalar_survival_linear[1] is not None
 
-sim_data_scalar = test_sim_data_scalar()
