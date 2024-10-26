@@ -17,7 +17,7 @@ setup(
         'numpy',
         'pandas',
         'torch',
-        'sklearn',
+        'scikit-learn',
         'scipy',
         'matplotlib',
         'setuptools' 
