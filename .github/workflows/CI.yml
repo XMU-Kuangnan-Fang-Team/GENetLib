@@ -40,6 +40,6 @@ jobs:
           pip install .
       - name: Test
         run: |
-          cd pytest
-          python test_func_ge.py
+          pip install pytest
+          pytest pytest
 
