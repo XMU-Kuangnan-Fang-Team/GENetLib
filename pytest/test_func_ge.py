@@ -1,3 +1,4 @@
+import pytest
 from GENetLib.sim_data_func import sim_data_func
 from GENetLib.func_ge import func_ge
 
