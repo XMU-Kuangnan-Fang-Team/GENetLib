@@ -13,21 +13,6 @@ z = func_continuous['z']
 location = func_continuous['location']
 
 
-from GENetLib.sim_data_scalar import sim_data_scalar
-from GENetLib.scalar_ge import scalar_ge
-ytype = 'Survival'
-num_hidden_layers = 2
-nodes_hidden_layer = [1000, 100]
-Learning_Rate2 = 0.035
-L2 = 0.1
-Learning_Rate1 = 0.06
-L = 0.09
-Num_Epochs = 100
-t = 0.01
-scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-scalar_ge_res = scalar_ge(scalar_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
-
-
 from GENetLib.sim_data_func import sim_data_func
 from GENetLib.func_ge import func_ge
 num_hidden_layers = 2
@@ -45,24 +30,6 @@ z = func_continuous['z']
 location = func_continuous['location']
 X = func_continuous['X']
 func_ge_res = func_ge(y, z, location, X, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, nbasis1, params1, Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
-
-
-from GENetLib.sim_data_scalar import sim_data_scalar
-from GENetLib.grid_scalar_ge import grid_scalar_ge
-ytype = 'Survival'
-num_hidden_layers = 2
-nodes_hidden_layer = [1000, 100]
-Learning_Rate2 = [0.035, 0.045]
-L2 = [0.1]
-Learning_Rate1 = [0.02, 0.03]
-L = [0.06, 0.07]
-Num_Epochs = 100
-t = 0.01
-dim_E = 5
-dim_G = 500
-haveGE = True
-scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-grid_scalar_ge_res = grid_scalar_ge(scalar_survival_linear[0], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
 
 
 from GENetLib.sim_data_func import sim_data_func
