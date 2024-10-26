@@ -4,11 +4,15 @@ on:
   push:
     paths:
       - "GENetLib/*.py"
+      - "setup.py"
+      - "requirements.py"
       - "pytest/*.py"
       - ".github/workflows/CI.yml"
   pull_request:
     paths:
       - "GENetLib/*.py"
+      - "setup.py"
+      - "requirements.py"
       - "pytest/*.py"
       - ".github/workflows/CI.yml"
   workflow_dispatch:
