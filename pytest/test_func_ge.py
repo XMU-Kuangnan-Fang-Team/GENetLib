@@ -1,5 +1,5 @@
 from GENetLib.sim_data_func import sim_data_func
-from GENetLib.sim_data_func import func_ge
+from GENetLib.func_ge import func_ge
 
 def test_func_ge():
   func_continuous = sim_data_func(n=50, m=30, ytype='Continuous', seed=123)
