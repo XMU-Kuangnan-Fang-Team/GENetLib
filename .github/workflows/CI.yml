@@ -38,3 +38,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install .
+      - name: Test
+        run: |
+          pip install -r pytest/requirements.txt
+          pytest pytest -v  
