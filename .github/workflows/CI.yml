@@ -41,4 +41,4 @@ jobs:
       - name: Test
         run: |
           pip install -r pytest/requirements.txt
-          pytest pytest -v  
+          pytest pytest/
