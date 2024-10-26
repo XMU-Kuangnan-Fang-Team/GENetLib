@@ -39,9 +39,9 @@ def bspline_mat(x, breaks, norder=4, nderiv=0, returnMatrix=False):
         if nbasis > 1:
             basismat = spline_design(knots, x, norder)
         else:
-            basismat = np.matrix(spline_design(knots, x, norder))
+            basismat = np.array(spline_design(knots, x, norder))
         if not returnMatrix and len(basismat.shape) == 2:
-            return np.matrix(basismat)
+            return np.array(basismat)
         else:
             return basismat
     else:
