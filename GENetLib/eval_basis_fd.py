@@ -44,12 +44,6 @@ def eval_fd(evalarg, fdobj, Lfdobj = 0, returnMatrix = False):
         nvar = 1
     else:
         nvar = coefd[2]
-    if len(evaldim) > 1:
-        if evaldim[1] == 1:
-            evalarg = list(evalarg)
-        else:
-            if evaldim[1] != coefd[1]:
-                raise ValueError(f"evalarg has {evaldim[1]} columns; does not match {ndim[1]} = number of columns of ffdobj$coefs")
     if ndim <= 2:
         evalarray = np.zeros((n, nrep))
     else:
@@ -62,25 +56,6 @@ def eval_fd(evalarg, fdobj, Lfdobj = 0, returnMatrix = False):
         basismat = eval_basis(evalarg, basisobj, Lfdobj, returnMatrix)
         if ndim <= 2:
             evalarray = np.dot(basismat, coef)
-        else:
-            evalarray = np.zeros((n, nrep, nvar))
-            for ivar in range(nvar):
-                evalarray[:, :, ivar] = np.dot(basismat, coef[:, :, ivar])
-    else:
-        for i in range(nrep):
-            evalargi = evalarg[:, i]
-            if np.all(np.isnan(evalargi)):
-                raise ValueError(f"All values are NA for replication {i}")
-            index = ~np.isnan(evalargi) & (evalargi >= rangeval[0]) & (evalargi <= rangeval[1])
-            evalargi = evalargi[index]
-            basismat = eval_basis(evalargi, basisobj, Lfdobj, returnMatrix)
-            if ndim == 2:
-                evalarray[index, i] = np.dot(basismat, coef[:, i])
-                evalarray[~index, i] = np.nan
-            if ndim == 3:
-                for ivar in range(nvar):
-                    evalarray[index, i, ivar] = np.dot(basismat, coef[:, i, ivar])
-                    evalarray[~index, i, ivar] = np.nan
     if len(np.shape(evalarray)) == 2 and not returnMatrix:
         return np.asmatrix(evalarray)
     else:
