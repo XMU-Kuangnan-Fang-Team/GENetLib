@@ -17,7 +17,7 @@ def create_test_fdobj(basisobj, coef):
 
 def test_inprod_bspline_normal():
     nbasis = 4
-    norder = 4
+    norder = 2
     basisobj1 = create_test_basis(nbasis, norder)
     basisobj2 = create_test_basis(nbasis, norder)
     coef1 = np.random.rand(nbasis)
@@ -29,7 +29,7 @@ def test_inprod_bspline_normal():
 
 def test_inprod_bspline_diff_knots():
     nbasis = 4
-    norder = 4
+    norder = 2
     basisobj1 = create_test_basis(nbasis, norder)
     basisobj2 = create_test_basis(nbasis + 1, norder)
     coef1 = np.random.rand(nbasis)
@@ -41,7 +41,7 @@ def test_inprod_bspline_diff_knots():
 
 def test_inprod_bspline_diff_range():
     nbasis = 4
-    norder = 4
+    norder = 2
     basisobj1 = create_test_basis(nbasis, norder)
     basisobj2 = create_test_basis(nbasis, norder, rangeval=[1, 2])
     coef1 = np.random.rand(nbasis)
@@ -53,7 +53,7 @@ def test_inprod_bspline_diff_range():
 
 def test_inprod_bspline_invalid_coef_dim():
     nbasis = 4
-    norder = 4
+    norder = 2
     basisobj = create_test_basis(nbasis, norder)
     coef1 = np.random.rand(nbasis, 2) 
     coef2 = np.random.rand(nbasis)
