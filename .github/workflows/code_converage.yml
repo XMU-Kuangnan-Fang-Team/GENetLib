@@ -31,9 +31,7 @@ jobs:
           submodules: recursive
       - name: Install GENetLib & dependencies
         run: |
-          export PROFILE=1
           pip install .
-          ls * -al
       - name: Generate coverage report
         run: |
           pip install pytest
@@ -41,11 +39,9 @@ jobs:
           pip install gcovr
           pip install pandas
           cd ./pytest
-          pytest --cov=skscope -v --cov-report=xml
-          ls * -al
+          pytest --cov=GENetLib -v --cov-report=xml
           cd ..
           gcovr --filter src/ --exclude-throw-branches --exclude-unreachable-branches --print-summary --xml cpp_coverage.xml
-          ls * -al
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
