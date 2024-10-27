@@ -23,10 +23,6 @@ def basis_fd(btype=None, rangeval=None, nbasis=None, params=None, dropind=None, 
         btype = "const"
     elif btype in ["exp", "expon", "exponential"]:
         btype = "expon"
-    elif btype in ["fdVariance", "fdVar"]:
-        btype = "fdVariance"
-    elif btype == "FEM":
-        btype = "FEM"
     elif btype in ["Fourier", "fourier", "Fou", "fou"]:
         btype = "fourier"
     elif btype in ["mon", "monom", "monomial"]:
