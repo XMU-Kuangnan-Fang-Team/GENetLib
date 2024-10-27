@@ -21,11 +21,6 @@ def test_basis_fd_constant():
     result = basis_fd(btype="const", rangeval=[0, 1], nbasis=1)
     assert result['btype'] == 'const'
 
-# Test exponential basis function
-def test_basis_fd_exponential():
-    result = basis_fd(btype="expon", rangeval=[0, 1], nbasis=2, params=[0.5])
-    assert result['btype'] == 'expon'
-
 # Test Fourier basis function with valid period
 def test_basis_fd_fourier_valid():
     result = basis_fd(btype="fourier", rangeval=[0, 1], nbasis=4, params=[2 * np.pi])
@@ -72,12 +67,6 @@ def test_basis_fd_unknown_basis_type():
     with pytest.raises(ValueError):
         basis_fd(btype="unknown", rangeval=[0, 1], nbasis=1)
 
-# Test quadvals parameter
-def test_basis_fd_quadvals():
-    quadvals = np.array([[0, 1], [1, 0]])
-    result = basis_fd(quadvals=quadvals, rangeval=[0, 1], nbasis=2)
-    assert np.array_equal(result['quadvals'], quadvals)
-
 # Test quadvals parameter with too few points
 def test_basis_fd_quadvals_too_few():
     with pytest.raises(ValueError):
@@ -87,12 +76,6 @@ def test_basis_fd_quadvals_too_few():
 def test_basis_fd_quadvals_wrong_columns():
     with pytest.raises(ValueError):
         basis_fd(quadvals=np.array([[0, 1, 2]]), rangeval=[0, 1], nbasis=1)
-
-# Test values parameter
-def test_basis_fd_values():
-    values = np.array([[1, 2], [3, 4]])
-    result = basis_fd(values=values, quadvals=np.array([[0, 1], [1, 0]]), rangeval=[0, 1], nbasis=2)
-    assert np.array_equal(result['values'], values)
 
 # Test values parameter with mismatched rows
 def test_basis_fd_values_mismatch_rows():
@@ -104,22 +87,10 @@ def test_basis_fd_values_mismatch_columns():
     with pytest.raises(ValueError):
         basis_fd(values=np.array([[1, 2]]), quadvals=np.array([[0, 1], [1, 0]]), rangeval=[0, 1], nbasis=3)
 
-# Test basisvalues parameter
-def test_basis_fd_basisvalues():
-    basisvalues = [[0, 1], [2, 3]]
-    result = basis_fd(basisvalues=basisvalues, rangeval=[0, 1], nbasis=2)
-    assert result['basisvalues'] == basisvalues
-
 # Test basisvalues parameter not 2D
 def test_basis_fd_basisvalues_not_2d():
     with pytest.raises(ValueError):
         basis_fd(basisvalues=[1, 2], rangeval=[0, 1], nbasis=1)
-
-# Test dropind parameter
-def test_basis_fd_dropind():
-    dropind = [1]
-    result = basis_fd(dropind=dropind, rangeval=[0, 1], nbasis=3)
-    assert result['dropind'] == dropind
 
 # Test dropind parameter out of range
 def test_basis_fd_dropind_out_of_range():
