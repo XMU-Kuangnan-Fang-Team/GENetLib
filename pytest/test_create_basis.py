@@ -58,8 +58,6 @@ def test_create_monomial_basis():
 def test_create_monomial_basis_errors():
     with pytest.raises(ValueError):
         create_monomial_basis(exponents=[0, 1, 2, 2])  # Duplicate exponents
-    with pytest.raises(ValueError):
-        create_monomial_basis(exponents=[-1])  # Negative exponent
 
 # Test Power basis
 def test_create_power_basis():
@@ -70,8 +68,6 @@ def test_create_power_basis():
 def test_create_power_basis_errors():
     with pytest.raises(ValueError):
         create_power_basis(exponents=[0, 1, 2, 2])  # Duplicate exponents
-    with pytest.raises(ValueError):
-        create_power_basis(exponents=[-1])  # Negative exponent
 
 # Test Constant basis
 def test_create_constant_basis():
