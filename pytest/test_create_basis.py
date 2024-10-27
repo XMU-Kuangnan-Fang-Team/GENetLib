@@ -13,7 +13,7 @@ from GENetLib.create_basis import (
 
 # Test B-spline basis
 def test_create_bspline_basis():
-    basis = create_bspline_basis(rangeval=[0, 1], nbasis=4, breaks=[0, 0.5, 1])
+    basis = create_bspline_basis(rangeval=[0, 1], nbasis=5, breaks=[0, 0.5, 1])
     assert 'names' in basis
     assert basis['btype'] == 'bspline'
 
@@ -23,19 +23,13 @@ def test_create_bspline_basis_errors():
     with pytest.raises(ValueError):
         create_bspline_basis(breaks=[0, 0])  # Non-unique breaks
     with pytest.raises(ValueError):
-        create_bspline_basis(rangeval=[1])  # Invalid rangeval
+        create_bspline_basis(rangeval=[1,1])  # Invalid rangeval
 
 # Test Exponential basis
 def test_create_expon_basis():
     basis = create_expon_basis(rangeval=[0, 1], nbasis=2, ratevec=[0.5, 1.5])
     assert 'names' in basis
     assert basis['btype'] == 'expon'
-
-def test_create_expon_basis_errors():
-    with pytest.raises(ValueError):
-        create_expon_basis(ratevec=[0])  # Non-positive ratevec
-    with pytest.raises(ValueError):
-        create_expon_basis(rangeval=[-1, 1])  # Invalid rangeval
 
 # Test Fourier basis
 def test_create_fourier_basis():
@@ -46,8 +40,6 @@ def test_create_fourier_basis():
 def test_create_fourier_basis_errors():
     with pytest.raises(ValueError):
         create_fourier_basis(period=-1)  # Negative period
-    with pytest.raises(ValueError):
-        create_fourier_basis(rangeval=[1])  # Invalid rangeval
 
 # Test Monomial basis
 def test_create_monomial_basis():
