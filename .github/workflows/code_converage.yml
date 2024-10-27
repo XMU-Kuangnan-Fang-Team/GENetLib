@@ -1,0 +1,54 @@
+name: Code Coverage
+
+on:
+  push:
+    paths:
+      - "GENetLib/*.py"
+      - "pytest/*.py"
+      - ".github/workflows/code_coverage.yml"
+  pull_request:
+    paths:
+      - "GENetLib/*.py"
+      - "pytest/*.py"
+      - ".github/workflows/code_coverage.yml"
+  workflow_dispatch:
+
+jobs:
+  codecovPy:
+    name: Codecov workflow
+    runs-on: windows-latest
+    env:
+      PYTHON: "3.9"
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install GENetLib & dependencies
+        run: |
+          export PROFILE=1
+          pip install .
+          ls * -al
+      - name: Generate coverage report
+        run: |
+          pip install pytest
+          pip install pytest-cov
+          pip install gcovr
+          pip install pandas
+          cd ./pytest
+          pytest --cov=skscope -v --cov-report=xml
+          ls * -al
+          cd ..
+          gcovr --filter src/ --exclude-throw-branches --exclude-unreachable-branches --print-summary --xml cpp_coverage.xml
+          ls * -al
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./pytest/coverage.xml, ./cpp_coverage.xml
+          verbose: true
