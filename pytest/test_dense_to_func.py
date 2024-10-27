@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from dense_to_func import dense_to_func
+from GENetLib.dense_to_func import dense_to_func
 from GENetLib.create_basis import create_bspline_basis, create_expon_basis, create_fourier_basis, create_monomial_basis, create_power_basis
 
 
