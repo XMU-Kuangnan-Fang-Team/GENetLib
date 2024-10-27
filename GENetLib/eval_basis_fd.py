@@ -11,22 +11,6 @@ def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
     nderiv = 0
     bwtlist = 0
     basismat = get_basis_matrix(evalarg, basisobj, nderiv, returnMatrix)
-    if nderiv > 0:
-        nbasis = np.shape(basismat)[1]
-        oneb = np.ones((1, nbasis))
-        nonintwrd = False
-        for j in range(nderiv):
-            bfd = bwtlist[j]
-            bbasis = bfd['basis']
-            if bbasis['btype'] != "constant" or bfd['coefs'] != 0:
-                nonintwrd = True
-        if nonintwrd:
-            for j in range(nderiv):
-                bfd = bwtlist[j]
-                if not np.all(bfd['coefs'] == 0):
-                    wjarray = eval_fd(evalarg, bfd, 0, returnMatrix)
-                    Dbasismat = get_basis_matrix(evalarg, basisobj, j - 1, returnMatrix)
-                    basismat = basismat + np.dot(wjarray, oneb) * Dbasismat
     if not returnMatrix and len(np.shape(basismat)) == 2:
         return np.asmatrix(basismat)
     else:
