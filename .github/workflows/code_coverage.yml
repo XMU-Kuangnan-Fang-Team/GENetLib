@@ -5,12 +5,12 @@ on:
     paths:
       - "GENetLib/*.py"
       - "pytest/*.py"
-      - ".github/workflows/code_converage.yml"
+      - ".github/workflows/code_coverage.yml"
   pull_request:
     paths:
       - "GENetLib/*.py"
       - "pytest/*.py"
-      - ".github/workflows/code_converage.yml"
+      - ".github/workflows/code_coverage.yml"
   workflow_dispatch:
 
 jobs:
