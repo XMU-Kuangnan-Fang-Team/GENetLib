@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from GeNetLib.basis_fd import basis_fd
+from GENetLib.basis_fd import basis_fd
 
 
 def test_basis_fd_default():
