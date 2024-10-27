@@ -39,9 +39,9 @@ def basis_fd(btype=None, rangeval=None, nbasis=None, params=None, dropind=None, 
         btype = "power"
     else:
         btype = "unknown"
-    if nbasis <= 0:
+    if nbasis is not None and nbasis<= 0:
         raise ValueError("Argument nbasis is not positive.")
-    if round(nbasis) != nbasis:
+    if nbasis is not None and round(nbasis) != nbasis:
         raise ValueError("Argument nbasis is not an integer.")
     if quadvals is None:
         quadvals = []
