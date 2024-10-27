@@ -12,7 +12,7 @@ def test_func_ge():
                               Learning_Rate2=0.035, L2=0.01, Learning_Rate1=0.06, L=0.09, 
                               Num_Epochs=50, t = 0.01, model = None, split_type = 0, ratio = [7, 3], 
                               important_feature = True, plot = True, model_reg = None, isfunc = False)
-  scalar_ge_res_2 = scalar_ge(data=scalar_binary[0], ytype='Binary', dim_G=500, dim_E=5, haveGE=False, 
+  scalar_ge_res_2 = scalar_ge(data=scalar_binary[0], ytype='Binary', dim_G=500, dim_E=5, haveGE=True, 
                               num_hidden_layers=2, nodes_hidden_layer=[1000,100], 
                               Learning_Rate2=0.035, L2=0.01, Learning_Rate1=0.06, L=0.09, 
                               Num_Epochs=50, t = 0.01, model = None, split_type = 1, ratio = [7, 2, 1], 
