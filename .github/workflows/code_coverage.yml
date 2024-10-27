@@ -20,27 +20,27 @@ jobs:
     env:
       PYTHON: "3.9"
     steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@master
+      - name: Setup Python
+        uses: actions/setup-python@master
         with:
           python-version: 3.9
-      - name: Install GENetLib and dependencies
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install GENetLib & dependencies
         run: |
           pip install .
-          pip install pytest coverage codecov
       - name: Generate coverage report
         run: |
-            coverage run -m pytest
-            coverage xml -o coverage.xml
-      - name: Filter coverage report
-        run: |
-            python filter_coverage.py
+          pip install pytest
+          pip install pytest-cov
+          cd ./pytest
+          pytest --cov=GENetLib -v --cov-report=xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage_filtered.xml
+          files: ./pytest/coverage.xml
           verbose: true
