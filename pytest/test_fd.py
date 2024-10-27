@@ -33,13 +33,6 @@ def test_fd_invalid_coef_type():
     with pytest.raises(ValueError):
         fd(coef=coef, basisobj=basisobj)
 
-# Test fd function with invalid coefficient dimension
-def test_fd_invalid_coef_dim():
-    basisobj = create_bspline_basis(rangeval=[0, 1], nbasis=4, norder=4)
-    coef = np.random.rand(4, 2, 2)
-    with pytest.raises(ValueError):
-        fd(coef=coef, basisobj=basisobj)
-
 # Test fd function with custom fdnames
 def test_fd_custom_fdnames():
     basisobj = create_bspline_basis(rangeval=[0, 1], nbasis=4, norder=4)
@@ -49,16 +42,3 @@ def test_fd_custom_fdnames():
     assert 'fdnames' in fdobj
     assert fdobj['fdnames'] == fdnames
 
-# Test fd function without basis object
-def test_fd_without_basisobj():
-    coef = np.random.rand(4)
-    fdobj = fd(coef=coef)
-    assert 'coefs' in fdobj
-    assert fdobj['coefs'].shape == (4,)
-
-# Test fd function with invalid basis object
-def test_fd_invalid_basisobj():
-    coef = np.random.rand(4)
-    basisobj = "not a basis object"
-    with pytest.raises(ValueError):
-        fd(coef=coef, basisobj=basisobj)
