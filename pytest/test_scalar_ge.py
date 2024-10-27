@@ -12,7 +12,6 @@ def test_func_ge():
                               Learning_Rate2=0.035, L2=0.01, Learning_Rate1=0.06, L=0.09, 
                               Num_Epochs=50, t = 0.01, model = None, split_type = 0, ratio = [7, 3], 
                               important_feature = True, plot = True, model_reg = None, isfunc = False)
-
+  
   assert scalar_ge_res_1 is not None
-  assert func_ge_res_2 is not None
-  assert func_ge_res_3 is not None
+
