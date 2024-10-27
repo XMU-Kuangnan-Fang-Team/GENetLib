@@ -6,6 +6,7 @@ on:
       - "GENetLib/*.py"
       - "setup.py"
       - "requirements.py"
+      - "pytest/*.py"
   pull_request:
     paths:
       - "GENetLib/*.py"
