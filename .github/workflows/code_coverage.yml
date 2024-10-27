@@ -20,35 +20,24 @@ jobs:
     env:
       PYTHON: "3.9"
     steps:
-      - uses: actions/checkout@master
-      - name: Setup Python
-        uses: actions/setup-python@master
-        with:
-          python-version: 3.9
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
-      - name: Install GENetLib & dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install GENetLib and dependencies
         run: |
           pip install .
-      - name: Generate coverage report
-        run: |
-          pip install pytest
-          pip install pytest-cov
-          pip install gcovr
-          pip install pandas
-          cd ./pytest
-          pytest --cov=GENetLib.sim_data_scalar --cov=GENetLib.sim_data_func --cov=GENetLib.func_ge --cov=GENetLib.grid_func_ge -v --cov-report=xml
-          cd ..
-          gcovr --filter src/ --exclude-throw-branches --exclude-unreachable-branches --print-summary --xml cpp_coverage.xml
+          pip install pytest coverage codecov
       - name: Generate coverage report for specific functions
         run: |
-          coverage run -m pytest --cov=GENetLib.sim_data_scalar --cov=GENetLib.sim_data_func --cov=GENetLib.func_ge --cov=GENetLib.grid_func_ge
-          coverage xml -o coverage.xml
+            coverage run -m pytest -m "not slow" pytest/test_sim_data_scalar.py pytest/test_sim_data_func.py pytest/test_func_ge.py pytest/test_grid_func_ge.py
+            coverage xml -o coverage.xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./pytest/coverage.xml
+          files: ./coverage.xml
           verbose: true
