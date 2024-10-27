@@ -16,10 +16,6 @@ def create_bspline_basis(rangeval=None, nbasis=None, norder=4, breaks=None,
         Breaks = [float(b) for b in breaks]
         if min([Breaks[i+1] - Breaks[i] for i in range(len(Breaks)-1)]) < 0:
             raise ValueError("One or more breaks differences are negative.")
-        if any([math.isnan(b) for b in Breaks]):
-            raise ValueError("breaks contains NAs; not allowed.")
-        if any([math.isinf(b) for b in Breaks]):
-            raise ValueError("breaks contains Infs; not allowed.")
     if rangeval is None or len(rangeval) < 1:
         if breaks is None:
             rangeval = [0, 1]
@@ -228,8 +224,6 @@ def create_power_basis(rangeval = [0, 1], nbasis = None, exponents = None,
                     raise ValueError(f"exponents must be numeric;  class(exponents) = {type(exponents)}")
         else:
             raise ValueError(f"nbasis must be numeric;  class(nbasis) = {type(nbasis)}")
-    if any([i < 0 for i in exponents]) and rangeval[1] <= 0:
-        raise ValueError("An exponent is negative and range contains 0 or negative values.")
     if dropind is None or len(dropind) == 0:
         dropind = None
     btype = "power"
@@ -254,11 +248,6 @@ def create_power_basis(rangeval = [0, 1], nbasis = None, exponents = None,
 
 # Constant value
 def create_constant_basis(rangeval=[0, 1], names="const", axes=None):
-    
-    if len(rangeval) == 1:
-        if rangeval[0] <= 0:
-            raise ValueError("RANGEVAL is a single value that is not positive.")
-        rangeval = [0, rangeval[0]]
     btype = "const"
     nbasis = 1
     params = []
