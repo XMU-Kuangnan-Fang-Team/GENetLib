@@ -21,7 +21,7 @@ def test_basis_fd_expon():
     assert result['nbasis'] == 2
 
 def test_basis_fd_fourier():
-    result = basis_fd(btype="fourier", nbasis=4, params=[2*pi])
+    result = basis_fd(btype="fourier", nbasis=4, params=[2*np.pi])
     assert result['btype'] == 'fourier'
     assert result['nbasis'] == 5  # Fourier basis with even nbasis should increment by 1
 
