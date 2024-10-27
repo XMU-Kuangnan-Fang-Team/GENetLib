@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 import pandas as pd
 from GENetLib.spline_design import spline_design
+from GENetLib.basis_mat import bspline_mat, expon_mat, fourier_mat, monomial_mat, polyg_mat, power_mat
 
 # Test B-spline matrix
 def test_bspline_mat():
