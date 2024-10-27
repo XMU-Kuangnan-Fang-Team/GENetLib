@@ -39,7 +39,7 @@ jobs:
           pip install gcovr
           pip install pandas
           cd ./pytest
-          pytest --cov=GENetLib -v --cov-report=xml
+          pytest --cov=GENetLib.sim_data_scalar --cov=GENetLib.sim_data_func --cov=GENetLib.func_ge --cov=GENetLib.grid_func_ge -v --cov-report=xml
           cd ..
           gcovr --filter src/ --exclude-throw-branches --exclude-unreachable-branches --print-summary --xml cpp_coverage.xml
       - name: Upload coverage to Codecov
