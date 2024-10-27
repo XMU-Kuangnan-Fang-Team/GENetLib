@@ -34,6 +34,13 @@ def test_fourier_mat():
     result = fourier_mat(x)
     assert result.shape[1] > 1
 
+def test_fourier_mat_nderiv():
+    x = np.linspace(0, 1, 10)
+    result_1 = fourier_mat(x, nbasis = 4, nderiv=2)
+    result_2 = fourier_mat(x, nbasis = 4, nderiv=3)
+    assert result_1 is not None
+    assert result_2 is not None
+
 def test_fourier_mat_errors():
     x = np.linspace(0, 1, 10)
     with pytest.raises(ValueError):
