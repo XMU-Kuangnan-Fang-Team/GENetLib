@@ -2,9 +2,7 @@
 <img src="image/logo.jpg" alt="logo" width="700"></img>
 </div>
 
-[![Documentation Status](https://readthedocs.org/projects/qdax/badge/?version=latest)](https://qdax.readthedocs.io/en/latest/?badge=latest)
-![pytest](https://github.com/adaptive-intelligent-robotics/QDax/actions/workflows/ci.yaml/badge.svg?branch=main)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/adaptive-intelligent-robotics/QDax/blob/main/LICENSE)
+
 [![codecov](https://codecov.io/github/Barry57/GENetLib/graph/badge.svg?token=9J9QMN7L9Z)](https://codecov.io/github/Barry57/GENetLib)
 
 
