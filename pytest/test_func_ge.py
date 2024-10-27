@@ -15,7 +15,7 @@ def test_func_ge():
                           'Binary', 'Fourier', num_hidden_layers=2, nodes_hidden_layer=[100,10], Learning_Rate2=0.035, 
                           L2=0.01, Learning_Rate1=0.02, L=0.01, Num_Epochs=50, nbasis1=5, params1=4, Bsplines=5, norder1=4, 
                           model=None, split_type=0, ratio=[7, 3], plot_res=True)
-  func_ge_res_3 = func_ge(list(func_survival['y']), func_survival['z'], func_survival['location'], func_survival['X'], 
+  func_ge_res_3 = func_ge(func_survival['y'], func_survival['z'], func_survival['location'], func_survival['X'], 
                           'Survival', 'Power', num_hidden_layers=2, nodes_hidden_layer=[100,10], Learning_Rate2=0.035, 
                           L2=0.01, Learning_Rate1=0.02, L=0.01, Num_Epochs=50, nbasis1=5, params1=[-1,-0.5,0,0.5,1], Bsplines=5, norder1=4, 
                           model=None, split_type=0, ratio=[7, 3], plot_res=True, plot_beta = False) 
