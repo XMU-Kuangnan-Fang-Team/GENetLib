@@ -16,12 +16,12 @@ def test_func_ge():
                               num_hidden_layers=2, nodes_hidden_layer=[1000,100], 
                               Learning_Rate2=0.035, L2=0.01, Learning_Rate1=0.06, L=0.09, 
                               Num_Epochs=50, t = 0.01, model = None, split_type = 1, ratio = [7, 2, 1], 
-                              important_feature = False, plot = False, model_reg = None, isfunc = False)
+                              important_feature = True, plot = False, model_reg = None, isfunc = False)
   scalar_ge_res_3 = scalar_ge(data=scalar_survival[0], ytype='Survival', dim_G=500, dim_E=5, haveGE=False, 
                               num_hidden_layers=2, nodes_hidden_layer=[1000,100], 
                               Learning_Rate2=0.035, L2=0.01, Learning_Rate1=0.06, L=0.09, 
                               Num_Epochs=50, t = 0.01, model = None, split_type = 1, ratio = [7, 2, 1], 
-                              important_feature = False, plot = False, model_reg = None, isfunc = False)
+                              important_feature = True, plot = False, model_reg = None, isfunc = False)
   assert scalar_ge_res_1 is not None
   assert scalar_ge_res_2 is not None
   assert scalar_ge_res_3 is not None
