@@ -23,7 +23,6 @@ from .func_ge import func_ge
 from .grid_func_ge import grid_func_ge
 from .plot_fd import plot_fd
 from .plot_rawdata import plot_rawdata
-from .plot_func import plot_func
 
 
 __all__ = ['basis_fd', 'create_bspline_basis','create_expon_basis','create_fourier_basis',
@@ -33,4 +32,4 @@ __all__ = ['basis_fd', 'create_bspline_basis','create_expon_basis','create_fouri
            'inprod','fd','pre_data1','pre_data2','sim_data_scalar','sim_data_func',
            'spline_design','fd_chk','knotmultchk','eval_basis','eval_fd','dense_to_func',
            'scalar_l2train','scalar_mcp_l2train','scalar_ge','grid_scalar_ge','func_ge','grid_func_ge',
-           'plot_fd','plot_rawdata','plot_func']
+           'plot_fd','plot_rawdata']
