@@ -35,10 +35,6 @@ def basis_fd(btype=None, rangeval=None, nbasis=None, params=None, dropind=None, 
         btype = "power"
     else:
         btype = "unknown"
-    if nbasis is not None and nbasis<= 0:
-        raise ValueError("Argument nbasis is not positive.")
-    if nbasis is not None and round(nbasis) != nbasis:
-        raise ValueError("Argument nbasis is not an integer.")
     if quadvals is None:
         quadvals = []
     elif len(quadvals) != 0:
@@ -64,9 +60,6 @@ def basis_fd(btype=None, rangeval=None, nbasis=None, params=None, dropind=None, 
         sizevec = np.array(basisvalues).shape
         if len(sizevec) != 2:
             raise ValueError("BASISVALUES is not 2-dimensional.")
-        for i in range(sizevec[0]):
-            if len(basisvalues[i][0]) != np.array(basisvalues[i][1]).shape[0]:
-                raise ValueError("Number of argument values not equal number of values.")
     else:
         basisvalues = []
     if dropind is None:
@@ -81,12 +74,6 @@ def basis_fd(btype=None, rangeval=None, nbasis=None, params=None, dropind=None, 
         for i in range(ndrop):
             if dropind[i] < 1 or dropind[i] > nbasis:
                 raise ValueError("A DROPIND index value is out of range.")
-        nvalues = len(values)
-        if nvalues > 0 and len(values[0]) > 0:
-            for ivalue in range(nvalues):
-                derivvals = values[ivalue]
-                derivvals = np.delete(derivvals, dropind, axis=1)
-                values[ivalue] = derivvals
     if btype == "fourier":
         period = params[0]
         if period <= 0:
@@ -105,9 +92,6 @@ def basis_fd(btype=None, rangeval=None, nbasis=None, params=None, dropind=None, 
     elif btype in ["expon", "polynomial", "power", "monom", "polygonal"]:
         if len(params) != nbasis:
             raise ValueError(f"No. of parameters not equal to no. of basis fns for {btype} basisobj")
-    elif btype == "fdVariance":
-        if len(params) != 2:
-            raise ValueError("No. of parameters not equal to 8 for FEM basisobj")
     elif btype == "const":
         params = 0
     else:
