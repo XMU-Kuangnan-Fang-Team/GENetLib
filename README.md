@@ -1,5 +1,5 @@
 <div align="center">
-<img src="image/qdax_logo.png" alt="qdax_logo" width="140"></img>
+<img src="image/logo.png" alt="logo" width="140"></img>
 </div>
 
 
