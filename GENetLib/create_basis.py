@@ -31,24 +31,8 @@ def create_bspline_basis(rangeval=None, nbasis=None, norder=4, breaks=None,
         raise ValueError(f"rangeval[0] must be less than rangeval[1]; instead rangeval[0] = {rangeval[0]}", f" >= rangeval[1] = {rangeval[1]}")
     nbreaks = len(breaks) if breaks is not None else 0
     if nbasis is not None:
-        if not isinstance(nbasis, int):
-            raise ValueError(f"nbasis must be numeric, is {type(nbasis)}")
-        if nbasis < 1:
-            raise ValueError(f"nbasis must be a single positive integer; nbasis = {nbasis}")
-        if nbasis % 1 > 0:
-            raise ValueError(f"nbasis is not an integer, = {nbasis}", f", with fractional part = {nbasis % 1}")
-        if nbasis < norder:
-            raise ValueError(f"nbasis must be at least norder; nbasis = {nbasis}", f"; norder = {norder}")
         if breaks is not None:
             nbreaks = len(breaks)
-            if nbreaks < 2:
-                raise ValueError("Number of values in argument 'breaks' less than 2.")
-            if breaks[0] != rangeval[0] or breaks[nbreaks-1] != rangeval[1]:
-                raise ValueError("Range of argument 'breaks' not identical to that of argument 'rangeval'.")
-            if min([breaks[i+1] - breaks[i] for i in range(nbreaks-1)]) < 0:
-                raise ValueError("Values in argument 'breaks' are decreasing.")
-            if nbasis != norder + nbreaks - 2:
-                raise ValueError(f"Relation nbasis = norder + length(breaks) - 2 does not hold; nbasis = {nbasis}", f"norder = {norder}", "length(breaks) = {len(breaks)}")
         else:
             breaks = list(np.linspace(rangeval[0], rangeval[1], num=nbasis - norder + 2))
             nbreaks = len(breaks)
@@ -82,19 +66,6 @@ def create_bspline_basis(rangeval=None, nbasis=None, norder=4, breaks=None,
 def create_expon_basis(rangeval = [0, 1], nbasis = None, ratevec = None, 
                        dropind = None, quadvals = None, values = None, basisvalues = None, 
                        names = ["exp"], axes = None):
-    
-    if not isinstance(rangeval, (list, np.ndarray)):
-        raise ValueError(f"rangeval must be numeric;  class(rangeval) = {type(rangeval)}")
-    if len(rangeval) < 1:
-        raise ValueError("rangeval must be a numeric vector of length 2;  ", "length(rangeval) = 0.")
-    if len(rangeval) == 1:
-        if rangeval[0] <= 0:
-            raise ValueError(f"rangeval a single value that is not positive:  {rangeval}")
-        rangeval = [0, rangeval[0]]
-    if len(rangeval) > 2:
-        raise ValueError("rangeval must be a vector of length 2;  ", f"length(rangeval) = {len(rangeval)}")
-    if np.diff(rangeval) <= 0:
-        raise ValueError(f"rangeval must cover a positive range;  diff(rangeval) = {np.diff(rangeval)}")
     if nbasis is not None:
         if ratevec is None:
             ratevec = list(range(nbasis))
@@ -131,20 +102,8 @@ def create_fourier_basis(rangeval = [0, 1], nbasis = 3, period = None,
     if period == None:
         period = float(np.diff(rangeval))
     btype = "fourier"
-    if len(rangeval) < 1:
-        raise ValueError("length(rangeval) = 0;  not allowed.")
-    if len(rangeval) == 1:
-        if rangeval[0] <= 0:
-            raise ValueError("RANGEVAL a single value that is not positive.")
-        rangeval = [0, rangeval[0]]
-    if period is not None and not isinstance(period, (int, float)):
-        raise ValueError(f"period must be numeric;  class(period) = {type(period)}")
     if period is not None and period <= 0:
         raise ValueError(f"'period' must be positive, is {period}")
-    if not isinstance(nbasis, int):
-        raise ValueError(f"nbasis must be numeric;  class(nbasis) = {type(nbasis)}")
-    if nbasis <= 0:
-        raise ValueError(f"nbasis must be positive;  is {nbasis}")
     params = [period]
     basisobj = basis_fd(btype = btype, rangeval = rangeval, nbasis = nbasis, 
                         params = params, dropind = dropind, quadvals = quadvals, 
@@ -174,14 +133,6 @@ def create_monomial_basis(rangeval = [0, 1], nbasis = None, exponents = None,
     
     btype = "monom"
     Rangeval = np.array(rangeval, dtype=float)
-    if len(rangeval) < 1:
-        raise ValueError("rangeval must be a numeric vector of length 2; length(rangeval) = 0.")
-    if len(rangeval) == 1:
-        if rangeval[0] <= 0:
-            raise ValueError(f"rangeval a single value that is not positive:  {rangeval}")
-        rangeval = [0, rangeval[0]]
-    if len(rangeval) > 2:
-        raise ValueError("rangeval must be a vector of length 2;  ", f"length(rangeval) = {len(rangeval)}")
     nNAr = np.isnan(Rangeval).sum()
     if nNAr > 0:
         raise ValueError(f"as.numeric(rangeval) contains {nNAr}", " NA", f";  class(rangeval) = {type(rangeval)}")
@@ -248,19 +199,6 @@ def create_monomial_basis(rangeval = [0, 1], nbasis = None, exponents = None,
 def create_power_basis(rangeval = [0, 1], nbasis = None, exponents = None, 
                        dropind = None, quadvals = None, values = None, basisvalues = None, 
                        names = ["power"], axes = None):
-    
-    if not isinstance(rangeval, (list, np.ndarray)):
-        raise ValueError(f"rangaval must be numeric;  class(rangeval) = {type(rangeval)}")
-    if len(rangeval) < 1:
-        raise ValueError("rangeval must be a numeric vector of length 2;  length(rangeval) = 0.")
-    if len(rangeval) == 1:
-        if rangeval[0] <= 0:
-            raise ValueError(f"rangeval a single value that is not positive:  {rangeval}")
-        rangeval = [0, rangeval[0]]
-    if len(rangeval) > 2:
-        raise ValueError(f"rangeval must be a vector of length 2;  length(rangeval) = {len(rangeval)}")
-    if np.diff(rangeval) <= 0:
-        raise ValueError(f"rangeval must cover a positive range;  diff(rangeval) = {np.diff(rangeval)}")
     if nbasis is None:
         if exponents is None:
             nbasis = 2
