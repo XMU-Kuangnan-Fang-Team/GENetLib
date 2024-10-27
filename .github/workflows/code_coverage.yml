@@ -42,6 +42,10 @@ jobs:
           pytest --cov=GENetLib.sim_data_scalar --cov=GENetLib.sim_data_func --cov=GENetLib.func_ge --cov=GENetLib.grid_func_ge -v --cov-report=xml
           cd ..
           gcovr --filter src/ --exclude-throw-branches --exclude-unreachable-branches --print-summary --xml cpp_coverage.xml
+      - name: Generate coverage report for specific functions
+        run: |
+          coverage run -m pytest --cov=GENetLib.sim_data_scalar --cov=GENetLib.sim_data_func --cov=GENetLib.func_ge --cov=GENetLib.grid_func_ge
+          coverage xml -o coverage.xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
