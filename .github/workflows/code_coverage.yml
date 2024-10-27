@@ -31,13 +31,16 @@ jobs:
         run: |
           pip install .
           pip install pytest coverage codecov
-      - name: Generate coverage report for specific functions
+      - name: Generate coverage report
         run: |
-            coverage run -m pytest -m "not slow" pytest/test_sim_data_scalar.py pytest/test_sim_data_func.py pytest/test_func_ge.py pytest/test_grid_func_ge.py
+            coverage run -m pytest
             coverage xml -o coverage.xml
+      - name: Filter coverage report
+        run: |
+            python filter_coverage.py
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
+          files: ./coverage_filtered.xml
           verbose: true
