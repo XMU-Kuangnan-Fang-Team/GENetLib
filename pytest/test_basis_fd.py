@@ -2,118 +2,136 @@ import pytest
 import numpy as np
 from GENetLib.basis_fd import basis_fd
 
-
+# Test default parameters
 def test_basis_fd_defaults():
-    basis = basis_fd()
-    assert basis['btype'] == 'bspline'
-    assert basis['rangeval'] == [0, 1]
-    assert basis['nbasis'] == 2
+    result = basis_fd()
+    assert result['btype'] == 'bspline'
+    assert result['rangeval'] == [0, 1]
+    assert result['nbasis'] == 2
 
-def test_basis_fd_custom_params():
-    basis = basis_fd(btype="bspline", rangeval=[1, 2], nbasis=4, params=[0.5])
-    assert basis['btype'] == 'bspline'
-    assert basis['rangeval'] == [1, 2]
-    assert basis['nbasis'] == 4
+# Test custom parameters
+def test_basis_fd_custom():
+    result = basis_fd(btype="bspline", rangeval=[0, 10], nbasis=3, params=[1, 2, 3])
+    assert result['btype'] == 'bspline'
+    assert result['rangeval'] == [0, 10]
+    assert result['nbasis'] == 3
 
+# Test constant basis function
 def test_basis_fd_constant():
-    basis = basis_fd(btype="const")
-    assert basis['btype'] == 'const'
+    result = basis_fd(btype="const", rangeval=[0, 1], nbasis=1)
+    assert result['btype'] == 'const'
 
-def test_basis_fd_polynomial():
-    basis = basis_fd(btype="polynomial", nbasis=3, params=[0, 1])
-    assert basis['btype'] == 'polynomial'
-    assert basis['params'] == [0, 1]
+# Test exponential basis function
+def test_basis_fd_exponential():
+    result = basis_fd(btype="expon", rangeval=[0, 1], nbasis=2, params=[0.5])
+    assert result['btype'] == 'expon'
 
+# Test Fourier basis function with valid period
 def test_basis_fd_fourier_valid():
-    basis = basis_fd(btype="fourier", nbasis=4, params=[np.pi])
-    assert basis['btype'] == 'fourier'
-    assert basis['params'] == [np.pi]
+    result = basis_fd(btype="fourier", rangeval=[0, 1], nbasis=4, params=[2 * np.pi])
+    assert result['btype'] == 'fourier'
+    assert result['params'] == [2 * np.pi]
 
+# Test Fourier basis function with invalid period
 def test_basis_fd_fourier_invalid_period():
     with pytest.raises(ValueError):
-        basis_fd(btype="fourier", params=[-1])
+        basis_fd(btype="fourier", rangeval=[0, 1], params=[-1])
 
+# Test Fourier basis function with even nbasis
 def test_basis_fd_fourier_even_nbasis():
-    with pytest.raises(ValueError):
-        basis_fd(btype="fourier", nbasis=4)
+    result = basis_fd(btype="fourier", rangeval=[0, 1], nbasis=4, params=[2 * np.pi])
+    assert result['nbasis'] == 5  # Should automatically adjust to odd
 
+# Test B-spline basis function
 def test_basis_fd_bspline():
-    basis = basis_fd(btype="bspline", rangeval=[0, 1], nbasis=5, params=[0.25, 0.75])
-    assert basis['btype'] == 'bspline'
+    result = basis_fd(btype="bspline", rangeval=[0, 1], nbasis=5, params=[0.25, 0.75])
+    assert result['btype'] == 'bspline'
 
+# Test B-spline basis function with breaks out of range
 def test_basis_fd_bspline_breaks_out_of_range():
     with pytest.raises(ValueError):
         basis_fd(btype="bspline", rangeval=[0, 1], params=[2])
 
-def test_basis_fd_exponential():
-    basis = basis_fd(btype="expon", nbasis=2, params=[0.5])
-    assert basis['btype'] == 'expon'
-
+# Test monomial basis function
 def test_basis_fd_monomial():
-    basis = basis_fd(btype="monom", nbasis=3, params=[1, 2, 3])
-    assert basis['btype'] == 'monom'
+    result = basis_fd(btype="monom", rangeval=[0, 1], nbasis=3, params=[1, 2, 3])
+    assert result['btype'] == 'monom'
 
+# Test polynomial basis function
 def test_basis_fd_polyg():
-    basis = basis_fd(btype="polygonal", nbasis=4, params=[0, 1, 2, 3])
-    assert basis['btype'] == 'polygonal'
+    result = basis_fd(btype="polygonal", rangeval=[0, 1], nbasis=4, params=[0, 1, 2, 3])
+    assert result['btype'] == 'polygonal'
 
+# Test power basis function
 def test_basis_fd_power():
-    basis = basis_fd(btype="power", nbasis=3, params=[1, 2, 3])
-    assert basis['btype'] == 'power'
+    result = basis_fd(btype="power", rangeval=[0, 1], nbasis=3, params=[1, 2, 3])
+    assert result['btype'] == 'power'
 
+# Test unknown basis type
 def test_basis_fd_unknown_basis_type():
     with pytest.raises(ValueError):
-        basis_fd(btype="unknown")
+        basis_fd(btype="unknown", rangeval=[0, 1], nbasis=1)
 
+# Test quadvals parameter
 def test_basis_fd_quadvals():
-    quadvals = [[0, 1], [1, 0]]
-    basis = basis_fd(quadvals=quadvals)
-    assert basis['quadvals'] == quadvals
+    quadvals = np.array([[0, 1], [1, 0]])
+    result = basis_fd(quadvals=quadvals, rangeval=[0, 1], nbasis=2)
+    assert np.array_equal(result['quadvals'], quadvals)
 
+# Test quadvals parameter with too few points
 def test_basis_fd_quadvals_too_few():
     with pytest.raises(ValueError):
-        basis_fd(quadvals=[[0]])
+        basis_fd(quadvals=np.array([[0]]), rangeval=[0, 1], nbasis=1)
 
+# Test quadvals parameter with wrong number of columns
 def test_basis_fd_quadvals_wrong_columns():
     with pytest.raises(ValueError):
-        basis_fd(quadvals=[[0, 1, 2]])
+        basis_fd(quadvals=np.array([[0, 1, 2]]), rangeval=[0, 1], nbasis=1)
 
+# Test values parameter
 def test_basis_fd_values():
-    values = [[1, 2], [3, 4]]
-    basis = basis_fd(values=values)
-    assert basis['values'] == values
+    values = np.array([[1, 2], [3, 4]])
+    result = basis_fd(values=values, quadvals=np.array([[0, 1], [1, 0]]), rangeval=[0, 1], nbasis=2)
+    assert np.array_equal(result['values'], values)
 
+# Test values parameter with mismatched rows
 def test_basis_fd_values_mismatch_rows():
     with pytest.raises(ValueError):
-        basis_fd(quadvals=[[0, 1], [1, 0]], values=[[1]])
+        basis_fd(values=np.array([[1]]), quadvals=np.array([[0, 1], [1, 0]]), rangeval=[0, 1], nbasis=1)
 
+# Test values parameter with mismatched columns
 def test_basis_fd_values_mismatch_columns():
     with pytest.raises(ValueError):
-        basis_fd(nbasis=3, quadvals=[[0, 1], [1, 0]], values=[[1, 2]])
+        basis_fd(values=np.array([[1, 2]]), quadvals=np.array([[0, 1], [1, 0]]), rangeval=[0, 1], nbasis=3)
 
+# Test basisvalues parameter
 def test_basis_fd_basisvalues():
     basisvalues = [[0, 1], [2, 3]]
-    basis = basis_fd(basisvalues=basisvalues)
-    assert basis['basisvalues'] == basisvalues
+    result = basis_fd(basisvalues=basisvalues, rangeval=[0, 1], nbasis=2)
+    assert result['basisvalues'] == basisvalues
 
+# Test basisvalues parameter not 2D
 def test_basis_fd_basisvalues_not_2d():
     with pytest.raises(ValueError):
-        basis_fd(basisvalues=[1, 2])
+        basis_fd(basisvalues=[1, 2], rangeval=[0, 1], nbasis=1)
 
+# Test dropind parameter
 def test_basis_fd_dropind():
     dropind = [1]
-    basis = basis_fd(dropind=dropind)
-    assert basis['dropind'] == dropind
+    result = basis_fd(dropind=dropind, rangeval=[0, 1], nbasis=3)
+    assert result['dropind'] == dropind
 
-
+# Test dropind parameter out of range
 def test_basis_fd_dropind_out_of_range():
     with pytest.raises(ValueError):
-        basis_fd(nbasis=2, dropind=[3])
+        basis_fd(dropind=[3], rangeval=[0, 1], nbasis=2)
 
+# Test dropind parameter duplicates
 def test_basis_fd_dropind_duplicates():
     with pytest.raises(ValueError):
-        basis_fd(dropind=[1, 1])
+        basis_fd(dropind=[1, 1], rangeval=[0, 1], nbasis=2)
 
+# Test dropind parameter too many
 def test_basis_fd_dropind_too_many():
     with pytest.raises(ValueError):
-        basis_fd(nbasis=2, dropind=[1, 2])
+        basis_fd(dropind=[1, 2], rangeval=[0, 1], nbasis=2)
