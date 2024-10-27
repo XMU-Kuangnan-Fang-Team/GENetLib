@@ -15,7 +15,7 @@ def test_plot_fd():
 
 def test_plot_rawdata():
     func_continuous = sim_data_func(n=1500, m=30, ytype='Continuous', seed=123)
-    plot_rawdata(func_continuous['location'], func_continuous['X'], color = None, pch = 4, cex = 0.9):
+    plot_rawdata(func_continuous['location'], func_continuous['X'], color = None, pch = 4, cex = 0.9)
     assert plt.gcf() is not None
 
     
