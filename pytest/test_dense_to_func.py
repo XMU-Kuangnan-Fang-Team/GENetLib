@@ -46,3 +46,14 @@ def test_dense_to_func_empty():
     X = np.empty((0, 1))
     with pytest.raises(ValueError):
         dense_to_func(location, X, "Bspline", 4, 3)  # location cannot be empty
+
+def test_dense_to_func_missing_data():
+    # Create a list of locations
+    location = np.linspace(0, 10, 100).tolist()
+    X = np.random.rand(100, 1)  # Initial matrix with random values
+    X[X < 0.5] = np.nan  # Set some values to NaN
+    btype = "Bspline"
+    nbasis = 4
+    params = 4  # Order of the B-spline basis
+    tofunc = dense_to_func(location, X, btype, nbasis, params)
+    assert 'coefs' in tofunc
