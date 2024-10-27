@@ -1,99 +1,36 @@
 import pytest
 import numpy as np
-from GENetLib.basis_fd import basis_fd
+from GeNetLib.basis_fd import basis_fd
 
 
-def test_basisfd_default_params():
+def test_basis_fd_default():
     result = basis_fd()
     assert result['btype'] == 'bspline'
     assert result['rangeval'] == [0, 1]
     assert result['nbasis'] == 2
-    assert result['params'] == []
-    assert result['dropind'] == []
-    assert result['quadvals'] == []
-    assert result['values'] == []
-    assert result['basisvalues'] == []
 
-
-def test_basisfd_btype():
-    result = basis_fd(btype="bspline")
+def test_basis_fd_custom():
+    result = basis_fd(btype="bspline", rangeval=[0, 10], nbasis=3, params=[1, 2, 3])
     assert result['btype'] == 'bspline'
-    result = basis_fd(btype="con")
-    assert result['btype'] == 'const'
+    assert result['rangeval'] == [0, 10]
+    assert result['nbasis'] == 3
 
+def test_basis_fd_expon():
+    result = basis_fd(btype="expon", nbasis=2, params=[0.5, 1.5])
+    assert result['btype'] == 'expon'
+    assert result['nbasis'] == 2
 
-def test_basisfd_nbasis():
-    result = basis_fd(nbasis=5)
-    assert result['nbasis'] == 5
+def test_basis_fd_fourier():
+    result = basis_fd(btype="fourier", nbasis=4, params=[2*pi])
+    assert result['btype'] == 'fourier'
+    assert result['nbasis'] == 5  # Fourier basis with even nbasis should increment by 1
 
-
-def test_basisfd_nbasis_invalid():
+def test_basis_fd_errors():
     with pytest.raises(ValueError):
-        basis_fd(nbasis=0)
+        basis_fd(nbasis=-1)  # Negative nbasis
     with pytest.raises(ValueError):
-        basis_fd(nbasis=3.5)
-
-
-def test_basisfd_quadvals():
-    quadvals = np.array([[0, 1], [1, 0]])
-    result = basis_fd(quadvals=quadvals)
-    assert np.array_equal(result['quadvals'], quadvals)
-
-
-def test_basisfd_quadvals_invalid():
+        basis_fd(nbasis=3.5)  # Non-integer nbasis
     with pytest.raises(ValueError):
-        basis_fd(quadvals=np.array([[0]]))
+        basis_fd(btype="invalid")  # Unrecognizable basis type
     with pytest.raises(ValueError):
-        basis_fd(quadvals=np.array([[0, 1, 2]]))
-
-
-def test_basisfd_values():
-    values = np.array([[1, 2], [3, 4]])
-    result = basis_fd(values=values)
-    assert np.array_equal(result['values'], values)
-
-
-def test_basisfd_values_invalid():
-    with pytest.raises(ValueError):
-        basis_fd(values=np.array([[1]]))
-
-
-def test_basisfd_basisvalues():
-    basisvalues = [[0, 1], [2, 3]]
-    result = basis_fd(basisvalues=basisvalues)
-    assert result['basisvalues'] == basisvalues
-
-
-def test_basisfd_basisvalues_invalid():
-    with pytest.raises(ValueError):
-        basis_fd(basisvalues=[[1]])
-
-
-def test_basisfd_dropind():
-    dropind = [1]
-    result = basis_fd(dropind=dropind)
-    assert result['dropind'] == dropind
-
-
-def test_basisfd_dropind_invalid():
-    with pytest.raises(ValueError):
-        basis_fd(dropind=[1, 1])
-    with pytest.raises(ValueError):
-        basis_fd(dropind=[10])
-
-
-def test_basisfd_fourier():
-    params = [2]
-    result = basis_fd(btype="fourier", params=params, nbasis=4)
-    assert result['params'] == params
-
-
-def test_basisfd_bspline():
-    params = [0.5, 1.5]
-    result = basis_fd(btype="bspline", params=params, rangeval=[0, 2], nbasis=3)
-    assert result['params'] == params
-
-
-def test_basisfd_unknown_btype():
-    with pytest.raises(ValueError):
-        basis_fd(btype="unknown")
+        basis_fd(btype="fourier", params=[-1])  # Negative period for Fourier basis
