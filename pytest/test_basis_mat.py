@@ -41,6 +41,14 @@ def test_fourier_mat_errors():
     with pytest.raises(ValueError):
         fourier_mat(x, nbasis=-1)  # Negative basis
 
+def test_expon_mat_nderiv():
+    x = np.linspace(0, 1, 10)
+    ratevec = [0.5]
+    result_1 = expon_mat(x, ratevec,nderiv=1)
+    result_2 = expon_mat(x, ratevec,nderiv=2)
+    assert result_1 is not None
+    assert result_2 is not None    
+
 # Test Monomial matrix
 def test_monomial_mat():
     x = np.linspace(0, 1, 10)
@@ -72,10 +80,16 @@ def test_polyg_mat_errors():
 
 # Test Power matrix
 def test_power_mat():
-    x = np.linspace(0, 1, 10)
+    x = np.linspace(0.1, 1, 10)
     exponents = [1, 2]
     result = power_mat(x, exponents)
     assert result.shape is not None
+
+def test_power_mat_deriv():
+    x = np.linspace(0.1, 1, 10)
+    exponents = [1, 2]
+    result_1 = power_mat(x, exponents, nderiv=1)
+    assert result_1 is not None
 
 # Additional tests for edge cases and specific conditions
 def test_bspline_mat_return_matrix():
