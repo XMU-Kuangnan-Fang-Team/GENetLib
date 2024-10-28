@@ -12,8 +12,8 @@ def test_grid_scalar_ge():
                                         Learning_Rate2=[0.035,0.045], L2=[0.1], Learning_Rate1=[0.04, 0.05, 0.06], L=[0.08, 0.09], 
                                         Num_Epochs=50, t = 0.01, model = None, split_type = 0, ratio = [7, 3], 
                                         important_feature = True, plot = True, model_reg = None, isfunc = False)
-  grid_scalar_ge_res_2 = grid_scalar_ge(data=scalar_binary['data'], ytype='Binary', dim_G=500, dim_E=5, haveGE=False, 
-                                        num_hidden_layers=2, nodes_hidden_layer=[1000,100], 
+  grid_scalar_ge_res_2 = grid_scalar_ge(data=scalar_binary['data'], ytype='Binary', dim_G=1500, dim_E=5, haveGE=False, 
+                                        num_hidden_layers=1, nodes_hidden_layer=[50], 
                                         Learning_Rate2=[0.035,0.045], L2=[0.1], Learning_Rate1=[0.04, 0.05, 0.06], L=[0.08, 0.09], 
                                         Num_Epochs=50, t = 0.01, model = None, split_type = 1, ratio = [7, 2, 1], 
                                         important_feature = False, plot = False, model_reg = None, isfunc = False)
