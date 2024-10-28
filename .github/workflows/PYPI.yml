@@ -15,8 +15,8 @@ jobs:
   build_windows_wheels:
     name: Wheels on Windows
     runs-on: windows-latest
-    if: github.event_name == 'push' && (github.event.changed_files contains 'setup.py') || github.event_name == 'release'
-
+    if: github.event_name == 'push' && contains(github.event.changed_files, 'setup.py') || github.event_name == 'release'
+    
     steps:
       - uses: actions/checkout@v3
         with:
