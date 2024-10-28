@@ -3,77 +3,36 @@ name: PyPI
 on:
   push:
     branches:
-      - master
+      - main
     paths:
-      - "setup.py"
-      - ".github/workflows/pypi.yml"
-  release:
-    types:
-      - published
-  workflow_dispatch:
+      - 'setup.py'
+      - '.github/workflows/pypi.yml'
 
 jobs:
-  check_setup_changed:
+  build-and-publish:
     runs-on: windows-latest
-    outputs:
-      changed: ${{ steps.check.outputs.setup_changed }}
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - id: check
-        run: |
-          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'setup.py')
-          if [ -z "$FILES" ]; then
-            echo "setup_changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "setup_changed=true" >> $GITHUB_OUTPUT
+    - uses: actions/checkout@v3
 
-  build_windows_wheels:
-    needs: check_setup_changed
-    runs-on: windows-latest
-    if: needs.check_setup_changed.outputs.changed == 'true'
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build
 
-      - name: Install build dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
+    - name: Build package
+      run: python -m build
 
-      - name: Build wheels
-        run: |
-          pip run build --no-isolation --config-setting=--no-pure-python
-
-      - name: Check metadata
-        run: |
-          pip install twine
-          twine check dist/*
-
-      - name: Upload wheels to the project's github page
-        uses: actions/upload-artifact@v3
-        with:
-          path: dist\*.whl
-
-  upload_PyPI:
-    needs: [build_windows_wheels, check_setup_changed]
-    runs-on: windows-latest
-    if: github.event_name == 'release' && github.event.action == 'published' && needs.check_setup_changed.outputs.changed == 'true'
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: artifact
-          path: dist
-
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@v1.5.0
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
