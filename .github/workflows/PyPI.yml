@@ -1,22 +1,38 @@
 name: PyPI
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
     paths:
       - "setup.py"
+      - ".github/workflows/pypi.yml"
   release:
     types:
       - published
+  workflow_dispatch:
 
 jobs:
+  check_setup_changed:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.setup_changed }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: check
+        run: |
+          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'setup.py')
+          if [ -z "$FILES" ]; then
+            echo "setup_changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "setup_changed=true" >> $GITHUB_OUTPUT
+
   build_windows_wheels:
-    name: Wheels on Windows
+    needs: check_setup_changed
     runs-on: windows-latest
-    if: github.event_name == 'push' && contains(github.event.changed_files, 'setup.py') || github.event_name == 'release'
-    
+    if: needs.check_setup_changed.outputs.changed == 'true'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -47,18 +63,17 @@ jobs:
           path: dist\*.whl
 
   upload_PyPI:
-    name: Upload to PyPI if release
-    needs: build_windows_wheels
-    runs-on: windows-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
-
+    needs: [build_windows_wheels, check_setup_changed]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published' && needs.check_setup_changed.outputs.changed == 'true'
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: artifact
           path: dist
 
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
