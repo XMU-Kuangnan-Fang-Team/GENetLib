@@ -3,10 +3,11 @@
 </div>
 
 [![pypi](https://img.shields.io/pypi/v/GENetLib?logo=Pypi)](https://pypi.org/project/GENetLib)
-![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-red.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-darkgreen.svg)](https://opensource.org/licenses/MIT)
-[![codecov](https://codecov.io/github/Barry57/GENetLib/graph/badge.svg?token=9J9QMN7L9Z)](https://codecov.io/github/Barry57/GENetLib)
+![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-lightblue.svg)
 [![Build](https://github.com/Barry57/GENetLib/actions/workflows/CI.yml/badge.svg)](https://github.com/Barry57/GENetLib/actions/workflows/CI.yml/badge.svg)
+[![codecov](https://codecov.io/github/Barry57/GENetLib/graph/badge.svg?token=9J9QMN7L9Z)](https://codecov.io/github/Barry57/GENetLib)
+[![License: MIT](https://img.shields.io/badge/License-MIT-darkgreen.svg)](https://opensource.org/licenses/MIT)
+
 
 # GENetLib: A Python Library for Gene–environment Interaction Analysis via Deep Learning
 ## Introduction
