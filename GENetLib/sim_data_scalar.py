@@ -90,6 +90,6 @@ def sim_data_scalar(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Su
                 data.rename(columns={dim_G+dim_E+dim_G*dim_E:'y_binary'},inplace = True)
             else:
                 raise ValueError("Invalid ytype")
-        return data,interactionPos
+        return {'data':data, 'interpos':interactionPos}
     return generate_ge(seed, ytype)
 
