@@ -3,7 +3,7 @@ name: PyPI
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - "setup.py"
       - ".github/workflows/pypi.yml"
