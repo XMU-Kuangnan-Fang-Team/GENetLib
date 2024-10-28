@@ -14,7 +14,7 @@ on:
 
 jobs:
   check_setup_changed:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     outputs:
       changed: ${{ steps.check.outputs.setup_changed }}
     steps:
@@ -64,7 +64,7 @@ jobs:
 
   upload_PyPI:
     needs: [build_windows_wheels, check_setup_changed]
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: github.event_name == 'release' && github.event.action == 'published' && needs.check_setup_changed.outputs.changed == 'true'
     steps:
       - uses: actions/download-artifact@v3
