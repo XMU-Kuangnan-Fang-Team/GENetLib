@@ -71,8 +71,8 @@ See also as [scalar_ge](#scalar_ge), [grid_scalar_ge](#grid_scalar_ge).
 import GENetLib
 from GENetLib.sim_data_scalar import sim_data_scalar
 scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-scalar_survival_linear_data = scalar_survival_linear[0]
-scalar_survival_linear_inter = scalar_survival_linear[1]
+scalar_survival_linear_data = scalar_survival_linear['data']
+scalar_survival_linear_inter = scalar_survival_linear['interpos']
 ```
 <br />
 <br />
@@ -168,7 +168,7 @@ L = 0.09
 Num_Epochs = 100
 t = 0.01
 scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-scalar_ge_res = scalar_ge(scalar_survival_linear[0], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
+scalar_ge_res = scalar_ge(scalar_survival_linear['data'], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
 ```
 <br />
 <br />
@@ -299,7 +299,7 @@ dim_E = 5
 dim_G = 500
 haveGE = True
 scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-grid_scalar_ge_res = grid_scalar_ge(scalar_survival_linear[0], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
+grid_scalar_ge_res = grid_scalar_ge(scalar_survival_linear['data'], ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 1, ratio = [3, 1, 1], plot = True)
 ```
 <br />
 <br />
