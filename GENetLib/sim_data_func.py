@@ -6,6 +6,7 @@ from scipy.interpolate import BSpline, UnivariateSpline
 
 from GENetLib.basis_mat import bspline_mat
 
+
 '''Example data for method func_ge and grid_func_ge'''
 
 def sim_data_func(n, m, ytype, seed = 0):
