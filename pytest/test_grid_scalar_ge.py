@@ -4,9 +4,9 @@ import matplotlib
 matplotlib.use('Agg')
 
 def test_grid_scalar_ge():
-  scalar_continuous = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Continuous', n_inter=30)
-  scalar_binary = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Binary', n_inter=10)
-  scalar_survival = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Survival', n_inter=10, linear = False)
+  scalar_continuous = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Continuous', n_inter=30, seed = 123)
+  scalar_binary = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Binary', n_inter=10, seed = 123)
+  scalar_survival = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Survival', n_inter=10, linear = False, seed = 123)
   grid_scalar_ge_res_1 = grid_scalar_ge(data=scalar_continuous['data'], ytype='Continuous', dim_G=500, dim_E=5, haveGE=True, 
                                         num_hidden_layers=2, nodes_hidden_layer=[1000,100], 
                                         Learning_Rate2=[0.035,0.045], L2=[0.1], Learning_Rate1=[0.04, 0.05, 0.06], L=[0.08, 0.09], 
