@@ -31,6 +31,13 @@ We provide a web-based documentation which introduces the meaning of function pa
 This package has been uploaded to PyPI with previous versions, and the web page is available at
 [PyPI package](https://pypi.org/project/genetlib/). Users can also check [tags](https://github.com/Barry57/GENetLib/releases) to get historical versions.
 
+## Features
+``GENetLib`` has the following features:
+- **Comprehensiveness**: Supports a variety of input and output formats, enabling the construction of comprehensive neural network models for G-E interaction analysis.
+- **Flexibility**: Offers a multitude of parameters allowing users to build models flexibly according to their specific needs.
+- **Functional data compatibility**: Implements methods for functional data analysis (FDA) in Python, facilitating the processing of functional data with Python.
+- **Scalability**: New methods for G-E interaction analysis via deep learning can be easily integrated into the system.
+
 ## Installation
 It is recommended to use ``pip`` for installation:
 ```c
@@ -42,7 +49,7 @@ conda install GENetLib
 ```
 To get further information about installation and independencies, please move to [installation instructions](https://open-box.readthedocs.io/en/latest/).
 
-## Quick start
+## Quick Start
 We start with the two basic functions ``scalar_ge`` and ``func_ge``.
 ### scalar_ge
 ``scalar_ge`` performs G-E interaction analysis via deep leanring when the input is scalar data.
@@ -65,6 +72,7 @@ scalar_ge_res = scalar_ge(scalar_survival_linear['data'], ytype = 'Survival', di
 ```Python
 from GENetLib.sim_data_func import sim_data_func
 from GENetLib.func_ge import func_ge
+
 # Get example data where input is densely measured functional data and output is survival data
 func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
 y = func_continuous['y']
@@ -86,6 +94,9 @@ The main referenced paper is:
 - Ren, R., Fang, K., Zhang, Q., & Ma, S. (2023). FunctanSNP: an R package for functional analysis of dense SNP data (with interactions). Bioinformatics, 39(12), btad741. https://doi.org/10.1093/bioinformatics/btad741
 
 Other referenced papers can be obtained in [references](https://open-box.readthedocs.io/en/latest/).
+
+## License
+GENetLib is licensed under the MIT License. See [LICENSE](https://github.com/Barry57/GENetLib/blob/main/LICENSE) for details.
 
 ## Feedback
 - Welcome to submit [issues](https://github.com/Barry57/GENetLib/issues) or [pull requests](https://github.com/Barry57/GENetLib/pulls).
