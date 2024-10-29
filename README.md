@@ -102,3 +102,9 @@ GENetLib is licensed under the MIT License. See [LICENSE](https://github.com/Bar
 - Welcome to submit [issues](https://github.com/Barry57/GENetLib/issues) or [pull requests](https://github.com/Barry57/GENetLib/pulls).
 - Send an email to Barry57@163.com to contact us.
 - Thanks for all the supports! 👏
+### Stargazers
+<div align="center">
+
+[![Stargazers repo roster for @Barry57/GENetLib](http://reporoster.com/stars/Barry57/GENetLib)](https://github.com/Barry57/GENetLib/stargazers)
+</div>
+
