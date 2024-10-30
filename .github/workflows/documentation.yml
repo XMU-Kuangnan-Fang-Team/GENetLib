@@ -11,13 +11,12 @@ jobs:
     # Functionality for testing documentation builds on multiple OSes and Python versions
     name: Build docs (${{ matrix.python-version }}, ${{ matrix.os }})
     runs-on:
-      labels: GENetLib_windows-latest
+      windows-latest
     defaults:
       run:
         shell: bash -l {0}
     strategy:
       matrix:
-        os: ["windows-latest"]
         python-version: ["3.9"]
 
     steps:
