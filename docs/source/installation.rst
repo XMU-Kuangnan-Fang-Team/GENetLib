@@ -1,10 +1,16 @@
-## Installation
+Installation
+============
+
 It is recommended to use ``pip`` for installation:
-```c
-pip install GENetLib
-```
+
+.. code-block:: shell
+
+    pip install GENetLib
+
 For Linux or Mac users, another option is:
-```c
-conda install GENetLib
-```
-To get further information about installation and independencies, please move to [installation instructions](https://open-box.readthedocs.io/en/latest/).
+
+.. code-block:: shell
+
+    conda install GENetLib
+
+To get further information about installation and dependencies, please move to `installation instructions <https://open-box.readthedocs.io/en/latest/>`_.
