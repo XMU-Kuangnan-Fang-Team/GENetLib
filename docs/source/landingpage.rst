@@ -2,9 +2,9 @@
 
     <div align="center">
 
-.. image:: source/_static/logo.jpg
+.. image:: _static/logo.jpg
    :alt: logo
-   :width: 500
+   :width: 600
 
 .. raw:: html
 
@@ -46,7 +46,7 @@ This package also supports diverse output requirements:
 
 By integrating minimax concave penalty (MCP) and L2-norm regularization within a neural network estimation framework, ``GENetLib`` offers an innovative solution for high-dimensional genetic data analysis. The framework is shown below.
 
-.. image:: image/framework.png
+.. image:: _static/framework.jpg
    :alt: framework
    :width: 600
 
