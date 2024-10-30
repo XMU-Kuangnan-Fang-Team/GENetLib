@@ -70,7 +70,6 @@ html_static_path = ["_static"]
 html_sidebars = {"**": ["sidebar-nav-bs"]}
 html_theme_options = {
     "primary_sidebar_end": [],
-    "footer_items": ["copyright"],
     "icon_links": [
         {
             "name": "GitHub",
