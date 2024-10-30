@@ -1,10 +1,5 @@
 import os
 import sys
-from pathlib import Path
-from typing import Any, Dict
-
-import pydata_sphinx_theme
-from sphinx.application import Sphinx
 
 sys.path.insert(0, os.path.abspath("../.."))
 sys.path.append(os.path.abspath(os.path.join(__file__, "..", "..", "..")))
