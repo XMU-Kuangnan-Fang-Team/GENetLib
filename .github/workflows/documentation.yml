@@ -28,6 +28,10 @@ jobs:
           virtualenvs-in-project: false
           installer-parallel: true
 
+      - name: Set Poetry PATH
+        run: |
+          echo "C:\Users\runneradmin\.local\bin" >> $GITHUB_PATH
+
       - name: Install Pandoc
         run: |
           choco install pandoc
