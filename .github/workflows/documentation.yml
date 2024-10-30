@@ -28,15 +28,16 @@ jobs:
           virtualenvs-in-project: false
           installer-parallel: true
 
-      - name: Set Poetry PATH
-        run: |
-          echo "C:\Users\runneradmin\.local\bin" >> $GITHUB_PATH
-
       - name: Install Pandoc
         run: |
           choco install pandoc
+
+      - name: Add Poetry to PATH
+        run: |
+          echo "$env:APPDATA\Python\Python39\Scripts" >> $env:GITHUB_PATH
 
       - name: Build the documentation with Sphinx
         run: |
           poetry install --all-extras
           poetry run sphinx-build -b html source build/html
+        shell: cmd
