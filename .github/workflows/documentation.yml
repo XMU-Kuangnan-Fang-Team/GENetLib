@@ -39,7 +39,6 @@ jobs:
       - name: Build the documentation with Sphinx
         run: |
           poetry install --all-extras
-          # Windows does not have apt, so we install pandoc using pip instead
           pip install pandoc
           cd docs
           poetry run sphinx-build -b html source build/html
