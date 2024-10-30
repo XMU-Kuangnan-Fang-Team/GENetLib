@@ -1,5 +1,5 @@
 <div align="center">
-<img src="image/logo.jpg" alt="logo" width="500"></img>
+<img src="image/logo.jpg" alt="logo" width="500">
 </div>
 
 [![pypi](https://img.shields.io/pypi/v/GENetLib?logo=Pypi)](https://pypi.org/project/GENetLib)
@@ -23,7 +23,7 @@ This package also supports diverse output requirements:
 By integrating minimax concave penalty (MCP) and $L_2$-norm regularization within a neural network estimation framework, ``GENetLib`` offers an innovative solution for high-dimensional genetic data analysis. The framework is shown below.
 
 <div align="center">
-<img src="image/framework.png" alt="framework" width="600"></img>
+<img src="image/framework.png" alt="framework" width="600">
 </div>
 
 We provide a web-based documentation which introduces the meaning of function parameters, the usage of functions, detailed information about methods, and gives examples for each. The web page is available at
