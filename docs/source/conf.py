@@ -1,20 +1,19 @@
 import os
 import sys
-import shutil
+from pathlib import Path
+from typing import Any, Dict
 
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+import pydata_sphinx_theme
+from sphinx.application import Sphinx
+
+sys.path.insert(0, os.path.abspath("../.."))
+sys.path.append(os.path.abspath(os.path.join(__file__, "..", "..", "..")))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "GENetLib"
 author = "Yuhao Zhong"
-
-sys.path.insert(0, os.path.abspath("../.."))
-sys.path.append(os.path.abspath(os.path.join(__file__, "..", "..", "..")))
 
 
 # -- General configuration ---------------------------------------------------
