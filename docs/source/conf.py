@@ -1,3 +1,5 @@
+import os
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -26,7 +28,7 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_documatt_theme"
-html_static_path = ['_static']
+html_static_path = ['source/_static']
 
 html_logo = 'logo.jpg'
 html_favicon = 'logo.jpg'
