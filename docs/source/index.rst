@@ -9,7 +9,6 @@ GENetLib's documentation
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: CONTENTS
 
    introduction
    installation
