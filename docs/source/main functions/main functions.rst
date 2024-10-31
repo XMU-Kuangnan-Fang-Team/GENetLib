@@ -4,7 +4,7 @@ Main Functions
 .. toctree::
    :maxdepth: 1
    :hidden:
-   :caption: CONTENTS:
+   :caption: Main Functions
 
    sim_data_scalar
    sim_data_func

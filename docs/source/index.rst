@@ -9,12 +9,12 @@ GENetLib's documentation
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption:
+   :caption: CONTENTS
 
    introduction
    installation
-   methods/index
-   main functions/index
+   methods/methods
+   main functions/main functions
    references
    outlook
 
