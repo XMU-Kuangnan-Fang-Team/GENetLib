@@ -28,5 +28,5 @@ exclude_patterns = []
 html_theme = "sphinx_documatt_theme"
 html_static_path = ['_static']
 
-html_logo = 'logo.png'
-html_favicon = 'logo.png'
+html_logo = 'logo.jpg'
+html_favicon = 'logo.jpg'

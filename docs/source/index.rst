@@ -7,14 +7,14 @@ GENetLib's documentation
 ======================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
    :caption: CONTENTS:
 
    introduction
    installation
-   methods
-   examples
+   methods/index
+   main functions/index
    references
    outlook
 
