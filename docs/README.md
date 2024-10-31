@@ -18,6 +18,6 @@ Conduct the following command to generate the content of website:
 ```bash
 make html
 ```
-You can see the website's contents by opening `index.html` file
+You can check the website's contents by opening `index.html` file
 in the directory `docs/build/html` with your browser.
-For more components and details, please refer to [documatt](https://documatt.com/sphinx-themes/)
+For more components and details, please refer to [documatt](https://documatt.com/sphinx-themes/).
