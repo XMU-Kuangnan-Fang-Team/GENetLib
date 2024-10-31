@@ -4,7 +4,7 @@ Methods
 .. toctree::
    :maxdepth: 1
    :hidden:
-   :capton: Methods
+   :caption: Methods
 
    ScalarGE
    FuncGE
