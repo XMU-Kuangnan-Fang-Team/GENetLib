@@ -11,5 +11,10 @@ GENetLib's documentation
    :hidden:
    :caption: CONTENTS:
 
-
+   introduction
+   installation
+   methods
+   examples
+   references
+   outlook
 
