@@ -3,8 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-GENetLib's documentation
-======================================
+Welcome to GENetLib's Documentation!
+=====================================
+
+``GENetLib`` is a Python library for gene–environment interaction nnalysis via deep learning.
+In this documentation, you can obtain:
+- The framework of this package
+- The details of 
+-    
+
 
 .. toctree::
    :maxdepth: 2
