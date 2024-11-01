@@ -17,17 +17,17 @@ In this documentation, you can obtain:
 
 - Examples for main functions
 
-Welcome to provide your feedback, and the ways to contact us are provided in :ref:`Outlook <outlook-label>`.
+Welcome to provide your feedback, and the ways to contact us are provided in :ref:`outlook <outlook-label>`.
 
 
 .. toctree::
    :maxdepth: 2
    :hidden:
 
-   Introduction
-   Installation
-   Methods/methods
-   Main Functions/main functions
-   References
-   Outlook
+   introduction
+   installation
+   methods/methods
+   main functions/main functions
+   references
+   outlook
 
