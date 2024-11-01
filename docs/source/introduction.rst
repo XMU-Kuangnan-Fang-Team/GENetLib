@@ -1,10 +1,12 @@
+Introduction
 ========================================================
 `GENetLib`: A Python Library for Gene–environment Interaction Analysis via Deep Learning
-========================================================
 
 .. image:: _static/logo.jpg
-   :alt: logo
    :width: 500
+   :align: center
+
+----
 
 .. image:: https://img.shields.io/pypi/v/GENetLib?logo=Pypi
    :target: https://pypi.org/project/GENetLib
@@ -21,18 +23,17 @@
 
 `GENetLib` is a Python library designed for gene-environment interaction analysis via neural network, addressing the analytical challenges in complex disease research. 
 This package is capable of handling a variety of input data types:
-- Scalar input data
-- Functional input data (or densely measured data)
+* Scalar input data
+* Functional input data (or densely measured data)
 
 This package also supports diverse output requirements:
-- Continuous output data
-- Binary output data
-- Survival output data
+* Continuous output data
+* Binary output data
+* Survival output data
 
 By integrating minimax concave penalty (MCP) and \( L_2 \)-norm regularization within a neural network estimation framework, `GENetLib` offers an innovative solution for high-dimensional genetic data analysis. The framework is shown below.
 
 .. image:: _static/framework.png
-   :alt: framework
    :width: 600
 
 We provide a web-based documentation which introduces the meaning of function parameters, the usage of functions, detailed information about methods, and gives examples for each. The web page is available at
@@ -41,7 +42,7 @@ This package has been uploaded to PyPI with previous versions, and the web page 
 `PyPI package <https://pypi.org/project/genetlib/>`_.  Users can also check `tags <https://github.com/Barry57/GENetLib/releases>`_  to get historical versions.
 
 Features
-========
+-----------
 
 `GENetLib` has the following features:
 - **Comprehensiveness**: Supports a variety of input and output formats, enabling the construction of comprehensive neural network models for G-E interaction analysis.
