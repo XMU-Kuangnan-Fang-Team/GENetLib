@@ -19,7 +19,7 @@ Then you can instll this package using the code:
 Install from source
 ---------------------
 
-This is recommended if you want to work with the latest development version or if you wish to contribute to skscope.
+If you want to work with the latest development version or wish to contribute to `GENetLib`, this way will be suitable.
 
 
 Then, clone the latest source code from GitHub and enter the directory of
