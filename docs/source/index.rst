@@ -22,7 +22,6 @@ Welcome to provide your feedback, and the ways to contact us are provided in :re
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
 
    introduction
    installation
