@@ -29,14 +29,5 @@ Welcome to provide your feedback, and the ways to contact us are provided in :re
    references
    outlook
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
 
-   introduction
-   installation
-   methods/methods
-   main functions/main functions
-   references
-   outlook
 
