@@ -44,7 +44,7 @@ By integrating minimax concave penalty (MCP) and \( L_2 \)-norm regularization w
    :width: 700
    :align: center
 
-When the input data is scalar data, we adopt the `ScalarGE model <>`. is designed to characterize G-E interaction effects between
+When the input data is scalar data, we adopt the `ScalarGE model <https://genetlib.readthedocs.io/en/latest/methods/ScalarGE.html>`. is designed to characterize G-E interaction effects between
 high-dimensional (scalar) genetic variables and environmental variables.
 
 This package has been uploaded to PyPI with previous versions, and the web page is available at
