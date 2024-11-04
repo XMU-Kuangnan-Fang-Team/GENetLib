@@ -1,2 +1,2 @@
-Function ``plot_func``
+plot_func
 =========================

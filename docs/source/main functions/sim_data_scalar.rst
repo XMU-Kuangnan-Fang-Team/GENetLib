@@ -1,2 +1,2 @@
-Function ``sim_data_scalar``
+sim_data_scalar
 =========================

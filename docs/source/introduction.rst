@@ -20,7 +20,7 @@ Introduction
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 
-`GENetLib` is a Python library designed for gene-environment (G-E) interaction analysis via neural network, 
+**GENetLib** is a Python library designed for gene-environment (G-E) interaction analysis via neural network, 
 addressing the analytical challenges in complex disease research. 
 This package is capable of handling a variety of input data types:
 
@@ -28,8 +28,9 @@ This package is capable of handling a variety of input data types:
 
 - Functional input data (or densely measured data)
 
-When the input data is scalar data, we adopt the :ref:`ScalarGE <scalarge-label>`. is designed to characterize G-E interaction effects between
-high-dimensional (scalar) genetic variables and environmental variables.
+When the input data is scalar data, we adopt the :ref:`ScalarGE model<scalarge-label>`. This model is designed to characterize G-E interaction effects between
+high-dimensional (scalar) genetic variables and environmental variables. When the input data is functional data or densely measured observations, 
+we adopt the :ref:`FuncGE model<funcge-label>`.
 
 This package also supports diverse output requirements:
 
@@ -40,7 +41,7 @@ This package also supports diverse output requirements:
 - Survival output data
 
 By integrating minimax concave penalty (MCP) and \( L_2 \)-norm regularization within a neural network estimation framework, 
-`GENetLib` offers an innovative solution for high-dimensional genetic data analysis. The framework is shown below.
+**GENetLib** offers an innovative solution for high-dimensional genetic data analysis. The framework is shown below.
 
 .. image:: _static/framework.png
    :width: 700

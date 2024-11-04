@@ -1,2 +1,2 @@
-Function ``grid_scalar_ge``
+grid_scalar_ge
 =========================

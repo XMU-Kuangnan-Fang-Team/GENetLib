@@ -1,2 +1,2 @@
-Function ``plot_rawdata``
+plot_rawdata
 =========================

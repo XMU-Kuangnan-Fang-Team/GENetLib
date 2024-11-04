@@ -6,7 +6,7 @@
 Welcome to GENetLib's Documentation!
 =====================================
 
-``GENetLib`` is a Python library for gene–environment interaction nnalysis via deep learning.
+**GENetLib** is a Python library for gene–environment interaction nnalysis via deep learning.
 This documentation aims to help users get a comprehensive understanding of our methods, and get started quickly with this package.
 
 In this documentation, you can obtain:
@@ -17,7 +17,8 @@ In this documentation, you can obtain:
 
 - Examples for main functions
 
-Welcome to provide your feedback, and the ways to contact us are provided in :ref:`outlook <outlook-label>`.
+Welcome to provide your feedback and make contributions to our package, we will be grateful for all the contributors. 
+The ways to contact us are provided in :ref:`outlook <outlook-label>`.
 
 
 .. toctree::

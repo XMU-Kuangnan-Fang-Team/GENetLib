@@ -1,2 +1,2 @@
-Function ``sim_data_func``
+sim_data_func
 ===========================

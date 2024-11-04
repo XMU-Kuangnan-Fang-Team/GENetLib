@@ -1,2 +1,5 @@
-FuncGE Model
+The FuncGE Model
 =========================
+
+.. _funcge-label:
+

@@ -1,2 +1,2 @@
-Function ``grid_func_ge``
+grid_func_ge
 =========================

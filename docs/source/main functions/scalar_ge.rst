@@ -1,2 +1,2 @@
-Function ``scalar_ge``
+scalar_ge
 =========================

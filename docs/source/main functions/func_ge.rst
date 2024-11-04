@@ -1,2 +1,2 @@
-Function ``func_ge``
+func_ge
 =========================
