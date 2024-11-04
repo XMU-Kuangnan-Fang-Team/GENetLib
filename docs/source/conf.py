@@ -32,6 +32,6 @@ html_logo = '_static/logo.jpg'
 html_favicon = '_static/logo.jpg'
 
 html_sidebars = {
-    'index': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'],
-    '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'],
+    'index': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
+    '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
 }
