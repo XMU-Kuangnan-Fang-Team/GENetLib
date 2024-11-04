@@ -3,7 +3,7 @@ Installation
 
 
 Install from PyPI
-^^^^^^^^^^^^^^^^^^
+------------------
 It is recommended to use ``pip`` for installation. You need to check the upgrade at the beginning:
 
 .. code-block:: console
@@ -17,16 +17,13 @@ Then you can instll this package using the code:
    pip install GENetLib
 
 Install from source
-^^^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 If you want to work with the latest development version or wish to contribute to `GENetLib`, this way will be suitable.
 
 
 Then, clone the latest source code from GitHub and enter the directory of
 
-
-For more details, or for installing nightly versions, see the
-`TorchRL installation guide <https://github.com/pytorch/rl#installation>`__.
 
 
 
