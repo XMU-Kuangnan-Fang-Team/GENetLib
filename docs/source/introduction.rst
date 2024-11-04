@@ -28,7 +28,7 @@ This package is capable of handling a variety of input data types:
 
 - Functional input data (or densely measured data)
 
-When the input data is scalar data, we adopt the `ScalarGE model <>`. is designed to characterize G-E interaction effects between
+When the input data is scalar data, we adopt the :ref:`ScalarGE <scalarge-label>`. is designed to characterize G-E interaction effects between
 high-dimensional (scalar) genetic variables and environmental variables.
 
 This package also supports diverse output requirements:
