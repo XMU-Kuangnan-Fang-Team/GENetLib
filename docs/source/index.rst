@@ -19,8 +19,10 @@ In this documentation, you can obtain:
 
 Welcome to provide your feedback, and the ways to contact us are provided in :ref:`outlook <outlook-label>`.
 
+
 .. toctree::
    :maxdepth: 2
+   :hidden:
 
    introduction
    installation
@@ -28,6 +30,4 @@ Welcome to provide your feedback, and the ways to contact us are provided in :re
    main functions/main functions
    references
    outlook
-
-
 
