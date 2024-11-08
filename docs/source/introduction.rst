@@ -54,7 +54,7 @@ By integrating minimax concave penalty (MCP) and L :subscript:`2`-norm regulariz
 
 
 This package has been uploaded to PyPI with previous versions, and the web page is available at
-`PyPI package <https://pypi.org/project/genetlib/>`_.  Users can also check `tags <https://github.com/Barry57/GENetLib/releases>`_  to get historical versions.
+`PyPI package <https://pypi.org/project/genetlib/>`_.  Users can also check `releases <https://github.com/Barry57/GENetLib/releases>`_  to get historical versions.
 
 Features
 -----------
