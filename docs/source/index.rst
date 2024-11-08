@@ -7,10 +7,10 @@ Welcome to GENetLib's Documentation!
 =====================================
 
 .. image:: _static/overall.png
-   :width: 700
+   :width: 1000
    :align: center
 
-**GENetLib** is a Python library for gene–environment interaction nnalysis via deep learning.
+**GENetLib** is a Python library for gene–environment interaction analysis via deep learning.
 This documentation aims to help users get a comprehensive understanding of our methods, and get started quickly with this package.
 
 In this documentation, you can obtain:
