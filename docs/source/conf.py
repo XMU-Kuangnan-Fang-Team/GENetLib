@@ -15,10 +15,7 @@ author = 'Yuhao Zhong'
 
 extensions = [
     'sphinx_documatt_theme',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.viewcode',
-    'sphinxcontrib.bibtex',
+    'sphinxcontrib.bibtex'
 ]
 
 bibtex_bibfiles = ['references.bib'] 
