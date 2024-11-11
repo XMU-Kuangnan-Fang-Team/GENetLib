@@ -46,15 +46,17 @@ To adapt to the multiple output types in clinical analysis, this package support
 - Survival output data
 
 By integrating minimax concave penalty (MCP) and L :subscript:`2`-norm regularization within a neural network estimation framework, 
-**GENetLib** offers an innovative solution for high-dimensional genetic data analysis. The framework is shown below.
+**GENetLib** offers an innovative solution for high-dimensional genetic data analysis. 
+
+Framework
+---------------
+
+The framework of **GENetLib** is shown in the figure below.
 
 .. image:: _static/framework.png
    :width: 700
    :align: center
 
-
-This package has been uploaded to PyPI with previous versions, and the web page is available at
-`PyPI package <https://pypi.org/project/genetlib/>`_.  Users can also check `releases <https://github.com/Barry57/GENetLib/releases>`_  to get historical versions.
 
 Features
 -----------
