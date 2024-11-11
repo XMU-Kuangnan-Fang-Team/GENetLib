@@ -50,7 +50,7 @@ If you prefer to use the setup.py script to install, you can run:
 Dependencies
 ---------------
 
-Dependencies and version control for running GENetLib:
+Dependencies and version control for running **GENetLib**:
 
 - matplotlib >= 3.7.1
 - numpy >= 1.24.3
