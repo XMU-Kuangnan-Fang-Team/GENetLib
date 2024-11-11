@@ -6,13 +6,13 @@ Install from PyPI
 ------------------
 It is recommended to use ``pip`` for installation. You need to check the upgrade at the beginning:
 
-.. code-block:: python
+.. code-block:: bash
    
    pip install --upgrade pip
 
 Then you can instll this package using the code:
 
-.. code-block:: python
+.. code-block:: bash
 
    pip install GENetLib
 
@@ -23,26 +23,26 @@ If you want to work with the latest development version or wish to contribute to
 
 Clone the latest source code from GitHub and navigate into the directory of the cloned project:
 
-.. code-block:: python
+.. code-block:: bash
 
    git clone https://github.com/Barry57/GENetLib.git
    cd GENetLib
 
 Run the following command to install the project:
 
-.. code-block:: python
+.. code-block:: bash
 
    pip install .
 
 Alternatively, if you want to install the project in development mode (which will install the project along with all development dependencies), you can use:
 
-.. code-block:: python
+.. code-block:: bash
 
    pip install -e .
 
 If you prefer to use the setup.py script to install, you can run:
 
-.. code-block:: python
+.. code-block:: bash
 
    python setup.py install
 
