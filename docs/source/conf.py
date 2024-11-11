@@ -18,7 +18,8 @@ extensions = [
     'sphinxcontrib.bibtex'
 ]
 
-bibtex_bibfiles = ['references.bib'] 
+bibtex_bibfiles = ['references.bib']
+bibtex_default_style = 'alpha'
 
 templates_path = ['_templates']
 exclude_patterns = []
