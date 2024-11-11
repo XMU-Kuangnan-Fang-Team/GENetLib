@@ -18,7 +18,7 @@ extensions = [
     'sphinxcontrib.bibtex'
 ]
 
-bibtex_bibfiles = ['references.bib'] 
+bibtex_bibfiles = ['docs/references.bib'] 
 
 templates_path = ['_templates']
 exclude_patterns = []
