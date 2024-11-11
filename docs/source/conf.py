@@ -14,8 +14,14 @@ author = 'Yuhao Zhong'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx_documatt_theme"
+    'sphinx_documatt_theme',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode',
+    'sphinxcontrib.bibtex',
 ]
+
+bibtex_bibfiles = ['references.bib'] 
 
 templates_path = ['_templates']
 exclude_patterns = []
