@@ -19,7 +19,7 @@ extensions = [
 ]
 
 bibtex_bibfiles = ['references.bib']
-bibtex_default_style = 'abbrv'
+bibtex_default_style = 'plain'
 
 templates_path = ['_templates']
 exclude_patterns = []

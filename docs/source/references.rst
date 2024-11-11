@@ -2,5 +2,5 @@ References
 =========================
 
 .. bibliography:: references.bib
-   :style: abbrv
+   :style: plain
    :all:
