@@ -25,7 +25,7 @@ This package has been uploaded to PyPI with previous versions, and the web page 
 `PyPI package <https://pypi.org/project/genetlib/>`_. 
 Users can also check `releases <https://github.com/Barry57/GENetLib/releases>`_  to get historical versions.
 Welcome to provide your feedback and make contributions to our package, we will be grateful for all the contributors. 
-The ways to contact us are provided in :ref:`outlook <outlook-label>`.
+The ways to contact us are provided in :ref:`contributing to GENetLib <contribution-label>`.
 
 
 .. toctree::
@@ -36,5 +36,5 @@ The ways to contact us are provided in :ref:`outlook <outlook-label>`.
    methods/methods
    main functions/main functions
    references
-   outlook
+   contribution
 
