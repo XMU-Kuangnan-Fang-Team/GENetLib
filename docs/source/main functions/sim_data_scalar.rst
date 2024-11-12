@@ -56,8 +56,7 @@ Value
 
 The function **sim_data_scalar** outputs a tuple including generated data and the positions of interaction effect variables.
 
-- **data**: A dataframe contains gene variables, environment variables, interaction variables and output y.
-When the type of output data is "survival", output y is an n*2 array that consists:
+- **data**: A dataframe contains gene variables, environment variables, interaction variables and output y. When the type of output data is "survival", output y is an n*2 array that consists:
 
 1. The minimum of the survival time and censoring time.
 
