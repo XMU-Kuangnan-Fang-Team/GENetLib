@@ -3,6 +3,8 @@ scalar_ge
 
 .. _scalarge-label:
 
+*G-E interaction analysis via deep leanring when the input X is scalar*
+
 Description
 ------------
 
@@ -94,7 +96,7 @@ Here is an example output for an established model:
 In terms of visualization, this function can output the line plot of residuals with the number of neural network epochs. Here is an example output:
 
 .. image:: /_static/scalar_ge_train.png
-   :width: 700
+   :width: 500
    :align: center
 
 
