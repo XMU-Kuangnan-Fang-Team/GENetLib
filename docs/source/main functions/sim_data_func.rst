@@ -1,9 +1,6 @@
 sim_data_func
 ===========================
 
-sim_data_scalar
-=========================
-
 .. _simdatascalar-label:
 
 Description
@@ -45,7 +42,7 @@ This part shows the meanings and data types of parameters. Users can check the t
 Value
 -------
 
-The function **sim_data_func** outputs a dictionary including response variable y, scalar variable z and sequence (genotypes) data X..
+The function **sim_data_func** outputs a dictionary including response variable y, scalar variable z and sequence (genotypes) data X.
 
 - **x**: a matrix representing the sequence data, with the number of rows equal to the number of samples.
 
