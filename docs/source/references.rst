@@ -4,7 +4,7 @@ References
 Main References
 ----------------
 
-The main referenced paper is:
+The main referenced paper are:
 
 - Shuni Wu, Yaqing Xu, Qingzhao Zhang, and Shuangge Ma. Gene–environment interaction analysis via deep learning. Genetic epidemiology, 47(3):261–286, 2023.
 
@@ -18,6 +18,7 @@ This paper is available at https://doi.org/10.1093/bioinformatics/btad741.
 Complete References
 --------------------
 
+The complete referenced paper are listed below:
 
 - [1] Hugues Aschard, Martin D Tobin, Dana B Hancock, David Skurnik, Akshay Sood, Alan James, Albert Vernon Smith, Ani W Manichaikul, Archie Campbell, Bram P Prins, and others. Evidence for large-scale gene-by-smoking interaction effects on pulmonary function. International journal of epidemiology, 46(3):894–904, 2017.
 
