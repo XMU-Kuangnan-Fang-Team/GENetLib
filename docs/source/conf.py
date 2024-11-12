@@ -33,8 +33,8 @@ html_static_path = ["_static"]
 html_theme = "sphinx_documatt_theme"
 
 
-html_logo = 'logo/logo.jpg'
-html_favicon = 'logo/logo.jpg'
+html_logo = 'img_logo/logo.jpg'
+html_favicon = 'img_logo/logo.jpg'
 
 html_sidebars = {
     'index': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
