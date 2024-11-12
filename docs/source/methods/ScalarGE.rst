@@ -46,21 +46,21 @@ We designed three types of output layers for different outcomes:
 For the continuous layer, we adopt the following loss function:
 
 .. math::
-    \l_{\text{continuous}}(\boldsymbol{\theta})=\frac{1}{n}\sum_{i=1}^n \left[ y_i-g(\boldsymbol{W}_i\boldsymbol{\theta})\right]^2
+    l_{\text{continuous}}(\boldsymbol{\theta})=\frac{1}{n}\sum_{i=1}^n \left[ y_i-g(\boldsymbol{W}_i\boldsymbol{\theta})\right]^2
 
 where :math:`\boldsymbol{\theta}` represents the neural network weights, and :math:`g` is the functional form.
 
 For the binary layer, the loss function :math:`l(\boldsymbol{\theta})` is formulated as:
 
 .. math::
-    \l_{\text{binary}}(\boldsymbol{\theta}) = -\frac{1}{n} \sum_{i=1}^n \left[ y_i\log(p_i) + (1 - y_i) \log (1 - p_i)-\boldsymbol{W}_i \boldsymbol{\theta} \right]
+    l_{\text{binary}}(\boldsymbol{\theta}) = -\frac{1}{n} \sum_{i=1}^n \left[ y_i\log(p_i) + (1 - y_i) \log (1 - p_i)-\boldsymbol{W}_i \boldsymbol{\theta} \right]
 
 where :math:`p_i = (1 + e^{-\boldsymbol{W}_i \boldsymbol{\theta}})^{-1}` is the sigmoid function, and :math:`y_i` represents the binary outcome.
 
 For the Cox layer, the loss function is derived from the partial likelihood of the Cox model:
 
 .. math::
-    \l_{\text{Cox}}(\boldsymbol{\theta})=-\sum_{i:\delta_{i}=1}\biggl[h_{\boldsymbol{\theta}}(\boldsymbol{W}_i)-\log{\sum_{j\in R(T_{i})}e^{h_{\boldsymbol{\theta}}(\boldsymbol{W}_j)}}\biggr]
+    l_{\text{Cox}}(\boldsymbol{\theta})=-\sum_{i:\delta_{i}=1}\biggl[h_{\boldsymbol{\theta}}(\boldsymbol{W}_i)-\log{\sum_{j\in R(T_{i})}e^{h_{\boldsymbol{\theta}}(\boldsymbol{W}_j)}}\biggr]
 
 where :math:`y_i` and :math:`c_i` represent the survival time and censoring time, respectively. The minimum of :math:`y_i` and :math:`c_i` is denoted by :math:`T_i`, and the event indicator :math:`\delta_i` is defined as :math:`I(y_i \leq c_i)`.
 The at-risk set at time :math:`T_i` is :math:`R(T_i) = \{i' : T_{i'} \geq T_i\}`, and :math:`h_{\boldsymbol{\theta}}` is the prognostic index output by the model.
@@ -75,7 +75,7 @@ The coefficient vector associated with the corresponding G and G-E variables in 
 Let :math:`K` denote the total number of fully connected layers in the network, and :math:`\omega_k` be the weight matrix for the :math:`k`-th layer. The objective function is:
 
 .. math::
-    \L(\boldsymbol{\theta}) = l_{\cdot}(\boldsymbol{\theta}) + \sum_{j=1}^p\rho(||\boldsymbol{b_j}||;\lambda_1,s) + \sum_{j=1}^p \sum_{k=1}^q \rho(|\beta_{kj}|; \lambda_2, s) + \lambda \biggl( \sum_{k=1}^K||\omega_k||_F^2 \biggr)
+    L(\boldsymbol{\theta}) = l_{\cdot}(\boldsymbol{\theta}) + \sum_{j=1}^p\rho(||\boldsymbol{b_j}||;\lambda_1,s) + \sum_{j=1}^p \sum_{k=1}^q \rho(|\beta_{kj}|; \lambda_2, s) + \lambda \biggl( \sum_{k=1}^K||\omega_k||_F^2 \biggr)
 
 where :math:`l_{\cdot}(\boldsymbol{\theta})` is the corresponding loss function depending on outcomes, :math:`|\cdot|` denotes the :math:`L_2`-norm, :math:`\rho(t; \lambda, s) = \lambda \int_0^{|t|} \left(1 - \frac{x}{\lambda s}\right)+ dx`
 is the minimax concave penalty (MCP), and :math:`\lambda_1, \lambda_2 > 0` are tuning parameters. :math:`|\cdot|_{F}` denotes the Frobenius norm of a matrix, and :math:`\lambda > 0` is another tuning parameter.
