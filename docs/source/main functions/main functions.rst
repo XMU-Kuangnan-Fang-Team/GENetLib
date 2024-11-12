@@ -1,6 +1,8 @@
 Main Functions
 ======================================
 
+In this section, we introduce the main functions of **GENetLib** in detail.
+
 .. toctree::
    :maxdepth: 1
    :hidden:

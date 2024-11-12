@@ -77,9 +77,9 @@ The function **scalar_ge** outputs a tuple including training results of the Sca
 
 - Residual of the validation set.
 
-- C index(y is survival) or R2(y is continuous or binary) of the training set.
+- C index (y is survival) or R2 (y is continuous or binary) of the training set.
 
-- C index(y is survival) or R2(y is continuous or binary) of the validation set.
+- C index (y is survival) or R2 (y is continuous or binary) of the validation set.
 
 - A neural network after training.
 

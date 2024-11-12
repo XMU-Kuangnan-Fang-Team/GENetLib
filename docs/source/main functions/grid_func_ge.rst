@@ -34,7 +34,6 @@ This part shows the meanings and data types of parameters. Users can check the t
 
 
 
-
 Value
 -------
 
@@ -46,9 +45,9 @@ The function **grid_func_ge** outputs a tuple including training results and opt
 
 - Residual of the validation set.
 
-- C index(y is survival) or R2(y is continuous or binary) of the training set.
+- C index (y is survival) or R2 (y is continuous or binary) of the training set.
 
-- C index(y is survival) or R2(y is continuous or binary) of the validation set.
+- C index (y is survival) or R2 (y is continuous or binary) of the validation set.
 
 - A neural network after training.
 
