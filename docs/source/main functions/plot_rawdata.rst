@@ -37,7 +37,7 @@ This part shows the meanings and data types of parameters. Users can check the t
    * - **X**
      - matrix, represents the sequence data with the number of rows equal to the number of samples.
    * - **color**
-     - str, Aspecification for the default plotting color.
+     - str, a specification for the default plotting color.
    * - **pch**
      - float, either an integer specifying a symbol or a single character to be used as the default in plotting points.
    * - **cex**
@@ -52,13 +52,21 @@ Value
 The function **plot_rawdata** plots the figure of the sequence (genotypes) data.
 Here are two example graphs for this function:
 
-.. image:: /_static/plot_rawdata_1.png
-   :width: 500
-   :align: center
+.. raw:: html
 
-.. image:: /_static/plot_rawdata_2.png
-   :width: 500
-   :align: center
+   <div style="text-align: center;">
+
+.. |image1| image:: /_static/plot_rawdata_1.png
+   :width: 350px
+
+.. |image2| image:: /_static/plot_rawdata_2.png
+   :width: 350px
+
+|image1| |image2|
+
+.. raw:: html
+
+   </div>
 
 
 Examples
