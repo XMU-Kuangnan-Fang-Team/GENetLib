@@ -3,7 +3,7 @@ scalar_ge
 
 .. _scalarge-label:
 
-*G-E interaction analysis via deep leanring when the input X is scalar*
+*G-E interaction analysis via deep leanring when the input X is scalar.*
 
 Description
 ------------

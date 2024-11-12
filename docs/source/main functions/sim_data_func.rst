@@ -1,7 +1,7 @@
 sim_data_func
 ===========================
 
-.. _simdatascalar-label:
+.. _simdatafunc-label:
 
 Description
 ------------
