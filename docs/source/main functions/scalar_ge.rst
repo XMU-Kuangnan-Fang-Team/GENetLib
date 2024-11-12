@@ -6,7 +6,7 @@ scalar_ge
 Description
 ------------
 
-This function provides an approach based on deep neural network in conjunction with MCP and L :subscript:`2`-norm penalizations which can simultaneously conduct model estimation and selection of important main G effects and G–E interactions, while uniquely respecting the "main effects, interactions" variable selection hierarchy.
+This function provides an approach based on neural network in conjunction with MCP and L :subscript:`2` penalizations which can simultaneously conduct model estimation and selection of important main G effects and G–E interactions, while uniquely respecting the "main effects, interactions" variable selection hierarchy.
 
 See also at :ref:`sim_data_scalar <simdatascalar-label>` and :ref:`grid_scalar_ge <gridscalarge-label>`.
 
@@ -70,12 +70,19 @@ Value
 -------
 
 The function **scalar_ge** outputs a tuple including training results of the ScalarGE model:
+
 - Residual of the training set.
+
 - Residual of the validation set.
+
 - C index(y is survival) or R2(y is continuous or binary) of the training set.
+
 - C index(y is survival) or R2(y is continuous or binary) of the validation set.
+
 - A neural network after training.
+
 - Important features of gene variables.
+
 - Important features of G-E interaction variables.
 
 Here is an example output for an established model:
