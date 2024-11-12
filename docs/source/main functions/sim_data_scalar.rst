@@ -9,7 +9,7 @@ Description
 This function is used to generate the example data for functions **scalar_ge** and **grid_scalar_ge**.
 Users can customize the outcomes using the parameter shown in the parameter table below.
 
-See also at :ref:`**scalar_ge** <scalarge-label>` and :ref:`**grid_scalar_ge** <gridscalarge-label>`.
+See also at :ref:`scalar_ge <scalarge-label>` and :ref:`grid_scalar_ge <gridscalarge-label>`.
 
 Usage
 ------
@@ -24,42 +24,31 @@ Parameters
 This part shows the meanings and data types of parameters. Users can check the table below to customize the simulation data.
 
 .. list-table:: 
-   :widths: 20 10 70
+   :widths: 30 70
    :header-rows: 1
    :align: center
 
    * - Parameter
-     - | 
      - Description
-   * - rho_G
-     - | 
+   * - **rho_G**
      - numeric, correlation of gene variables.
-   * - rho_E
-     - | 
+   * - **rho_E**
      - numeric, correlation of environment variables.
-   * - dim_G
-     - | 
+   * - **dim_G**
      - numeric, dimension of gene variables.
-   * - dim_E
-     - | 
+   * - **dim_E**
      - numeric, dimension of environment variables.
-   * - n
-     - | 
+   * - **n**
      - numeric, sample size.
-   * - dim_E_Sparse
-     - | 
+   * - **dim_E_Sparse**
      - numeric, dimension of sparse environment variables.
-   * - ytype
-     - | 
+   * - **ytype**
      - character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is survival.
-   * - n_inter
-     - | 
+   * - **n_inter**
      - numeric, number of interaction effect variables.
-   * - linear
-     - | 
+   * - **linear**
      - bool, "True" or "False", whether or not to generate linear data. The default is True.
-   * - seed
-     - | 
+   * - **seed**
      - numeric, random seeds each time when data is generated.
 
 Value
@@ -67,14 +56,14 @@ Value
 
 The function **sim_data_scalar** outputs a tuple including generated data and the positions of interaction effect variables.
 
-**data**: A dataframe contains gene variables, environment variables, interaction variables and output y.
+- **data**: A dataframe contains gene variables, environment variables, interaction variables and output y.
 When the type of output data is "survival", output y is an n*2 array that consists:
 
-- The minimum of the survival time and censoring time.
+1. The minimum of the survival time and censoring time.
 
-- The event indicator.
+2. The event indicator.
 
-**interaction effect variables**: An array contains the positions of interaction effect variables.
+- **interaction effect variables**: An array contains the positions of interaction effect variables.
 
 
 
@@ -85,7 +74,6 @@ Here is a quick example for using this function:
 
 .. code-block:: python
 
-   import GENetLib
    from GENetLib.sim_data_scalar import sim_data_scalar
    scalar_survival_linear = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=1500, dim_E_Sparse=2, ytype='Survival', n_inter=30)
    scalar_survival_linear_data = scalar_survival_linear['data']
