@@ -103,6 +103,16 @@ Here is an example output for an established model:
 
 In terms of visualization, this function can output the plots of reconstructed functions. Here is an example output:
 
+
+.. figure:: image1.png
+   :figclass: align-center
+
+.. figure:: image2.png
+   :figclass: align-center
+
+.. figure:: image3.png
+   :figclass: align-center
+   
 .. |image1| image:: /_static/func_ge_0.png
    :width: 200px
 
@@ -112,15 +122,10 @@ In terms of visualization, this function can output the plots of reconstructed f
 .. |image3| image:: /_static/func_ge_2.png
    :width: 200px
 
-.. raw:: html
 
-   <div style="text-align: center">
 
-.. |image1| |image2| |image3|
+|image1| |image2| |image3|
 
-.. raw:: html
-
-   </div>
 
 
 
