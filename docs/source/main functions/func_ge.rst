@@ -108,13 +108,13 @@ In terms of visualization, this function can output the plots of reconstructed f
    <div style="text-align: center;">
 
 .. |image1| image:: /_static/func_ge_0.png
-   :width: 200px
+   :width: 250px
 
 .. |image2| image:: /_static/func_ge_1.png
-   :width: 200px
+   :width: 250px
 
 .. |image3| image:: /_static/func_ge_2.png
-   :width: 200px
+   :width: 250px
 
 |image1| |image2| |image3|
 
