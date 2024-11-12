@@ -24,32 +24,43 @@ Parameters
 This part shows the meanings and data types of parameters. Users can check the table below to customize the simulation data.
 
 .. list-table:: 
-   :widths: 20 80
+   :widths: 20 10 70
    :header-rows: 1
    :align: center
 
    * - Parameter
+     - | 
      - Description
-   * - |rho_G|
-     - |numeric, correlation of gene variables.|
-   * - |rho_E|
-     - |numeric, correlation of environment variables.|
-   * - |dim_G|
-     - |numeric, dimension of gene variables.|
-   * - |dim_E|
-     - |numeric, dimension of environment variables.|
-   * - |n|
-     - |numeric, sample size.|
-   * - |dim_E_Sparse|
-     - |numeric, dimension of sparse environment variables.|
-   * - |ytype|
-     - |character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is survival.|
-   * - |n_inter|
-     - |numeric, number of interaction effect variables.|
-   * - |linear|
-     - |bool, "True" or "False", whether or not to generate linear data. The default is True.|
-   * - |seed|
-     - |numeric, random seeds each time when data is generated.|
+   * - rho_G
+     - | 
+     - numeric, correlation of gene variables.
+   * - rho_E
+     - | 
+     - numeric, correlation of environment variables.
+   * - dim_G
+     - | 
+     - numeric, dimension of gene variables.
+   * - dim_E
+     - | 
+     - numeric, dimension of environment variables.
+   * - n
+     - | 
+     - numeric, sample size.
+   * - dim_E_Sparse
+     - | 
+     - numeric, dimension of sparse environment variables.
+   * - ytype
+     - | 
+     - character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is survival.
+   * - n_inter
+     - | 
+     - numeric, number of interaction effect variables.
+   * - linear
+     - | 
+     - bool, "True" or "False", whether or not to generate linear data. The default is True.
+   * - seed
+     - | 
+     - numeric, random seeds each time when data is generated.
 
 Value
 -------
