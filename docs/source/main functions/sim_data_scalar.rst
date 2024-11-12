@@ -14,7 +14,7 @@ See also at :ref:`scalar_ge <scalarge-label>` and :ref:`grid_scalar_ge <gridscal
 Usage
 ------
 
-.. code-block:: c
+.. code-block:: python
 
    sim_data_scalar(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse=0, ytype='Survival', n_inter=None, linear=True, seed=0)
 
@@ -24,8 +24,9 @@ Parameters
 .. list-table::
    :widths: 20 80
    :header-rows: 1
+   :align: center
 
-   * - Argument
+   * - Parameter
      - Description
    * - rho_G
      - numeric, correlation of gene variables.
@@ -55,7 +56,9 @@ The function **sim_data_scalar** outputs a tuple including generated data and th
 
 **data**: A dataframe contains gene variables, environment variables, interaction variables and output y.
 When the type of output data is "survival", output y is an n*2 array that consists:
+
 - The minimum of the survival time and censoring time.
+
 - The event indicator.
 
 **interaction effect variables**: An array contains the positions of interaction effect variables.
