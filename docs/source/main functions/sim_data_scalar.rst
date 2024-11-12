@@ -7,9 +7,9 @@ Description
 ------------
 
 This function is used to generate the example data for functions **scalar_ge** and **grid_scalar_ge**.
-Users can customize the outcomes using the parameter shown in the parameter list below.
+Users can customize the outcomes using the parameter shown in the parameter table below.
 
-See also at :ref:`scalar_ge <scalarge-label>` and :ref:`grid_scalar_ge <gridscalarge-label>`.
+See also at :ref:`**scalar_ge** <scalarge-label>` and :ref:`**grid_scalar_ge** <gridscalarge-label>`.
 
 Usage
 ------
@@ -21,33 +21,35 @@ Usage
 Parameters
 ----------
 
-.. list-table::
+This part shows the meanings and data types of parameters. Users can check the table below to customize the simulation data.
+
+.. list-table:: 
    :widths: 20 80
    :header-rows: 1
    :align: center
 
    * - Parameter
      - Description
-   * - rho_G
-     - numeric, correlation of gene variables.
-   * - rho_E
-     - numeric, correlation of environment variables.
-   * - dim_G
-     - numeric, dimension of gene variables.
-   * - dim_E
-     - numeric, dimension of environment variables.
-   * - n
-     - numeric, sample size.
-   * - dim_E_Sparse
-     - numeric, dimension of sparse environment variables.
-   * - ytype
-     - character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is survival.
-   * - n_inter
-     - numeric, number of interaction effect variables.
-   * - linear
-     - bool, "True" or "False", whether or not to generate linear data. The default is True.
-   * - seed
-     - numeric, random seeds each time when data is generated.
+   * - |rho_G|
+     - |numeric, correlation of gene variables.|
+   * - |rho_E|
+     - |numeric, correlation of environment variables.|
+   * - |dim_G|
+     - |numeric, dimension of gene variables.|
+   * - |dim_E|
+     - |numeric, dimension of environment variables.|
+   * - |n|
+     - |numeric, sample size.|
+   * - |dim_E_Sparse|
+     - |numeric, dimension of sparse environment variables.|
+   * - |ytype|
+     - |character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is survival.|
+   * - |n_inter|
+     - |numeric, number of interaction effect variables.|
+   * - |linear|
+     - |bool, "True" or "False", whether or not to generate linear data. The default is True.|
+   * - |seed|
+     - |numeric, random seeds each time when data is generated.|
 
 Value
 -------
@@ -67,6 +69,8 @@ When the type of output data is "survival", output y is an n*2 array that consis
 
 Examples
 -------------
+
+Here is a quick example for using this function:
 
 .. code-block:: python
 
