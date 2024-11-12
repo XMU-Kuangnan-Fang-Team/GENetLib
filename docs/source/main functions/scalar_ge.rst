@@ -6,7 +6,7 @@ scalar_ge
 Description
 ------------
 
-This function provides an approach based on deep neural network in conjunction with
+This function provides an approach based on deep neural network, conjuncting with
 MCP and L :subscript:`2`-norm penalizations which can simultaneously conduct model estimation and selection of
 important main G effects and G–E interactions,
 while uniquely respecting the "main effects, interactions" variable selection hierarchy.
@@ -83,13 +83,13 @@ The function **scalar_ge** outputs a tuple including training results of the Sca
 
 Here is an example output for an established model:
 
-.. image:: scalar_ge.png
+.. image:: _static/scalar_ge.png
    :width: 700
    :align: center
 
 In terms of visualization, this function can output the line plot of residuals with the number of neural network epochs. Here is an example output:
 
-.. image:: scalar_ge_train.png
+.. image:: _static/scalar_ge_train.png
    :width: 700
    :align: center
 
