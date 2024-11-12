@@ -1,7 +1,7 @@
 Introduction
 ==================
 
-.. image:: /static_/logo.jpg
+.. image:: logo.jpg
    :width: 700
    :align: center
 
