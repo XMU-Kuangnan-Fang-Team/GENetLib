@@ -112,7 +112,15 @@ In terms of visualization, this function can output the plots of reconstructed f
 .. |image3| image:: /_static/func_ge_2.png
    :width: 200px
 
-|image1| |image2| |image3|
+.. raw:: html
+
+   <div style="text-align: center">
+
+.. |image1| |image2| |image3|
+
+.. raw:: html
+
+   </div>
 
 
 
