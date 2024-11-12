@@ -5,7 +5,41 @@ The ScalarGE Model
 
 The ScalarGE model is designed to characterize gene-environment (G-E) interaction effects between high-dimensional (scalar) genetic variables and environmental variables.
 
-Consider a dataset with :math:`n` independent individuals. Let :math:`\boldsymbol{y} = (y_1, \ldots, y_n)^{\top}` represent the outcome variables, the G variables as the :math:`n \times p` matrix :math:`\boldsymbol{X}=(\boldsymbol{X}_1, \ldots, \boldsymbol{X}_n)^{\top}` where :math:`\boldsymbol{X}_i=(X_{i1}, \dots, X_{ip})`, and the E variables as the :math:`n \times q` matrix :math:`\boldsymbol{Z} = (\boldsymbol{Z}_1, \ldots, \boldsymbol{Z}_n)^{\top}` where :math:`\boldsymbol{Z}_i=(Z_{i1}, \dots, Z_{iq})`. Define :math:`\boldsymbol{V}_i = \boldsymbol{Z}_i \otimes \boldsymbol{X}_i` and :math:`\boldsymbol{V} = (\boldsymbol{V}_1, \ldots, \boldsymbol{V}_n)^\top`, making :math:`V` an :math:`n \times (p \times q)` matrix that represents the G-E interaction variables. Thus, we define :math:`\boldsymbol{W}=(\boldsymbol{X}, \boldsymbol{V}, \boldsymbol{Z})` as an :math:`n \times (p + p \times q + q)` matrix, where :math:`\boldsymbol{W}_i` is the variable set for the :math:`i`-th individual. The output layer is flexibly specified based on the outcome type. We designed three types of output layers for different outcomes: (i) binary layer, tailored for binary outcomes such as treatment response; (ii) continuous layer, suited for outcomes like disease risk; and (iii) Cox layer, applicable to survival outcomes such as time to an event.
+
+Notation
+----------
+
+Consider a dataset with :math:`n` independent individuals.
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+   :align: center
+
+   * - Parameter
+     - Notation
+   * - outcome variables
+     - :math:`\boldsymbol{y} = (y_1, \ldots, y_n)^{\top}`
+   * - G variables
+     - :math:`\boldsymbol{X}=(\boldsymbol{X}_1, \ldots, \boldsymbol{X}_n)^{\top}` where :math:`\boldsymbol{X}_i=(X_{i1}, \dots, X_{ip})`
+   * - E variables
+     - :math:`\boldsymbol{Z} = (\boldsymbol{Z}_1, \ldots, \boldsymbol{Z}_n)^{\top}` where :math:`\boldsymbol{Z}_i=(Z_{i1}, \dots, Z_{iq})`
+   * - G-E interaction variables
+     - :math:`\boldsymbol{V}_i = \boldsymbol{Z}_i \otimes \boldsymbol{X}_i` and :math:`\boldsymbol{V} = (\boldsymbol{V}_1, \ldots, \boldsymbol{V}_n)^\top`
+
+Thus, we define :math:`\boldsymbol{W}=(\boldsymbol{X}, \boldsymbol{V}, \boldsymbol{Z})` where :math:`\boldsymbol{W}_i` is the variable set for the :math:`i`-th individual.
+
+
+Loss Functions
+---------------
+
+We designed three types of output layers for different outcomes:
+
+- Binary layer, tailored for binary outcomes such as treatment response.
+
+- Continuous layer, suited for outcomes like disease risk.
+
+- Cox layer, applicable to survival outcomes such as time to an event.
 
 For the continuous layer, we adopt the following loss function:
 :math:`l_{\text{continuous}}(\boldsymbol{\theta})=\frac{1}{n}\sum_{i=1}^n \left[ y_i-g(\boldsymbol{W}_i\boldsymbol{\theta})\right]^2,`
