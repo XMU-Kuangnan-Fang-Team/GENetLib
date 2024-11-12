@@ -104,13 +104,13 @@ Here is an example output for an established model:
 In terms of visualization, this function can output the plots of reconstructed functions. Here is an example output:
 
 .. |image1| image:: /_static/func_ge_0.png
-   :width: 300px
+   :width: 200px
 
 .. |image2| image:: /_static/func_ge_1.png
-   :width: 300px
+   :width: 200px
 
 .. |image3| image:: /_static/func_ge_2.png
-   :width: 300px
+   :width: 200px
 
 |image1| |image2| |image3|
 
