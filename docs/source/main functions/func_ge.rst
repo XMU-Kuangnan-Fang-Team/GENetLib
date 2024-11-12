@@ -102,17 +102,11 @@ Here is an example output for an established model:
    :align: center
 
 In terms of visualization, this function can output the plots of reconstructed functions. Here is an example output:
-
-
-.. figure:: /_static/func_ge_0.png
-   :figclass: align-center
-
-.. figure:: /_static/func_ge_1.png
-   :figclass: align-center
-
-.. figure:: /_static/func_ge_2.png
-   :figclass: align-center
    
+.. raw:: html
+
+   <div style="text-align: center;">
+
 .. |image1| image:: /_static/func_ge_0.png
    :width: 200px
 
@@ -122,9 +116,11 @@ In terms of visualization, this function can output the plots of reconstructed f
 .. |image3| image:: /_static/func_ge_2.png
    :width: 200px
 
-
-
 |image1| |image2| |image3|
+
+.. raw:: html
+
+   </div>
 
 
 

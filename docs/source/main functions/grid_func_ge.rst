@@ -64,15 +64,6 @@ Here is an example output for an established model:
 
 In terms of visualization, this function can output the plots of reconstructed functions. Here is an example output:
 
-
-.. figure:: /_static/grid_func_ge_0.png
-   :figclass: align-center
-
-.. figure:: /_static/grid_func_ge_1.png
-   :figclass: align-center
-
-.. figure:: /_static/grid_func_ge_2.png
-   :figclass: align-center
    
 .. |image1| image:: /_static/grid_func_ge_0.png
    :width: 200px
