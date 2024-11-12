@@ -1,5 +1,5 @@
 The ScalarGE Model
 =========================
 
-.. _scalarge-label:
+.. _scalargemodel-label:
 

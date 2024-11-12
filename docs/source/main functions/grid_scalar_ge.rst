@@ -11,7 +11,7 @@ Description
 
 This function performs grid search for **scalar_ge** over a grid of values for the regularization parameter `L`, `L2`` and learning rate `Learning_Rate1`, `Learning_Rate2`.
 
-See also at :ref:`sim_data_scalar <simdatascalar-label>` and :ref:`scalar_ge <scalarge-label>`.
+See also at :ref:`sim_data_scalar <simdatascalar-label>` and :ref:`scalar_ge <scalarge-label>`. The model is :ref:`ScalarGE <scalargemodel-label>`.
 
 
 Usage
@@ -25,7 +25,7 @@ Usage
 Parameters
 ----------
 
-This part shows the meanings and data types of parameters. Users can check the table below to build a customizable ScalarGE model.
+This part shows the meanings and data types of parameters. Users can check the table below to build a optimal ScalarGE model with given parameters.
 
 .. list-table:: 
    :widths: 30 70
@@ -75,7 +75,7 @@ This part shows the meanings and data types of parameters. Users can check the t
 Value
 -------
 
-The function "grid_scalar_ge" outputs a tuple including training results and optimal parameters of the ScalarGE model.
+The function **grid_scalar_ge** outputs a tuple including training results and optimal parameters of the ScalarGE model.
 
 - Values of tunning parameters after grid search.
 

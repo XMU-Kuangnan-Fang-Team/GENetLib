@@ -10,7 +10,7 @@ Description
 
 This function provides an approach based on neural network in conjunction with MCP and L :subscript:`2` penalizations which can simultaneously conduct model estimation and selection of important main G effects and G–E interactions, while uniquely respecting the "main effects, interactions" variable selection hierarchy.
 
-See also at :ref:`sim_data_scalar <simdatascalar-label>` and :ref:`grid_scalar_ge <gridscalarge-label>`.
+See also at :ref:`sim_data_scalar <simdatascalar-label>` and :ref:`grid_scalar_ge <gridscalarge-label>`. The model is :ref:`ScalarGE <scalargemodel-label>`.
 
 Usage
 ------

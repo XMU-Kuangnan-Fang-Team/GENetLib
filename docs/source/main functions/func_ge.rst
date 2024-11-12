@@ -10,7 +10,7 @@ Description
 
 This function provides an approach based on neural network in conjunction with MCP and L :subscript:`2` penalizations which treats functional data or discrete realizations of functional data.
 
-See also at :ref:`sim_data_func <simdatafunc-label>` and :ref:`grid_func_ge <gridfuncge-label>`.
+See also at :ref:`sim_data_func <simdatafunc-label>` and :ref:`grid_func_ge <gridfuncge-label>`. The model is :ref:`FuncGE <funcgemodel-label>`.
 
 Usage
 ------
@@ -104,13 +104,13 @@ Here is an example output for an established model:
 In terms of visualization, this function can output the plots of reconstructed functions. Here is an example output:
 
 
-.. figure:: image1.png
+.. figure:: /_static/func_ge_0.png
    :figclass: align-center
 
-.. figure:: image2.png
+.. figure:: /_static/func_ge_1.png
    :figclass: align-center
 
-.. figure:: image3.png
+.. figure:: /_static/func_ge_2.png
    :figclass: align-center
    
 .. |image1| image:: /_static/func_ge_0.png

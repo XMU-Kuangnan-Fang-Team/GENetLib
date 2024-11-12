@@ -1,5 +1,5 @@
 The FuncGE Model
 =========================
 
-.. _funcge-label:
+.. _funcgemodel-label:
 
