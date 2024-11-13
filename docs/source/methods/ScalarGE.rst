@@ -12,7 +12,7 @@ Notation
 Consider a dataset with :math:`n` independent individuals.
 
 .. list-table:: 
-   :widths: 30 70
+   :widths: 50 50
    :header-rows: 1
    :align: center
 
@@ -37,27 +37,27 @@ Loss Functions
 
 We designed three types of output layers for different outcomes:
 
-- Binary layer, tailored for binary outcomes such as treatment response.
-
 - Continuous layer, suited for outcomes like disease risk.
+
+- Binary layer, tailored for binary outcomes such as treatment response.
 
 - Cox layer, applicable to survival outcomes such as time to an event.
 
-For the continuous layer, we adopt the following loss function:
+1. Continuous layer:
 
 .. math::
     l_{\text{continuous}}(\boldsymbol{\theta})=\frac{1}{n}\sum_{i=1}^n \left[ y_i-g(\boldsymbol{W}_i\boldsymbol{\theta})\right]^2
 
 where :math:`\boldsymbol{\theta}` represents the neural network weights, and :math:`g` is the functional form.
 
-For the binary layer, the loss function :math:`l(\boldsymbol{\theta})` is formulated as:
+2. Binary layer:
 
 .. math::
     l_{\text{binary}}(\boldsymbol{\theta}) = -\frac{1}{n} \sum_{i=1}^n \left[ y_i\log(p_i) + (1 - y_i) \log (1 - p_i)-\boldsymbol{W}_i \boldsymbol{\theta} \right]
 
 where :math:`p_i = (1 + e^{-\boldsymbol{W}_i \boldsymbol{\theta}})^{-1}` is the sigmoid function, and :math:`y_i` represents the binary outcome.
 
-For the Cox layer, the loss function is derived from the partial likelihood of the Cox model:
+3. Cox layer:
 
 .. math::
     l_{\text{Cox}}(\boldsymbol{\theta})=-\sum_{i:\delta_{i}=1}\biggl[h_{\boldsymbol{\theta}}(\boldsymbol{W}_i)-\log{\sum_{j\in R(T_{i})}e^{h_{\boldsymbol{\theta}}(\boldsymbol{W}_j)}}\biggr]
