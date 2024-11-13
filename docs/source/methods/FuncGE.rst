@@ -12,7 +12,7 @@ Notation 1
 Consider a dataset with :math:`n` independent individuals.
 
 .. list-table:: 
-   :widths: 50 50
+   :widths: 30 70
    :header-rows: 1
    :align: center
 
@@ -75,7 +75,7 @@ Notation 2
 -------------
 
 .. list-table:: 
-   :widths: 50 50
+   :widths: 30 70
    :header-rows: 1
    :align: center
 
@@ -152,7 +152,7 @@ Algorithm: Training of FuncGE
 
 **Input**:
 
-- Functional genetic variables X(t) :math:`\boldsymbol{X}(t)` or discrete sequence :math:`\boldsymbol{X}``
+- Functional genetic variables :math:`\boldsymbol{X}(t)` or discrete sequence :math:`\check{\boldsymbol{X}}`;
 
 - Environmental variables :math:`\boldsymbol{Z}`;
 
@@ -164,29 +164,31 @@ Algorithm: Training of FuncGE
 
 - Tuning parameter of the fully connected layers :math:`\lambda`.
 
-**Data pre-processing**: 
+**Data pre-processing**:
 
-- For functional genetic input :math:`\boldsymbol{X}(t)`, format :math:`\boldsymbol{W} = (\boldsymbol{U}, \boldsymbol{Q}, \boldsymbol{Z})`
+- For functional genetic input :math:`\boldsymbol{X}`, format :math:`\tilde{W} = (\boldsymbol{U}, \boldsymbol{Q}, \boldsymbol{Z})`;
+
+- For sequence genetic input :math:`\check{\boldsymbol{X}}`, format :math:`\tilde{\boldsymbol{W}} = (\tilde{\boldsymbol{U}}, \tilde{\boldsymbol{Q}}, \boldsymbol{Z})`.
 
 **Initialize**:
 
-- Sparse layer :math:`\boldsymbol{b}^{(0)}`, :math:`k`-th fully connected layer :math:`\omega_k^{(0)}`, :math:`m = 0`.
+- Sparse layer :math:`\tilde{\boldsymbol{b}}^{(0)}`, :math:`k`-th fully connected layer :math:`\tilde{\omega}_k^{(0)}`, :math:`m = 0`.
 
 **Repeat**:
 
-- Update the approximated MCP penalties with the current estimate :math:`\boldsymbol{b}^{(m)}`;
+- Update the approximated MCP penalties with the current estimate :math:`\tilde{\boldsymbol{b}}^{(m)}`;
 
-- Update Loss :math:`= l.(\boldsymbol{\theta}) + \text{approximated MCP penalties} + \lambda \sum_{k=1}^{K} \|\omega_{k}^{(m)}\|_F^2`;
+- Update Loss :math:`= \tilde{l}(\boldsymbol{\theta}) + \text{approximated MCP penalties} + \lambda \sum_{k=1}^{K} \|\tilde{\omega}_{k}^{(m)}\|_F^2`;
 
-- Conduct back propagation, and obtain the gradients :math:`\frac{\partial \text{Loss}}{\partial \boldsymbol{b}_j^{(m)}}` and :math:`\frac{\partial \text{Loss}}{\partial \omega_k^{(m)}}`;
+- Conduct back propagation, and obtain the gradients :math:`\frac{\partial \text{Loss}}{\partial \tilde{\boldsymbol{b}}_j^{(m)}}` and :math:`\frac{\partial \text{Loss}}{\partial \tilde{\omega}_k^{(m)}}`;
 
 - For :math:`j = 1` to :math:`p` do
 
-  - Update estimates :math:`\gamma_j^{(m+1)} = \gamma_j^{(m)} - \alpha_1 \frac{\partial \text{Loss}}{\partial \gamma_j^{(m)}}`;
+  - Update estimates :math:`\tilde{\gamma}_j^{(m+1)} = \tilde{\gamma}_j^{(m)} - \alpha_1 \frac{\partial \text{Loss}}{\partial \tilde{\gamma}_j^{(m)}}`;
 
   - For :math:`k = 1` to :math:`q` do
 
-    - Update estimates :math:`\beta_{kj}^{(m+1)} = \beta_{kj}^{(m)} - \alpha_1 \frac{\partial \text{Loss}}{\partial \beta_{kj}^{(m)}}`;
+    - Update estimates :math:`\tilde{\beta}_{kj}^{(m+1)} = \tilde{\beta}_{kj}^{(m)} - \alpha_1 \frac{\partial \text{Loss}}{\partial \tilde{\beta}_{kj}^{(m)}}`;
 
   - End for;
 
@@ -194,25 +196,33 @@ Algorithm: Training of FuncGE
 
 - For :math:`k = 1` to :math:`K` do
 
-  - Update :math:`\omega_k^{(m+1)} = \omega_k^{(m)} - \alpha_2 \frac{\partial \text{Loss}}{\partial \omega_k^{(m)}}`;
+  - Update :math:`\tilde{\omega}_k^{(m+1)} = \tilde{\omega}_k^{(m)} - \alpha_2 \frac{\partial \text{Loss}}{\partial \tilde{\omega}_k^{(m)}}`;
 
 - End for;
 
 - Update :math:`m = m + 1`;
 
-Until convergence or :math:`m` reaches its maximum.
+- Until convergence or :math:m reaches its maximum.
 
 
-Sequence Data Processing
+Extra: Sequence Data Processing
 -------------------------------
+
+
+We extend our model to accommodate densely sampled discrete data.
 
 For the :math:`i`-th individual, suppose we obtained the densely measured observations :math:`\boldsymbol{\check{X}}_{i} = (X_{i}(t_{i1}), \ldots, X_{i}(t_{m_{i}}) )^{\top}` at different physical positions :math:`\{ t_{i1}, \ldots, t_{im_i} \}`.
 Here, :math:`\boldsymbol{\check{X}}_i` is considered a discrete realization of a smooth genetic function :math:`X_i(t)`, where :math:`t \in [0, T]`.
-Using functional data analysis, we employ least squares-based smoothing techniques to estimate the function :math:`X_i(t)`. The function :math:`X_i(t)` can be approximated as:
+
+Using functional data analysis, we employ least squares-based smoothing techniques to estimate the function :math:`X_i(t)`.
+The function :math:`X_i(t)` can be approximated as:
 
 .. math::
 
     \hat{X}_i(t) = \check{\boldsymbol{X}}_i^\top \boldsymbol{\Omega}_i (\boldsymbol{\Omega}_i^\top \boldsymbol{\Omega}_i)^{-1} \boldsymbol{\phi}(t),
 
 where :math:`\boldsymbol{\phi}(t) = (\phi_1(t), \ldots, \phi_{L_X}(t))^\top` is a set of basis functions, such as B-splines, Fourier series, or wavelets.
-:math:`\Omega_{i}` is an :math:`m_{i} \times L_{X}` matrix, where the element of :math:`\Omega_{i}` in the :math:`j`-th row and :math:`l`-th column is the value of :math:`\phi_{l}(t_{ij})`.
+:math:`\Omega_{i}` is an matrix where :math:`\Omega_{i}` in the :math:`j`-th row and :math:`l`-th column is the value of :math:`\phi_{l}(t_{ij})`.
+
+Then we can use this expansion and re-execute the process of the FuncGE model to obtain the final modeling results.
+
