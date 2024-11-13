@@ -32,7 +32,7 @@ html_theme = "sphinx_documatt_theme"
 html_logo = html_favicon = 'logo.png'
 
 html_theme_options = {
-    'header_text': 'GENetLib\'s documentation',
+    'header_text': project,
     "header_logo_style": "height: 3em",
     "footer_logo_style": "height: 3em",
     "motto": "GENetLib is a Python library for gene–environment interaction analysis via deep learning."
