@@ -29,12 +29,12 @@ html_static_path = ["_static"]
 
 html_theme = "sphinx_documatt_theme"
 
-html_logo = html_favicon = 'logo.png'
+html_logo = html_favicon = ''
 
 html_theme_options = {
     'header_text': project,
-    "header_logo_style": "height: 3em",
-    "footer_logo_style": "height: 3em",
+    "header_logo_style": "height: 0em",
+    "footer_logo_style": "height: 0em",
     "motto": "GENetLib is a Python library for gene–environment interaction analysis via deep learning."
 }
 
