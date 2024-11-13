@@ -18,7 +18,7 @@ Consider a dataset with :math:`n` independent individuals.
 
    * - Parameter
      - Notation
-   * - outcome variables
+   * - Outcome variables
      - :math:`\boldsymbol{y} = (y_1, \ldots, y_n)^{\top}`
    * - G variables
      - :math:`\boldsymbol{X}=(\boldsymbol{X}_1, \ldots, \boldsymbol{X}_n)^{\top}` where :math:`\boldsymbol{X}_i=(X_{i1}, \dots, X_{ip})`
