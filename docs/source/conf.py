@@ -17,7 +17,6 @@ extensions = [
     'sphinx_documatt_theme'
 ]
 
-bibtex_bibfiles = ['references.bib']
 bibtex_default_style = 'plain'
 
 templates_path = ['_templates']
@@ -30,7 +29,7 @@ html_static_path = ["_static"]
 
 html_theme = "sphinx_documatt_theme"
 
-html_logo = html_favicon = 'logo.png'
+html_logo = html_favicon = '../logo.png'
 
 html_theme_options = {
     'header_text': 'GENetLib\'s documentation',
