@@ -14,8 +14,7 @@ author = 'Yuhao Zhong'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx_documatt_theme',
-    'sphinxcontrib.bibtex'
+    'sphinx_documatt_theme'
 ]
 
 bibtex_bibfiles = ['references.bib']
