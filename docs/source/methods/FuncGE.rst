@@ -68,4 +68,6 @@ Using this approximation, we can rewrite the model above:
 
 .. math::
 
-    y_{i}&=g\biggl\{\sum_{k=1}^qz_{ik}\gamma_k+\left[\int_0^TX_i(t)\boldsymbol{\psi}(t)^\top\mathrm{d}t\right]\boldsymbol{\theta_0}+\sum_{k=1}^qz_{ik}\left[\left(\int_0^TX_i(t)\boldsymbol{\psi}(t)^\top\mathrm{d}t\right)\boldsymbol{\theta_k}\right]\biggr\}+\varepsilon_i
+    y_{i} = g\left\{\sum_{k=1}^q z_{ik} \gamma_k + \left[\int_0^T X_i(t) \boldsymbol{\psi}(t)^\top \mathrm{d}t\right] \boldsymbol{\theta_0} + \sum_{k=1}^q z_{ik} \left[\left(\int_0^T X_i(t) \boldsymbol{\psi}(t)^\top \mathrm{d}t\right) \boldsymbol{\theta_k}\right]\right\} + \varepsilon_i
+
+    
