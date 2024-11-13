@@ -25,7 +25,7 @@ Consider a dataset with :math:`n` independent individuals.
    * - E variables
      - :math:`\boldsymbol{Z} = (\boldsymbol{Z}_1, \ldots, \boldsymbol{Z}_n)^{\top}` where :math:`\boldsymbol{Z}_i=(Z_{i1}, \dots, Z_{iq})`
    * - G-E interaction variables
-     - :math:`\boldsymbol{V}_i = \boldsymbol{Z}_i \otimes \boldsymbol{X}_i` and :math:`\boldsymbol{V} = (\boldsymbol{V}_1, \ldots, \boldsymbol{V}_n)^\top`
+     - :math:`\boldsymbol{V} = (\boldsymbol{V}_1, \ldots, \boldsymbol{V}_n)^\top` where :math:`\boldsymbol{V}_i = \boldsymbol{Z}_i \otimes \boldsymbol{X}_i`
    * - Combination of G and G-E variables
      - :math:`\boldsymbol{H} = (\boldsymbol{X}, \boldsymbol{V})`
 
