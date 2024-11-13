@@ -32,7 +32,7 @@ Consider a dataset with :math:`n` independent individuals.
 Thus, we define :math:`\boldsymbol{W}=(\boldsymbol{X}, \boldsymbol{V}, \boldsymbol{Z})` where :math:`\boldsymbol{W}_i` is the variable set for the :math:`i`-th individual.
 
 
-Loss Functions
+Loss functions
 ---------------
 
 We designed three types of output layers for different outcomes:
@@ -66,7 +66,7 @@ where :math:`y_i` and :math:`c_i` represent the survival time and censoring time
 The at-risk set at time :math:`T_i` is :math:`R(T_i) = \{i' : T_{i'} \geq T_i\}`, and :math:`h_{\boldsymbol{\theta}}` is the prognostic index output by the model.
 
 
-Penalty Approximation
+Penalty approximation
 ------------------------
 
 In the sparse layer, define :math:`\gamma_j` as the main effect and :math:`\beta_{1j}, \ldots, \beta_{qj}` as the interaction effects.
@@ -94,7 +94,7 @@ where :math:`m` denotes the :math:`m`-th iteration, and :math:`\rho_\lambda^{\pr
 We minimize the objective function, iterating the estimation process until the training converges and parameters stabilize folloing the algorithm below.
 
 
-Algorithm: Training of ScalarGE
+Algorithm: training of ScalarGE
 -------------------------------
 
 **Input**:

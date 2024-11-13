@@ -44,7 +44,7 @@ The error term :math:`\epsilon_i` follows a normal distribution :math:`N(0, \sig
 :math:`g` is the functional form.
 
 
-Spline Regression
+Spline regression
 ---------------------
 
 Based on spline regression techniques, we approximate :math:`\beta_k(t)` for :math:`k = 0, 1, \ldots, q` using a set of B-spline basis functions :math:`\boldsymbol{\psi}(t) = \left( \psi_1(t), \ldots, \psi_{L_\beta}(t) \right)^\top`.
@@ -93,7 +93,7 @@ Thus, we define :math:`\tilde{\boldsymbol{W}} = \left(\boldsymbol{U}, \boldsymbo
 where :math:`\tilde{\boldsymbol{W}}_i` represents the variable set for the :math:`i`-th individual.
 
 
-Loss Functions
+Loss functions
 -----------------
 
 With the definitions of variable set :math:`\tilde{\boldsymbol{W}}` in place,
@@ -127,7 +127,7 @@ where :math:`y_i` and :math:`c_i` represent the survival time and censoring time
 The at-risk set at time :math:`T_{i}` is :math:`R(T_i) = \{i' : T_{i'} \geq T_i\}`, and :math:`h_{\boldsymbol{\theta}}` is the prognostic index.
 
 
-Penalty Approximation
+Penalty approximation
 -------------------------
 
 Define :math:`\tilde{\gamma}_{j}` as the main effect and :math:`\tilde{\beta}_{1j}, \ldots, \tilde{\beta}_{qj}` as the interaction effects.
@@ -147,7 +147,7 @@ Similarly, we utilize the same method as :ref:`ScalarGE <scalargemodel-label>` t
 We minimize the objective function, iterating the estimation process until the training converges and parameters stabilize folloing the algorithm below.
 
 
-Algorithm: Training of FuncGE
+Algorithm: training of FuncGE
 -------------------------------
 
 **Input**:
