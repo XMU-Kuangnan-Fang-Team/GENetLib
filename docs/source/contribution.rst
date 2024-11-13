@@ -17,7 +17,6 @@ Here we provide some ways to contribute to GENetLib:
 - Post on the :ref:`issue<https://github.com/Barry57/GENetLib/issues>` to tell us your questions or something you want to work on.
 
 - Please remember to add a tag on the issue to post your question types. This will help us clarify your questions.
-We will reply to you very soon.
 
 **Pull request**
 
@@ -29,6 +28,6 @@ We will reply to you very soon.
 Contact us
 --------------
 
-Send an email to Barry57@163.com to contact us.
+Send an email to Barry57@163.com to contact us. We will reply to you very soon!
 
-Thanks for all the supports! 👏
+Thanks for all the supports👏
