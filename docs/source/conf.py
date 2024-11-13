@@ -31,8 +31,11 @@ html_static_path = ["_static"]
 html_theme = "sphinx_documatt_theme"
 
 
-html_logo = 'logo.jpg'
-html_favicon = 'logo.jpg'
+html_theme_options = {
+    'header_text': 'GENetLib\'s documentation',
+    'header_logo_style': 'width: 3rem;',
+    "motto": "GENetLib is a Python library for gene–environment interaction analysis via deep learning."
+}
 
 html_sidebars = {
     'index': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
