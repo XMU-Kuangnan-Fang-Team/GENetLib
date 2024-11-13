@@ -1,10 +1,10 @@
-Contributing to GENetLib
+Contribution
 =========================
 
 .. _contribution-label:
 
 
-Contribution
+Contributing to GENetLib
 --------------
 
 **GENetLib** is a collaborative endeavor and we are always eager to receive contributions from the community.
