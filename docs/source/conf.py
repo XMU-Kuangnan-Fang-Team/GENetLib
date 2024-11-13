@@ -30,6 +30,8 @@ html_static_path = ["_static"]
 
 html_theme = "sphinx_documatt_theme"
 
+html_logo = ''
+html_favicon = ''
 
 html_theme_options = {
     'header_text': 'GENetLib\'s documentation',
