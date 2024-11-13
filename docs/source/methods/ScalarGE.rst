@@ -43,21 +43,23 @@ We designed three types of output layers for different outcomes:
 
 - Cox layer, applicable to survival outcomes such as time to an event.
 
-1. Continuous layer:
+Next we generate the loss functions for these three layers:
+
+**Continuous layer**
 
 .. math::
     l_{\text{continuous}}(\boldsymbol{\theta})=\frac{1}{n}\sum_{i=1}^n \left[ y_i-g(\boldsymbol{W}_i\boldsymbol{\theta})\right]^2
 
 where :math:`\boldsymbol{\theta}` represents the neural network weights, and :math:`g` is the functional form.
 
-2. Binary layer:
+**Binary layer**
 
 .. math::
     l_{\text{binary}}(\boldsymbol{\theta}) = -\frac{1}{n} \sum_{i=1}^n \left[ y_i\log(p_i) + (1 - y_i) \log (1 - p_i)-\boldsymbol{W}_i \boldsymbol{\theta} \right]
 
 where :math:`p_i = (1 + e^{-\boldsymbol{W}_i \boldsymbol{\theta}})^{-1}` is the sigmoid function, and :math:`y_i` represents the binary outcome.
 
-3. Cox layer:
+**Cox layer**
 
 .. math::
     l_{\text{Cox}}(\boldsymbol{\theta})=-\sum_{i:\delta_{i}=1}\biggl[h_{\boldsymbol{\theta}}(\boldsymbol{W}_i)-\log{\sum_{j\in R(T_{i})}e^{h_{\boldsymbol{\theta}}(\boldsymbol{W}_j)}}\biggr]

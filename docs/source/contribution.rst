@@ -1,4 +1,4 @@
-Contricuting to GENetLib
+Contributing to GENetLib
 =========================
 
 .. _contribution-label:
@@ -12,14 +12,14 @@ We appreciate a wide range of contributions, including but not limited to code. 
 
 Here we provide some ways to contribute to GENetLib:
 
-1. Issue
+**Issue**
 
 - Post on the :ref:`issue<https://github.com/Barry57/GENetLib/issues>` to tell us your questions or something you want to work on.
 
 - Please remember to add a tag on the issue to post your question types. This will help us clarify your questions.
 We will reply to you very soon.
 
-2. Pull request
+**Pull request**
 
 - Create a pull request (PR) with your changes from your fork.
 

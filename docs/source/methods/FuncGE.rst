@@ -100,7 +100,7 @@ With the definitions of variable set :math:`\tilde{\boldsymbol{W}}` in place,
 the loss function for continuous outcomes can be derived in a form similar to that described in :ref:`ScalarGE <scalargemodel-label>`.
 
 
-1. Continuous layer:
+**Continuous layer**
 
 .. math::
 
@@ -108,7 +108,7 @@ the loss function for continuous outcomes can be derived in a form similar to th
 
 where :math:`\boldsymbol{\theta}` represents the neural network weights.
 
-2. Binary layer:
+**Binary layer**
 
 .. math::
 
@@ -116,7 +116,7 @@ where :math:`\boldsymbol{\theta}` represents the neural network weights.
 
 where :math:`p_i = (1 + e^{-\tilde{\boldsymbol{W}}_i\boldsymbol{\theta}})^{-1}`.
 
-3. Cox layer:
+**Cox layer**
 
 .. math::
 
