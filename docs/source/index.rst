@@ -6,7 +6,7 @@
 Welcome to GENetLib's Documentation!
 =====================================
 
-.. image:: _static/overall_fig.png
+.. image:: _static/overall.png
    :width: 1000
    :align: center
 
