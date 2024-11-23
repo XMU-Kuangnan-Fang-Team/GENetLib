@@ -44,7 +44,7 @@ It is recommended to use ``pip`` for installation:
 ```c
 pip install GENetLib
 ```
-To get further information about installation and independencies, please move to [installation instructions](https://open-box.readthedocs.io/en/latest/).
+To get further information about installation and independencies, please move to [installation instructions](https://genetlib.readthedocs.io/en/latest/installation.html).
 
 ## Quick Start
 We start with the two basic functions ``scalar_ge`` and ``func_ge``.
@@ -83,14 +83,14 @@ func_ge_res = func_ge(y, z, location, X, ytype = 'Continuous', btyepe = 'Bspline
                       Learning_Rate1 = 0.02, L = 0.01, Num_Epochs = 50, nbasis1 = 5, params1 = 4,
                       Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
 ```
-For more information about the functions and methods, please check [main functions](https://open-box.readthedocs.io/en/latest/).
+For more information about the functions and methods, please check [main functions](https://genetlib.readthedocs.io/en/latest/main%20functions/main%20functions.html#).
 
 ## Reference
 The main referenced paper is:
 - Wu, S., Xu, Y., Zhang, Q., & Ma, S. (2023). Gene–environment interaction analysis via deep learning. Genetic Epidemiology, 1–26. https://doi.org/10.1002/gepi.22518
 - Ren, R., Fang, K., Zhang, Q., & Ma, S. (2023). FunctanSNP: an R package for functional analysis of dense SNP data (with interactions). Bioinformatics, 39(12), btad741. https://doi.org/10.1093/bioinformatics/btad741
 
-Other referenced papers can be obtained in [references](https://open-box.readthedocs.io/en/latest/).
+Other referenced papers can be obtained in [references](https://genetlib.readthedocs.io/en/latest/references.html).
 
 ## License
 GENetLib is licensed under the MIT License. See [LICENSE](https://github.com/Barry57/GENetLib/blob/main/LICENSE) for details.
