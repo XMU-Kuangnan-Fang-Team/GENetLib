@@ -1,4 +1,4 @@
-simulation
+Simulation
 =========================
 
 .. _simulation-label:
