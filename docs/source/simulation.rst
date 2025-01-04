@@ -15,7 +15,7 @@ Different samples
 We consider sample sizes of 500 and 1000, and the simulation results are presented in the table below.
 
 .. image:: _static/simulation_sample.png
-   :width: 700
+   :width: 500
    :align: center
 
 From the simulation results, we find that the conclusions in our article still hold under different sample sizes.
@@ -46,11 +46,11 @@ Notably, under nonlinear Case 2, we focus exclusively on prediction performance 
 The simulation results are presented in the table below.
 
 .. image:: _static/ISE.png
-   :width: 700
+   :width: 500
    :align: center
 
 .. image:: _static/IAE.png
-   :width: 700
+   :width: 500
    :align: center
 
 The simulation results display FuncGE's predictive accuracy in estimating main and interaction effect functions, as measured by the integrated squared error and integrated absolute error metrics, where lower error values indicate better performance.
