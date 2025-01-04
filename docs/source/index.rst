@@ -19,7 +19,7 @@ In this documentation, you can obtain:
 
 - Details of methods
 
-- Examples for main functions
+- Examples for main functions and simulation results
 
 This package has been uploaded to PyPI with previous versions, and the web page is available at
 `PyPI package <https://pypi.org/project/genetlib/>`_. 
@@ -35,6 +35,7 @@ The ways to contact us are provided in :ref:`contributing to GENetLib <contribut
    installation
    methods/methods
    main functions/main functions
+   simulation
    references
    contribution
 
