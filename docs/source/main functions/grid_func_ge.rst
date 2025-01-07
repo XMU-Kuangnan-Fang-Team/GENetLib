@@ -51,9 +51,9 @@ The function **grid_func_ge** outputs a tuple including training results and opt
 
 - A neural network after training.
 
-- Estimated coefficients of the chosen basis functions for the genetic effect function beta0(t) and interaction items betak(t).
+- Estimated coefficients of the chosen basis functions for the genetic effect function :math:`\beta_0(t)` and interaction items :math:`\beta_k(t)`.
 
-- The estimated genetic effect function beta(t) and interaction items betak(t).
+- The estimated genetic effect function :math:`\beta(t)` and interaction items :math:`\beta_k(t)`.
 
 Here is an example output for an established model:
 
