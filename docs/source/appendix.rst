@@ -1,7 +1,7 @@
-Simulation
+Appendix
 =========================
 
-.. _simulation-label:
+.. _appendix-label:
 
 We have conducted simulations on the main methods of the package. 
 The simulation settings and basic simulation results can be found in our article. 
