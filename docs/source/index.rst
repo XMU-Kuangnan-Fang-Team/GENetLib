@@ -35,7 +35,7 @@ The ways to contact us are provided in :ref:`contributing to GENetLib <contribut
    installation
    methods/methods
    main functions/main functions
-   simulation
+   appendix
    references
    contribution
 
