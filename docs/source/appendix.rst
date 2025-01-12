@@ -3,14 +3,16 @@ Appendix
 
 .. _appendix-label:
 
+Appendix: simulation
+---------------------
+
 We have conducted simulations on the main methods of the package. 
 The simulation settings and basic simulation results can be found in our article. 
 Here, we provide additional simulation results, 
 including simulations of **the FuncGE model** under different samples and simulation results for the ISE and IAE metrics.
 
-
 Different samples
-------------
+*************************************
 
 We consider sample sizes of 500 and 1000, and the simulation results are presented in the table below.
 
@@ -21,7 +23,7 @@ We consider sample sizes of 500 and 1000, and the simulation results are present
 From the simulation results, we find that the conclusions in our article still hold under different sample sizes.
 
 ISE and IAE
-------------
+************
 
 Additionally, to assess the prediction performance of the genetic effect functions :math:`\beta_0(t)`, :math:`\beta_1(t)`, and :math:`\beta_2(t)` under linear Case 1, we consider another two metrics ISE and IAE. The calculation methods of these metrics are shown below:
 
@@ -54,3 +56,60 @@ The simulation results are presented in the table below.
    :align: center
 
 The simulation results display FuncGE's predictive accuracy in estimating main and interaction effect functions, as measured by the integrated squared error and integrated absolute error metrics, where lower error values indicate better performance.
+
+
+
+Appendix: application
+----------------------
+
+Here we present the variable selection results of the ScalarGE model in the application study.
+
+.. csv-table:: Partial identification results using ScalarGE
+   :header: "Main G", "Age", "Gender", "Stage", "Smoking"
+   :widths: 20, 10, 10, 10, 10
+
+   "AACSP1", "", "", "", "/*"
+   "ABAT", "", "", "", ""
+   "ACY1", "/*", " ", "", ""
+   "AVPR2", "", "", "", ""
+   "BANP", "", "", " ", "/*"
+   "BLID", "", "/* ", "", ""
+   "C17orf58", "", "/* ", "", ""
+   "C1QTNF9B", "", "/* ", "", "/*"
+   "C3", "", "", "", "/*"
+   "CAPN15", "", "", "", "/*"
+   "CAV3", "", "", "", ""
+   "CCDC64", "", "", "", "/*"
+   "CCT6A", "", "/* ", "", ""
+   "CLUL1", "", "/* ", "", ""
+   "CSAG1", "", "", "", "/*"
+   "DCLRE1B", "", "/* ", "", ""
+   "DIO3", "", "/* ", "", ""
+   "FAM71E1", "", "", "", ""
+   "GPT", "", "", "", ""
+   "HAL", "", "", "/* ", ""
+   "HECTD3", "", "", "", ""
+   "HEPN1", "", "", "", ""
+   "HLA.DRB5", "", "", "", ""
+   "HOMEZ", "/*", "", "", ""
+   "ISCU", "", "/* ", "", ""
+   "LOC646999", "", "", "/*", ""
+   "LOC727896", "/*", "", "", ""
+   "LRRTM2", "", "", "", ""
+   "MC5R", "/*", "", "", ""
+   "MGC4856", "", "/*", "", ""
+   "MRPS17", "/*", "", "", ""
+   "NCOR1P1", "", "", "", "/*"
+   "NTSR1", "", "", "/*", ""
+   "OR2F2", "", "/&", "/*", ""
+   "PRR21", "/*", "", "", ""
+   "PTCHD4", "", "", "", ""
+   "S100G", "/*", "", "/*", ""
+   "SLC6A18", "", "", "", ""
+   "SRRM5", "", "/*", "", ""
+   "SYS1", "", "", "", ""
+   "TMEM180", "", "", "", "/*"
+   "TSC22D2", "/*", "", "", ""
+   "UMPS", "", "/*", "", ""
+   "WFIKKN2", "", "", "", ""
+   "WNT9B", "", "/*", "", ""
