@@ -2,11 +2,8 @@ from GENetLib.sim_data_scalar import sim_data_scalar
 from GENetLib.scalar_ge import scalar_ge
 import matplotlib
 matplotlib.use('Agg')
-def scalar_ge(y, G, E, ytype, num_hidden_layers, nodes_hidden_layer, num_epochs,
-              learning_rate1, learning_rate2, lambda1 = None, lambda2 = None, Lambda = None,
-              threshold = None, model = None, split_type = 0, ratio = [7, 3], 
-              important_feature = True, plot = True, model_reg = None, isfunc = False):
-def test_func_ge():
+
+def test_scalar_ge():
   scalar_continuous = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Continuous', n_inter=30, seed = 123)
   scalar_binary = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Binary', n_inter=10, seed = 123)
   scalar_survival = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Survival', n_inter=10, linear = False, seed = 123)
