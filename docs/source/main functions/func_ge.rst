@@ -148,7 +148,4 @@ Here is a quick example for using this function:
     Z = func_continuous['Z']
     location = func_continuous['location']
     X = func_continuous['X']
-    func_ge_res = func_ge(y, X, location, Z, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer,
-                          num_epochs, learning_rate1, learning_rate2, nbasis1, params1, lambda1 = 1.1*lambda2,
-                          lambda2 = lambda2, Lambda = Lambda, Bsplines = 5, norder1 = 4, split_type = 1,
-                          ratio = [3, 1, 1], plot_res = True, plot_beta = True)
+    func_ge_res = func_ge(y, X, location, Z, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, nbasis1, params1, lambda1 = 1.1*lambda2, lambda2 = lambda2, Lambda = Lambda, Bsplines = 5, norder1 = 4, split_type = 1, ratio = [3, 1, 1], plot_res = True, plot_beta = True)
