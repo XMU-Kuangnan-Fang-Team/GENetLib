@@ -50,7 +50,7 @@ This part shows the meanings and data types of parameters. Users can check the t
      - numeric, number of hidden layers in the neural network.
    * - **nodes_hidden_layer**
      - list, contains number of nodes in each hidden layer.
-   * - **Num_Epochs**
+   * - **num_epochs**
      - numeric, number of epochs for neural network training.
    * - **learning_rate1**
      - list, learning rates of sparse layers.
