@@ -13,13 +13,13 @@ def test_grid_scalar_ge():
                                         lambda1 = None, lambda2 = [0.08, 0.09], Lambda = [0.1],
                                         threshold = 0.01, model = None, split_type = 0, ratio = [7, 3], 
                                         important_feature = True, plot = True, model_reg = None, isfunc = False)
-  grid_scalar_ge_res_2 = grid_scalar_ge(scalar_continuous['y'], scalar_continuous['G'], scalar_continuous['E'], ytype='Binary',
+  grid_scalar_ge_res_2 = grid_scalar_ge(scalar_binary['y'], scalar_binary['G'], scalar_binary['E'], ytype='Binary',
                                         num_hidden_layers=1, nodes_hidden_layer=[50], num_epochs=50,
                                         learning_rate1=[0.04, 0.05, 0.06], learning_rate2=[0.035,0.045],
                                         lambda1 = None, lambda2 = [0.08, 0.09], Lambda = [0.1],
                                         threshold = 0.01, model = None, split_type = 1, ratio = [7, 2, 1], 
                                         important_feature = True, plot = False, model_reg = None, isfunc = False)
-  grid_scalar_ge_res_3 = grid_scalar_ge(scalar_continuous['y'], scalar_continuous['G'], scalar_continuous['E'], ytype='Survival',
+  grid_scalar_ge_res_3 = grid_scalar_ge(scalar_survival['y'], scalar_survival['G'], scalar_survival['E'], ytype='Survival',
                                         num_hidden_layers=2, nodes_hidden_layer=[1000,100], num_epochs=50,
                                         learning_rate1=[0.04, 0.05, 0.06], learning_rate2=[0.035,0.045],
                                         lambda1 = None, lambda2 = [0.08, 0.09], Lambda = [0.1],
