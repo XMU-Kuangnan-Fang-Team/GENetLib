@@ -44,11 +44,11 @@ Value
 
 The function **sim_data_func** outputs a dictionary including response variable y, scalar variable z and sequence (genotypes) data X.
 
-- **x**: a matrix representing the sequence data, with the number of rows equal to the number of samples.
+- **X**: a matrix representing the sequence data, with the number of rows equal to the number of samples.
 
 - **y**: an array representing the response variables.
 
-- **z**: a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
+- **Z**: a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
 
 - **location**: a list defining the sampling sites of the sequence (genotypes) data.
 
@@ -63,7 +63,7 @@ Here is a quick example for using this function:
 
     from GENetLib.sim_data_func import sim_data_func
     func_continuous = sim_data_func(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
-    x = func_continuous['X']
+    X = func_continuous['X']
     y = func_continuous['y']
-    z = func_continuous['z']
+    Z = func_continuous['Z']
     location = func_continuous['location']
