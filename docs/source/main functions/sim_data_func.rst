@@ -44,15 +44,17 @@ Value
 
 The function **sim_data_func** outputs a dictionary including response variable y, scalar variable z and sequence (genotypes) data X.
 
-- **X**: a matrix representing the sequence data, with the number of rows equal to the number of samples.
+- **y**: An array The response variable. When the type of output data is "survival", output y is an n*2 array that consists:
 
-- **y**: an array representing the response variables.
+1. The minimum of the survival time and censoring time.
 
-- **Z**: a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
+2. The event indicator.
 
-- **location**: a list defining the sampling sites of the sequence (genotypes) data.
+- **X**: A matrix representing the sequence data, with the number of rows equal to the number of samples.
 
+- **location**: A list defining the sampling sites of the sequence (genotypes) data.
 
+- **Z**: A matrix representing the scalar covariates, with the number of rows equal to the number of samples.
 
 Examples
 -------------
