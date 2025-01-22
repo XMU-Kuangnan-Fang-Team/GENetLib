@@ -41,6 +41,7 @@ def scalar_l2train(train_x, train_clinical, train_interaction, train_y,
             raise ValueError('Invalid ytype')
         loss.backward() # Backpropagate the loss
         opt.step() # Update model parameters
+        net_state_dict = net.state_dict()
         net.train()
         train_pred = net(train_x, train_interaction, train_clinical)
         # Calculate the training loss

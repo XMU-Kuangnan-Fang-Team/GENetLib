@@ -16,7 +16,7 @@ def scalar_mcp_l2train(train_x, train_clinical, train_interaction, train_y,
                        eval_x, eval_clinical, eval_interaction, eval_y,
                        In_Nodes, Interaction_Nodes, Clinical_Nodes, 
                        num_hidden_layers, nodes_hidden_layer, ytype, isfunc,
-                       Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, L3 = None,
+                       Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, 
                        plot = True, model = None, model_reg = None):
     d = np.sqrt(Clinical_Nodes + 1)
     # Initialize the GE_Net neural network
@@ -43,10 +43,7 @@ def scalar_mcp_l2train(train_x, train_clinical, train_interaction, train_y,
             for j in range(Clinical_Nodes):
                 temp += torch.abs(net.sparse2.weight.data[i + j * In_Nodes])
             b[i] = torch.abs(net.sparse1.weight.data[i]) + temp
-        if L3 == None:
-            a = d * L - b/torch.tensor([3])
-        else:
-            a = L3 - b/torch.tensor([3])
+        a = d * L - b/torch.tensor([3])
         zero = torch.zeros([In_Nodes])
         Pb = torch.where(a<0, zero, a)
         w1 = Pb / (2 * b ** 2)
@@ -73,6 +70,7 @@ def scalar_mcp_l2train(train_x, train_clinical, train_interaction, train_y,
             raise ValueError('Invalid ytype')
         loss.backward() # Backpropagate the loss
         opt.step() # Update model parameters
+        net_state_dict = net.state_dict()
         net.train()
         train_pred = net(train_x, train_interaction, train_clinical)
         # Calculate the training loss

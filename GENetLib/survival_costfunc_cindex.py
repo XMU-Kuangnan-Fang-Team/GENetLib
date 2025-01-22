@@ -44,4 +44,3 @@ def c_index(pred, ytime, yevent):
 	if torch.cuda.is_available():
 		concordance_index = concordance_index.cuda()
 	return(concordance_index)
-

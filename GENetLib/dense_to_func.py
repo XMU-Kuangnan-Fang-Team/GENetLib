@@ -29,16 +29,6 @@ def dense_to_func(location, X, btype, nbasis, params, Plot = False):
     if truelengths == n * m:
         basisMatrix = get_basis_matrix(evalarg = location, basisobj = fbasis, nderiv = 0, returnMatrix = False)
         basisCoef = solve(basisMatrix.T @ basisMatrix, basisMatrix.T @ X.T)
-    if truelengths != n * m:
-        location_list = [location[~np.isnan(X[i, :])] for i in range(n)]
-        X_list = [X[i, ~np.isnan(X[i, :])] for i in range(n)]
-
-        def coefFunc(i):
-            basisMatrix = get_basis_matrix(evalarg = location_list[i], basisobj = fbasis, nderiv = 0, returnMatrix = False)
-            basiscoef = solve(basisMatrix.T @ basisMatrix, basisMatrix.T @ X_list[i])
-            return basiscoef
-
-        basisCoef = np.array([coefFunc(i) for i in range(n)])
     tofunc = fd(coef = basisCoef, basisobj = fbasis)
     if Plot:
         plt.plot(location, eval_fd(location, tofunc))
