@@ -50,7 +50,7 @@ This part shows the meanings and data types of parameters. Users can check the t
    * - **learning_rate2**
      - numeric, learning rate of hidden layers.
    * - **lambda1**
-     - numeric, tuning parameter of the first MCP penalization.
+     - numeric or None, tuning parameter of the first MCP penalization.
    * - **lambda2**
      - numeric, tuning parameter of the second MCP penalization.
    * - **Lambda**
