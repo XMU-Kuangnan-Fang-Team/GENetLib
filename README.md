@@ -74,11 +74,11 @@ from GENetLib.func_ge import func_ge
 func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
 
 # Set up the FuncGE model
-func_ge_res = func_ge(func_continuous['y'], func_continuous['X'], func_continuous['location'], func_continuous['Z'],
-                      ytype = 'Continuous', btype = 'Bspline', num_hidden_layers = 2, nodes_hidden_layer = [100,10],
-                      num_epochs = 50, learning_rate1 = 0.02, learning_rate2 = 0.035, nbasis1 = 5, params1 = 4,
-                      lambda1 = None, lambda2 = 0.01, Lambda = 0.01, Bsplines = 5, norder1 = 4, split_type = 1,
-                      ratio = [3, 1, 1], plot_res = True)
+func_ge_res = func_ge(y = func_continuous['y'], X = func_continuous['X'], location = func_continuous['location'],
+                      Z = func_continuous['Z'], ytype = 'Continuous', btype = 'Bspline', num_hidden_layers = 2,
+                      nodes_hidden_layer = [100,10], num_epochs = 50, learning_rate1 = 0.02, learning_rate2 = 0.035,
+                      nbasis1 = 5, params1 = 4, lambda1 = None, lambda2 = 0.01, Lambda = 0.01, Bsplines = 5,
+                      norder1 = 4, split_type = 1, ratio = [3, 1, 1], plot_res = True)
 ```
 For more information about the functions and methods, please check [main functions](https://genetlib.readthedocs.io/en/latest/main%20functions/main%20functions.html#).
 
