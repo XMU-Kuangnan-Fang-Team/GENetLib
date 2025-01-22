@@ -59,7 +59,7 @@ scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500,
                                          dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
 
 # Set up the ScalerGE model
-scalar_ge_res = scalar_ge(scalar_survival_linear['y'], scalar_survival_linear['G'], scalar_survival_linear['E'],
+scalar_ge_res = scalar_ge(y = scalar_survival_linear['y'], G = scalar_survival_linear['G'], E = scalar_survival_linear['E'],
                           ytype = 'Survival',num_hidden_layers = 2, nodes_hidden_layer = [1000, 100], num_epochs = 100,
                           learning_rate1 = 0.06, learning_rate2 = 0.035, lambda1 = None, lambda2 = 0.09, Lambda = 0.1,
                           threshold = 0.01, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
@@ -77,8 +77,8 @@ func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 1
 func_ge_res = func_ge(func_continuous['y'], func_continuous['X'], func_continuous['location'], func_continuous['Z'],
                       ytype = 'Continuous', btype = 'Bspline', num_hidden_layers = 2, nodes_hidden_layer = [100,10],
                       num_epochs = 50, learning_rate1 = 0.02, learning_rate2 = 0.035, nbasis1 = 5, params1 = 4,
-                      lambda1 = None, lambda2 = 0.01, Lambda = 0.01, Bsplines = 5, norder1 = 4,
-                      model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
+                      lambda1 = None, lambda2 = 0.01, Lambda = 0.01, Bsplines = 5, norder1 = 4, split_type = 1,
+                      ratio = [3, 1, 1], plot_res = True)
 ```
 For more information about the functions and methods, please check [main functions](https://genetlib.readthedocs.io/en/latest/main%20functions/main%20functions.html#).
 
