@@ -37,7 +37,7 @@ This part shows the meanings and data types of parameters. Users can check the t
      - numeric or dict, a matrix representing the sequence data with the number of rows equal to the number of samples or a "fd" item which represents the functional data.
    * - **location**
      - list, a list defining the sampling sites of the sequence data.
-   * - **z**
+   * - **Z**
      - numeric, a matrix representing the scalar covariates, with the number of rows equal to the number of samples.
    * - **ytype**
      - character, "Survival", "Binary" or "Continuous" type of the output y.
@@ -145,10 +145,10 @@ Here is a quick example for using this function:
     params1 = 4
     func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
     y = func_continuous['y']
-    z = func_continuous['Z']
+    Z = func_continuous['Z']
     location = func_continuous['location']
     X = func_continuous['X']
-    func_ge_res = func_ge(y, X, location, z, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer,
+    func_ge_res = func_ge(y, X, location, Z, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer,
                           num_epochs, learning_rate1, learning_rate2, nbasis1, params1, lambda1 = 1.1*lambda2,
                           lambda2 = lambda2, Lambda = Lambda, Bsplines = 5, norder1 = 4, split_type = 1,
                           ratio = [3, 1, 1], plot_res = True, plot_beta = True)
