@@ -6,7 +6,6 @@ from scipy.interpolate import BSpline, UnivariateSpline
 
 from GENetLib.basis_mat import bspline_mat
 
-
 '''Example data for method func_ge and grid_func_ge'''
 
 def sim_data_func(n, m, ytype, seed = 0):
@@ -81,12 +80,12 @@ def sim_data_func(n, m, ytype, seed = 0):
         y_ = np.array([func_y(i) for i in range(n)]).reshape(n)
         y = censor_data(y_, n)
         y = np.array(y).reshape(2,n).T
-        simData = {'y': y, 'z': z, 'location': list(t), 'X': dataX}
+        simData = {'y': y, 'Z': z, 'location': list(t), 'X': dataX}
         return simData
     
     elif ytype == 'Continuous':
         y = np.array([func_y(i) for i in range(n)]).reshape(n)
-        simData = {'y': y, 'z': z, 'location': list(t), 'X': dataX}
+        simData = {'y': y, 'Z': z, 'location': list(t), 'X': dataX}
         return simData
     
     elif ytype == 'Binary':
@@ -94,5 +93,5 @@ def sim_data_func(n, m, ytype, seed = 0):
             return 1 / (1 + np.exp(-x))
         y_prob = np.array([func_y(i) for i in range(n)]).reshape(n)
         y_class = np.where(y_prob > 0.5, 1, 0)
-        simData = {'y': y_class, 'z': z, 'location': list(t), 'X': dataX}
+        simData = {'y': y_class, 'Z': z, 'location': list(t), 'X': dataX}
         return simData

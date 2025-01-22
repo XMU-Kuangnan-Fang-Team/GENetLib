@@ -7,6 +7,7 @@ from GENetLib.eval_basis_fd import eval_fd
 '''Plot functional objects'''
 
 def plot_fd(x, y = None, xlab = None, ylab = None):
+    
     fdobj = x
     coef = fdobj['coefs']
     coefd = coef.shape
@@ -26,13 +27,23 @@ def plot_fd(x, y = None, xlab = None, ylab = None):
     fdmat = eval_fd(y, fdobj, 0)
     rangey = [np.min(fdmat), np.max(fdmat)]
     ylim = rangey
-    plt.figure()
-    for irep in range(nrep):
-        plt.plot(y, fdmat[:, irep])
-    plt.axhline(0, linestyle='--', color='black')
-    plt.xlim(xlim)
-    plt.ylim(ylim)
-    plt.xlabel(xlab)
-    plt.ylabel(ylab)
-    plt.show()
+    if ndim < 2:
+        plt.figure()
+        plt.plot(y, fdmat)
+        plt.axhline(0, linestyle='--', color='black')
+        plt.xlim(xlim)
+        plt.ylim(ylim)
+        plt.xlabel(xlab)
+        plt.ylabel(ylab)
+        plt.show()
+    elif ndim == 2:
+        plt.figure()
+        for irep in range(nrep):
+            plt.plot(y, fdmat[:, irep])
+        plt.axhline(0, linestyle='--', color='black')
+        plt.xlim(xlim)
+        plt.ylim(ylim)
+        plt.xlabel(xlab)
+        plt.ylabel(ylab)
+        plt.show()
     

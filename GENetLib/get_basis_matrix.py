@@ -6,6 +6,11 @@ from GENetLib.basis_mat import bspline_mat, expon_mat, fourier_mat, monomial_mat
 '''Calculate a set of basis functions or their derivatives and a set of parameter values'''
 
 def get_basis_matrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
+    
+    if isinstance(basisobj, (int, float)) and isinstance(evalarg, dict):
+        temp = basisobj
+        basisobj = evalarg
+        evalarg = temp
     if evalarg is None:
         raise ValueError("evalarg required;  is NULL.")
     evalarg = np.array(evalarg, dtype=float)
@@ -21,6 +26,20 @@ def get_basis_matrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
         nvalues = len(basisvalues)
         N = len(evalarg)
         OK = False
+        for ivalues in range(nvalues):
+            basisvaluesi = basisvalues[ivalues]
+            if not isinstance(basisvaluesi, (list, np.ndarray)):
+                raise ValueError("BASISVALUES does not contain lists.")
+            argvals = basisvaluesi[0]
+            if len(basisvaluesi) >= nderiv + 2:
+                if N == len(argvals):
+                    if np.all(argvals == evalarg):
+                        basismat = basisvaluesi[nderiv + 1]
+                        OK = True
+        if OK:
+            if len(basismat.shape) == 2:
+                return np.asmatrix(basismat)
+            return basismat
     type_ = basisobj['btype']
     nbasis = basisobj['nbasis']
     params = basisobj['params']

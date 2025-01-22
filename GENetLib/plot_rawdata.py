@@ -27,3 +27,10 @@ def plot_rawdata(location, X, color=None, pch=4, cex=0.9, show_legend=True):
     if show_legend:
         plt.legend()
     plt.show()
+
+from GENetLib.sim_data_func import sim_data_func
+seed = 123
+func_survival = sim_data_func(20, 30, 'Survival', seed = seed)
+location = list(func_survival['location'])
+X = func_survival['X']
+plot_rawdata(location, X, show_legend = False)
