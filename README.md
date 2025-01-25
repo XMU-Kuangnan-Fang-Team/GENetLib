@@ -1,5 +1,5 @@
 <div align="center">
-<img src="image/logo.png" alt="logo.png" width="700">
+<img src="image/overall_fig.png" alt="overall_fig.png" width="700">
 </div>
 
 [![pypi](https://img.shields.io/pypi/v/GENetLib?logo=Pypi)](https://pypi.org/project/GENetLib)
