@@ -1,7 +1,7 @@
 Introduction
 ==================
 
-.. image:: _static/logo.jpg
+.. image:: _static/logo.png
    :width: 700
    :align: center
 
