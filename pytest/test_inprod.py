@@ -9,6 +9,8 @@ def test_inprod():
     fbasis_1 = inprod(fbasis1)
     fbasis_2 = inprod(fbasis2)
     fbasis_3 = inprod(fbasis3)
+    fbasis_4 = inprod(fbasis3, fbasis3, 2, 2)
     assert fbasis_1 is not None
     assert fbasis_2 is not None
     assert fbasis_3 is not None
+    assert fbasis_4 is not None
