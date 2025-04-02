@@ -58,18 +58,18 @@ def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
         nbasis = basismat.shape[1]
         oneb = np.ones((1, nbasis))
         nonintwrd = False
-        for j in range(1, nderiv + 1):
-            bfd = bwtlist[j - 1]
+        for j in range(nderiv):
+            bfd = bwtlist[j]
             bbasis = bfd['basis']
             if bbasis['btype'] != "constant" or bfd['coefs'] != 0:
                 nonintwrd = True
         if nonintwrd:
-            for j in range(1, nderiv + 1):
-                bfd = bwtlist[j - 1]
+            for j in range(nderiv):
+                bfd = bwtlist[j]
                 if not np.all(bfd['coefs'] == 0):
                     wjarray = eval_fd(evalarg, bfd, 0, returnMatrix)
-                    Dbasismat = get_basis_matrix(evalarg, basisobj, j - 1, returnMatrix)
-                    basismat = basismat + (wjarray @ oneb) * Dbasismat
+                    Dbasismat = get_basis_matrix(evalarg, basisobj, j, returnMatrix)
+                    basismat = basismat + (np.array(wjarray).T @ oneb) * np.array(Dbasismat)
     if not returnMatrix and len(basismat.shape) == 2:
         return np.asmatrix(basismat)
     else:
