@@ -5,6 +5,46 @@ from GENetLib.get_basis_matrix import get_basis_matrix
 
 '''Calculate the value of basis functions and functional objects'''
 
+def lfd(nderiv = 0, bwtlist = None):
+    if not isinstance(nderiv, int):
+        raise ValueError("Order of operator is not numeric.")
+    if nderiv < 0:
+        raise ValueError("Order of operator is negative.")
+    if bwtlist is None:
+        bwtlist = []
+    if bwtlist == None:
+        bwtlist = [None] * nderiv
+        if nderiv > 0:
+            conbasis = create_constant_basis()
+            bwtlist = [fd(0, conbasis) for _ in range(nderiv)]
+    nbwt = len(bwtlist)
+    if nbwt != nderiv and nbwt != nderiv + 1:
+        raise ValueError("The size of bwtlist is inconsistent with nderiv.")
+    if nderiv > 0:
+        rangevec = [0, 1]
+        for j in range(nbwt):
+            bfdj = bwtlist[j]
+            bbasis = bfdj['basis']
+            rangevec = bbasis['rangeval']
+            btype = bbasis['btype']
+            if btype != "const":
+                brange = bbasis['rangeval']
+                if rangevec != brange:
+                    raise ValueError("Ranges are not compatible.")
+    Lfdobj = {'nderiv': nderiv, 'bwtlist': bwtlist}
+    return Lfdobj
+
+def int2lfd(m = 0):
+    if m < 0:
+        raise ValueError("Argument is negative.")
+    if m == 0:
+        bwtlist = None
+    else:
+        basisobj = create_constant_basis([0, 1])
+        bwtlist = [fd([0], basisobj) for _ in range(m)]
+    Lfdobj = lfd(m, bwtlist)
+    return Lfdobj
+
 # Basis functions
 def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
     if isinstance(Lfdobj, int):
