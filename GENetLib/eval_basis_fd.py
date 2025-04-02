@@ -1,6 +1,8 @@
 import numpy as np
 
 from GENetLib.get_basis_matrix import get_basis_matrix
+from GENetLib.create_basis import create_constant_basis
+from GENetLib.fd import fd
 
 
 '''Calculate the value of basis functions and functional objects'''
