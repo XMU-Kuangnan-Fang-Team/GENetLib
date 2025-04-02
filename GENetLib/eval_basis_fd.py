@@ -7,11 +7,28 @@ from GENetLib.get_basis_matrix import get_basis_matrix
 
 # Basis functions
 def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
-
-    nderiv = 0
-    bwtlist = 0
+    if isinstance(Lfdobj, int):
+        Lfdobj = int2lfd(Lfdobj)
+    nderiv = Lfdobj['nderiv']
+    bwtlist = Lfdobj['bwtlist']
     basismat = get_basis_matrix(evalarg, basisobj, nderiv, returnMatrix)
-    if not returnMatrix and len(np.shape(basismat)) == 2:
+    if nderiv > 0:
+        nbasis = basismat.shape[1]
+        oneb = np.ones((1, nbasis))
+        nonintwrd = False
+        for j in range(1, nderiv + 1):
+            bfd = bwtlist[j - 1]
+            bbasis = bfd['basis']
+            if bbasis['btype'] != "constant" or bfd['coefs'] != 0:
+                nonintwrd = True
+        if nonintwrd:
+            for j in range(1, nderiv + 1):
+                bfd = bwtlist[j - 1]
+                if not np.all(bfd['coefs'] == 0):
+                    wjarray = eval_fd(evalarg, bfd, 0, returnMatrix)
+                    Dbasismat = get_basis_matrix(evalarg, basisobj, j - 1, returnMatrix)
+                    basismat = basismat + (wjarray @ oneb) * Dbasismat
+    if not returnMatrix and len(basismat.shape) == 2:
         return np.asmatrix(basismat)
     else:
         return basismat
