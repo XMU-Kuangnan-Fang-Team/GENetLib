@@ -6,7 +6,7 @@ Main References
 
 The main referenced paper are:
 
-- Shuni Wu, Yaqing Xu, Qingzhao Zhang, and Shuangge Ma. Gene–environment interaction analysis via deep learning. Genetic epidemiology, 47(3):261–286, 2023.
+- Shuni Wu, Yaqing Xu, Qingzhao Zhang, and Shuangge Ma. Gene-environment interaction analysis via deep learning. Genetic epidemiology, 47(3):261–286, 2023.
 
 This paper is available at https://doi.org/10.1002/gepi.22518.
 
@@ -48,7 +48,7 @@ The complete referenced paper are listed below:
 
 [14] Xinyi Lin, Seunggeun Lee, David C Christiani, and Xihong Lin. Test for interactions between a genetic marker set and environment in generalized linear models. Biostatistics, 14(4):667–681, 2013.
 
-[15] Jin Liu, Jian Huang, Yawei Zhang, Qing Lan, Nathaniel Rothman, Tongzhang Zheng, and Shuangge Ma. Identification of gene–environment interactions in cancer studies using penalization. Genomics, 102(4):189–194, 2013.
+[15] Jin Liu, Jian Huang, Yawei Zhang, Qing Lan, Nathaniel Rothman, Tongzhang Zheng, and Shuangge Ma. Identification of gene-environment interactions in cancer studies using penalization. Genomics, 102(4):189–194, 2013.
 
 [16] Stephen B Manuck and Jeanne M McCaffery. Gene-environment interaction. Annual review of psychology, 65(1):41–70, 2014.
 
@@ -85,5 +85,3 @@ The complete referenced paper are listed below:
 [32] Cun-Hui Zhang. Nearly unbiased variable selection under minimax concave penalty. The Annals of Statistics, 38(2):894–942, 2010.
 
 [33] Guolin Zhao, Rachel Marceau, Daowen Zhang, and Jung-Ying Tzeng. Assessing gene-environment interactions for common and rare variants with binary traits using gene-trait similarity regression. Genetics, 199(3):695–710, 2015.
-
-[34] Ni Zhao, Haoyu Zhang, Jennifer J Clark, Arnab Maity, and Michael C Wu. Composite kernel machine regression based on likelihood ratio test for joint testing of genetic and gene–environment interaction effect. Biometrics, 75(2):625–637, 2019.
