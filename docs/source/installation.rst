@@ -52,6 +52,7 @@ Dependencies
 
 Dependencies and version control for running **GENetLib**:
 
+- python >= 3.8
 - matplotlib >= 3.7.1
 - numpy >= 1.24.3
 - pandas >= 1.5.3
