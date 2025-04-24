@@ -36,6 +36,7 @@ def lfd(nderiv = 0, bwtlist = None):
     Lfdobj = {'nderiv': nderiv, 'bwtlist': bwtlist}
     return Lfdobj
 
+# Convert integer into fd object
 def int2lfd(m = 0):
     if m < 0:
         raise ValueError("Argument is negative.")
