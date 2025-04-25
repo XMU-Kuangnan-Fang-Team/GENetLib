@@ -1,5 +1,5 @@
 <div align="center">
-<img src="image/logo.jpg" alt="logo" width="500">
+<img src="image/overall_fig.png" alt="overall_fig.png" width="1000">
 </div>
 
 [![pypi](https://img.shields.io/pypi/v/GENetLib?logo=Pypi)](https://pypi.org/project/GENetLib)
@@ -59,10 +59,10 @@ scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500,
                                          dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
 
 # Set up the ScalerGE model
-scalar_ge_res = scalar_ge(scalar_survival_linear['data'], ytype = 'Survival', dim_G = 500, dim_E = 5,
-                          haveGE = True, num_hidden_layers = 2, nodes_hidden_layer = [1000, 100],
-                          Learning_Rate2 = 0.035, L2 = 0.1, Learning_Rate1 = 0.06, L = 0.09, Num_Epochs = 100,
-                          t = 0.01, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
+scalar_ge_res = scalar_ge(y = scalar_survival_linear['y'], G = scalar_survival_linear['G'], E = scalar_survival_linear['E'],
+                          ytype = 'Survival',num_hidden_layers = 2, nodes_hidden_layer = [1000, 100], num_epochs = 100,
+                          learning_rate1 = 0.06, learning_rate2 = 0.035, lambda1 = None, lambda2 = 0.09, Lambda = 0.1,
+                          threshold = 0.01, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
 ```
 ### func_ge
 ``func_ge`` performs G-E interaction analysis via deep leanring when the input is functional data.
@@ -72,21 +72,18 @@ from GENetLib.func_ge import func_ge
 
 # Get example data where input is densely measured functional data and output is survival data
 func_continuous = sim_data_func(n = 1500, m = 30, ytype = 'Continuous', seed = 123)
-y = func_continuous['y']
-z = func_continuous['z']
-location = func_continuous['location']
-X = func_continuous['X']
 
 # Set up the FuncGE model
-func_ge_res = func_ge(y, z, location, X, ytype = 'Continuous', btyepe = 'Bspline',
-                      num_hidden_layers = 2, nodes_hidden_layer = [100,10], Learning_Rate2 = 0.035, L2 = 0.01,
-                      Learning_Rate1 = 0.02, L = 0.01, Num_Epochs = 50, nbasis1 = 5, params1 = 4,
-                      Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = True)
+func_ge_res = func_ge(y = func_continuous['y'], X = func_continuous['X'], location = func_continuous['location'],
+                      Z = func_continuous['Z'], ytype = 'Continuous', btype = 'Bspline', num_hidden_layers = 2,
+                      nodes_hidden_layer = [100,10], num_epochs = 50, learning_rate1 = 0.02, learning_rate2 = 0.035,
+                      nbasis1 = 5, params1 = 4, lambda1 = None, lambda2 = 0.01, Lambda = 0.01, Bsplines = 5,
+                      norder1 = 4, split_type = 1, ratio = [3, 1, 1], plot_res = True)
 ```
 For more information about the functions and methods, please check [main functions](https://genetlib.readthedocs.io/en/latest/main%20functions/main%20functions.html#).
 
 ## Reference
-The main referenced paper is:
+The main referenced papers are:
 - Wu, S., Xu, Y., Zhang, Q., & Ma, S. (2023). Gene–environment interaction analysis via deep learning. Genetic Epidemiology, 1–26. https://doi.org/10.1002/gepi.22518
 - Ren, R., Fang, K., Zhang, Q., & Ma, S. (2023). FunctanSNP: an R package for functional analysis of dense SNP data (with interactions). Bioinformatics, 39(12), btad741. https://doi.org/10.1093/bioinformatics/btad741
 
@@ -99,3 +96,4 @@ GENetLib is licensed under the MIT License. See [LICENSE](https://github.com/Bar
 - Welcome to submit [issues](https://github.com/Barry57/GENetLib/issues) or [pull requests](https://github.com/Barry57/GENetLib/pulls).
 - Send an email to Barry57@163.com to contact us.
 - Thanks for all the supports! 👏
+

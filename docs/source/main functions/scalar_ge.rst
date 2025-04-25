@@ -17,7 +17,7 @@ Usage
 
 .. code-block:: python
 
-    scalar_ge(data, ytype, dim_G, dim_E, haveGE, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t = None, model = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True, model_reg = None, isfunc = False)
+    scalar_ge(y, G, E, ytype, num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, lambda1 = None, lambda2 = None, Lambda = None, threshold = None, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
 
 Parameters
 ----------
@@ -31,34 +31,32 @@ This part shows the meanings and data types of parameters. Users can check the t
 
    * - Parameter
      - Description
-   * - **data**
-     - dataframe or list, follow the format: dataframe with {G, GE(optional), E, y} or list with {y, G, E, GE(optional)}.
+   * - **y**
+     - array or dataframe, the response variable.
+   * - **G**
+     - array or dataframe, the scalar genetic variable.
+   * - **E**
+     - array or dataframe, the scalar environmental variable.
    * - **ytype**
      - character, "Survival", "Binary" or "Continuous" type of the output y.
-   * - **dim_G**
-     - numeric, dimension of gene variables.
-   * - **dim_E**
-     - numeric, dimension of environment variables.
-   * - **haveGE**
-     - bool, "True" or "False", whether there are GE interactions in the data. If not, the function will calculate GE interactions.
    * - **num_hidden_layers**
      - numeric, number of hidden layers in the neural network.
    * - **nodes_hidden_layer**
      - list, contains number of nodes in each hidden layer.
-   * - **Learning_Rate2**
-     - numeric, learning rate of hidden layers.
-   * - **L2**
-     - numeric, tuning parameter of L2 penalization.
-   * - **Learning_Rate1**
-     - numeric, learning rate of sparse layers.
-   * - **L**
-     - numeric, tuning parameter of MCP penalization.
-   * - **Num_Epochs**
+   * - **num_epochs**
      - numeric, number of epochs for neural network training.
-   * - **t**
+   * - **learning_rate1**
+     - numeric, learning rate of sparse layers.
+   * - **learning_rate2**
+     - numeric, learning rate of hidden layers.
+   * - **lambda1**
+     - numeric or None, tuning parameter of the first MCP penalization.
+   * - **lambda2**
+     - numeric, tuning parameter of the second MCP penalization.
+   * - **Lambda**
+     - numeric, tuning parameter of L2 penalization.
+   * - **threshold**
      - numeric, threshold in the selection of important features.
-   * - **model**
-     - tuple, pre-trained models. If not specified, the default is none.
    * - **split_type**
      - integer, types of data split. If split_type = 0, the data is divided into a training set and a validation set. If split_type = 1, the data is divided into a training set, a validation set and a test set.
    * - **ratio**
@@ -113,11 +111,13 @@ Here is a quick example for using this function:
     ytype = 'Survival'
     num_hidden_layers = 2
     nodes_hidden_layer = [1000, 100]
-    Learning_Rate2 = 0.035
-    L2 = 0.1
-    Learning_Rate1 = 0.06
-    L = 0.09
-    Num_Epochs = 100
-    t = 0.01
-    scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = 'Survival', n_inter = 30)
-    scalar_ge_res = scalar_ge(scalar_survival_linear['data'], ytype, 500, 5, True, num_hidden_layers, nodes_hidden_layer, Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, split_type = 0, ratio = [7, 3], important_feature = True, plot = True)
+    learning_rate2 = 0.015
+    Lambda = 0.2
+    learning_rate1 = 0.09
+    lambda2 = 0.09
+    num_epochs = 100
+    scalar_survival_linear = sim_data_scalar(rho_G = 0.25, rho_E = 0.3, dim_G = 500, dim_E = 5, n = 1500, dim_E_Sparse = 2, ytype = ytype, n_inter = 30)
+    y = scalar_survival_linear['y']
+    G = scalar_survival_linear['G']
+    E = scalar_survival_linear['E']
+    scalar_ge_res = scalar_ge(y, G, E, ytype, num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, lambda1 = None, lambda2 = lambda2, Lambda = Lambda)

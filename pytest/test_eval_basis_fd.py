@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from GENetLib.eval_basis_fd import eval_basis, eval_fd
+from GENetLib.eval_basis_fd import eval_basis, eval_fd, lfd, int2lfd
 from GENetLib.create_basis import create_bspline_basis
 
 # Test eval_basis function
@@ -65,3 +65,13 @@ def test_eval_fd_list_input():
     evalarg = list(np.linspace(0, 1, 10))
     function_values = eval_fd(evalarg, fdobj)
     assert function_values.shape == (1,10)
+
+# Test lfd
+def test_lfd():
+    function_values = lfd()
+    assert function_values is not None
+
+# Test int2lfd
+def test_int2lfd():
+    function_values = int2lfd()
+    assert function_values is not None

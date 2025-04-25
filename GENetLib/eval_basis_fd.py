@@ -1,17 +1,65 @@
 import numpy as np
 
 from GENetLib.get_basis_matrix import get_basis_matrix
+from GENetLib.create_basis import create_constant_basis
+from GENetLib.fd import fd
 
 
 '''Calculate the value of basis functions and functional objects'''
 
+def lfd(nderiv = 0, bwtlist = None):
+    if not isinstance(nderiv, int):
+        raise ValueError("Order of operator is not numeric.")
+    if nderiv < 0:
+        raise ValueError("Order of operator is negative.")
+    if bwtlist is None:
+        bwtlist = []
+    if bwtlist == None:
+        bwtlist = [None] * nderiv
+        if nderiv > 0:
+            conbasis = create_constant_basis()
+            bwtlist = [fd(0, conbasis) for _ in range(nderiv)]
+    nbwt = len(bwtlist)
+    if nbwt != nderiv and nbwt != nderiv + 1:
+        raise ValueError("The size of bwtlist is inconsistent with nderiv.")
+    if nderiv > 0:
+        rangevec = [0, 1]
+        for j in range(nbwt):
+            bfdj = bwtlist[j]
+            bbasis = bfdj['basis']
+            rangevec = bbasis['rangeval']
+            btype = bbasis['btype']
+            if btype != "const":
+                brange = bbasis['rangeval']
+                if rangevec != brange:
+                    raise ValueError("Ranges are not compatible.")
+    Lfdobj = {'nderiv': nderiv, 'bwtlist': bwtlist}
+    return Lfdobj
+
 # Basis functions
 def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
-
-    nderiv = 0
-    bwtlist = 0
+    if isinstance(Lfdobj, int):
+        Lfdobj = int2lfd(Lfdobj)
+    nderiv = Lfdobj['nderiv']
+    bwtlist = Lfdobj['bwtlist']
     basismat = get_basis_matrix(evalarg, basisobj, nderiv, returnMatrix)
-    if not returnMatrix and len(np.shape(basismat)) == 2:
+    if nderiv > 0:
+        nbasis = basismat.shape[1]
+        oneb = np.ones((1, nbasis))
+        nonintwrd = False
+        for j in range(nderiv):
+            bfd = bwtlist[j]
+            bbasis = bfd['basis']
+            if bbasis['btype'] != "constant" or bfd['coefs'] != 0:
+                nonintwrd = True
+        if nonintwrd:
+            for j in range(nderiv):
+                bfd = bwtlist[j]
+                if not np.all(bfd['coefs'] == 0):
+                    wjarray = eval_fd(evalarg, bfd, 0, returnMatrix)
+                    Dbasismat = get_basis_matrix(evalarg, basisobj, j, returnMatrix)
+                    basismat = basismat + (np.array(wjarray).T @ oneb) * np.array(Dbasismat)
+    if not returnMatrix and len(basismat.shape) == 2:
         return np.asmatrix(basismat)
     else:
         return basismat

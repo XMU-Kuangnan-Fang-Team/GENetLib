@@ -13,10 +13,11 @@ from GENetLib.fd import fd
 
 '''Grid search for func_ge'''
 
-def grid_func_ge(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidden_layer,
-                 Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs,
-                 nbasis1, params1, t = None, Bsplines = 20, norder1 = 4, 
-                 model = None, split_type = 0, ratio = [7, 3], plot_res = True, plot_beta = True):
+def grid_func_ge(y, X, location, Z, ytype, btype, 
+                 num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, 
+                 nbasis1, params1, lambda1 = None, lambda2 = None, Lambda = None, threshold = None, 
+                 Bsplines = 20, norder1 = 4, model = None, split_type = 0, 
+                 ratio = [7, 3], plot_res = True, plot_beta = True):
     # When X is functional input
     if type(X) == dict:
         fbasis2 = cb.create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
@@ -47,15 +48,15 @@ def grid_func_ge(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidde
         U = pd.DataFrame(np.array([funcU(i) for i in range(n)]).reshape(n, -1))
     # Calculate interaction variables
     dim_G = U.shape[1]
-    dim_E = z.shape[1]
+    dim_E = Z.shape[1]
     INTERACTION = np.zeros(shape=(n, dim_G * dim_E))
     k = 0
     for i in range(dim_E):
         for j in range(dim_G):
-            INTERACTION[:,k] = z[:,i] * U.iloc[:,j]
+            INTERACTION[:,k] = Z[:,i] * U.iloc[:,j]
             k = k + 1
     # Model for parameter initialization
-    data_reg = pd.DataFrame(np.hstack((U,INTERACTION,z)))
+    data_reg = pd.DataFrame(np.hstack((U,INTERACTION,Z)))
     if ytype == 'Survival':
         model_reg = LinearRegression().fit(data_reg, y[:,0])
     if ytype == 'Binary':
@@ -63,17 +64,17 @@ def grid_func_ge(y, z, location, X, ytype, btype, num_hidden_layers, nodes_hidde
     else:
         model_reg = LinearRegression().fit(data_reg, y)
     # Put basic coefficient matrix into modeling, grid search for parameters
-    GridFuncGE_res = grid_scalar_ge([y,U,z], ytype, dim_G, dim_E, False, num_hidden_layers, nodes_hidden_layer,
-                                    Learning_Rate2, L2, Learning_Rate1, L, Num_Epochs, t, model, 
-                                    split_type, ratio, True, plot_res, model_reg, True)
+    GridFuncGE_res = grid_scalar_ge(y, U, Z, ytype, num_hidden_layers, nodes_hidden_layer, num_epochs,
+                                    learning_rate1, learning_rate2, lambda1, lambda2, Lambda,
+                                    threshold, model, split_type, ratio, False, plot_res, model_reg, True)
     tensor1 = GridFuncGE_res[5].sparse1.weight.data.numpy()
     tensor2 = GridFuncGE_res[5].sparse2.weight.data.numpy()
     # Plot graphs of functions
-    basisCoef = np.concatenate((tensor1, tensor2), axis=0).reshape(z.shape[1]+1,-1)
-    betat = {f'beta{i}(t)': fd(coef = basisCoef[i,], basisobj = fbasis2) for i in range(z.shape[1]+1)}
-    b = {f'b{i}': basisCoef[i,] for i in range(z.shape[1]+1)}
+    basisCoef = np.concatenate((tensor1, tensor2), axis=0).reshape(Z.shape[1]+1,-1)
+    betat = {f'beta{i}(t)': fd(coef = basisCoef[i,], basisobj = fbasis2) for i in range(Z.shape[1]+1)}
+    b = {f'b{i}': basisCoef[i,] for i in range(Z.shape[1]+1)}
     if plot_beta:
-        for i in range(z.shape[1]+1):
+        for i in range(Z.shape[1]+1):
             plt.plot(location, np.array(eval_fd(location, fd(coef = basisCoef[i,], basisobj = fbasis2)))[0])
             plt.axhline(0, color='black', linestyle='--', linewidth=0.5)
             plt.xlabel('location')
