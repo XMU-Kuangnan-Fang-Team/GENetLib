@@ -36,6 +36,17 @@ def lfd(nderiv = 0, bwtlist = None):
     Lfdobj = {'nderiv': nderiv, 'bwtlist': bwtlist}
     return Lfdobj
 
+def int2lfd(m = 0):
+    if m < 0:
+        raise ValueError("Argument is negative.")
+    if m == 0:
+        bwtlist = None
+    else:
+        basisobj = create_constant_basis([0, 1])
+        bwtlist = [fd([0], basisobj) for _ in range(m)]
+    Lfdobj = lfd(m, bwtlist)
+    return Lfdobj
+
 # Basis functions
 def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
     if isinstance(Lfdobj, int):
