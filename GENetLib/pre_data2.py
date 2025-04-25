@@ -14,14 +14,14 @@ def pre_data2(y, x, clinical, interaction = None, ytype = 'Survival', split_type
     dim_G = x.shape[1]
     dim_E = clinical.shape[1]
     if ytype == 'Survival': 
-        if interaction == None:
+        if interaction is None:
             dim_GE = 0
             data = pd.DataFrame(np.hstack((x, clinical, np.array(y).reshape(n,-1))))
         else:
             dim_GE = interaction.shape[1]
             data = pd.DataFrame(np.hstack((x, interaction, clinical, np.array(y).reshape(n,-1))))
     elif ytype in ['Binary', 'Continuous']:
-        if interaction == None:
+        if interaction is None:
             dim_GE = 0
             data = pd.DataFrame(np.hstack((x, clinical, np.array(y).reshape(n,-1))))
         else:
