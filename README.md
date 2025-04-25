@@ -4,7 +4,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/GENetLib?logo=Pypi)](https://pypi.org/project/GENetLib)
 ![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-lightblue.svg)
-[![Build](https://github.com/Barry57/GENetLib/actions/workflows/CI.yml/badge.svg)](https://github.com/Barry57/GENetLib/actions/workflows/CI.yml/badge.svg)
+[![Build](https://github.com/XMU-Kuangnan-Fang-Team/GENetLib/actions/workflows/CI.yml/badge.svg)](https://github.com/XMU-Kuangnan-Fang-Team/GENetLib/actions/workflows/CI.yml/badge.svg)
 [![codecov](https://codecov.io/github/Barry57/GENetLib/graph/badge.svg?token=9J9QMN7L9Z)](https://codecov.io/github/Barry57/GENetLib)
 [![License: MIT](https://img.shields.io/badge/License-MIT-darkgreen.svg)](https://opensource.org/licenses/MIT)
 [![Documentation Status](https://readthedocs.org/projects/genetlib/badge/?version=latest)](https://genetlib.readthedocs.io/en/latest/?badge=latest)
