@@ -12,13 +12,11 @@ def lfd(nderiv = 0, bwtlist = None):
         raise ValueError("Order of operator is not numeric.")
     if nderiv < 0:
         raise ValueError("Order of operator is negative.")
-    if bwtlist is None:
-        bwtlist = []
     if bwtlist == None:
         bwtlist = [None] * nderiv
         if nderiv > 0:
             conbasis = create_constant_basis()
-            bwtlist = [fd(0, conbasis) for _ in range(nderiv)]
+            bwtlist = [fd([0], conbasis) for _ in range(nderiv)]
     nbwt = len(bwtlist)
     if nbwt != nderiv and nbwt != nderiv + 1:
         raise ValueError("The size of bwtlist is inconsistent with nderiv.")
