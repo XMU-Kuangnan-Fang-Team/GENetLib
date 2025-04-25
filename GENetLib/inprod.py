@@ -133,3 +133,4 @@ def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0
     else:
         return inprodmat
     
+    
