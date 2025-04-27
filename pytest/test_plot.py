@@ -17,3 +17,9 @@ def test_plot_rawdata():
     func_continuous = sim_data_func(n=1500, m=30, ytype='Continuous', seed=123)
     plot_rawdata(func_continuous['location'], func_continuous['X'], color = None, pch = 4, cex = 0.9)
     assert plt.gcf() is not None
+    plot_rawdata(func_continuous['location'], func_continuous['X'], color = 'green', pch = 4, cex = 0.9)
+    assert plt.gcf() is not None
+    location = np.array([0, 1, 2, 3, 4])
+    X = np.array([[1, np.nan, 3, np.nan, 5], [5, 4, np.nan, 2, np.nan]])
+    plot_rawdata(location, X, color='red', show_legend=False)
+    assert plt.gcf() is not None
