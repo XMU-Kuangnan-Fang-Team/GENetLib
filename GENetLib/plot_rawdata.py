@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 '''Plot functions fitting from densely measured observations'''
 
-def plot_rawdata2(location, X, color=None, pch=4, cex=0.9, show_legend=True):
+def plot_rawdata(location, X, color=None, pch=4, cex=0.9, show_legend=True):
     n, m = X.shape
     type_ = 'o'
     truelengths = np.sum(~np.isnan(X))
