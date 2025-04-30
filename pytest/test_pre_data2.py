@@ -1,5 +1,5 @@
 from GENetLib.sim_data import sim_data_scalar
-from GENetLib.fda_func import pre_data2
+from GENetLib.pre_data import pre_data2
 
 scalar_continuous = sim_data_scalar(rho_G=0.25, rho_E=0.3, dim_G=500, dim_E=5, n=500, dim_E_Sparse=2, ytype='Continuous', n_inter=30, seed = 111)
 pre1 = pre_data2(scalar_continuous['y'], scalar_continuous['G'], scalar_continuous['E'], interaction = scalar_continuous['GE'], ytype = 'Continuous', split_type = 0, ratio = [7, 3])
