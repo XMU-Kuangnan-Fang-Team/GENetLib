@@ -1,4 +1,3 @@
-import pytest
 import numpy as np
 from GENetLib.fda_func import spline_design
 
