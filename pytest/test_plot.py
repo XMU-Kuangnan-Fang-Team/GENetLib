@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-from GENetLib.plot_fd import plot_fd
-from GENetLib.fd_chk import fd_chk
-from GENetLib.basis_fd import basis_fd
-from GENetLib.plot_rawdata import plot_rawdata
-from GENetLib.sim_data_func import sim_data_func
+from GENetLib.plot_gene import plot_fd
+from GENetLib.fda_func import fd_chk
+from GENetLib.fda_func import basis_fd
+from GENetLib.plot_gene import plot_rawdata
+from GENetLib.sim_data import sim_data_func
 
 
 def test_plot_fd():
