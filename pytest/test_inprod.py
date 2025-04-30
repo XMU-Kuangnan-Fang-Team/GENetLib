@@ -1,5 +1,5 @@
-from GENetLib.create_basis import create_bspline_basis, create_fourier_basis, create_expon_basis
-from GENetLib.inprod import inprod
+from GENetLib.fda_func import create_bspline_basis, create_fourier_basis, create_expon_basis
+from GENetLib.fda_func import inprod
 
 
 def test_inprod():

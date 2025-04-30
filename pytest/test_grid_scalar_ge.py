@@ -1,4 +1,4 @@
-from GENetLib.sim_data_scalar import sim_data_scalar
+from GENetLib.sim_data import sim_data_scalar
 from GENetLib.grid_scalar_ge import grid_scalar_ge
 import matplotlib
 matplotlib.use('Agg')

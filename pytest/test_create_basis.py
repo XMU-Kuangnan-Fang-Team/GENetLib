@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 import math
 
-from GENetLib.create_basis import (
+from GENetLib.fda_func import (
     create_bspline_basis,
     create_expon_basis,
     create_fourier_basis,

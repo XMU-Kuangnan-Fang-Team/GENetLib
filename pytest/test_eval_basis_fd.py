@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from GENetLib.eval_basis_fd import eval_basis, eval_fd, lfd, int2lfd
-from GENetLib.create_basis import create_bspline_basis
+from GENetLib.fda_func import eval_basis, eval_fd, lfd, int2lfd
+from GENetLib.fda_func import create_bspline_basis
 
 # Test eval_basis function
 def test_eval_basis():

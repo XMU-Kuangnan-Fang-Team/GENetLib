@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from GENetLib.fd import fd
-from GENetLib.create_basis import create_bspline_basis
+from GENetLib.fda_func import fd
+from GENetLib.fda_func import create_bspline_basis
 
 # Test fd function with default coefficients
 def test_fd_default_coef():

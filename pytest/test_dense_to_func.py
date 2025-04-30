@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from GENetLib.dense_to_func import dense_to_func
-from GENetLib.create_basis import create_bspline_basis, create_expon_basis, create_fourier_basis, create_monomial_basis, create_power_basis
+from GENetLib.fda_func import dense_to_func
+from GENetLib.fda_func import create_bspline_basis, create_expon_basis, create_fourier_basis, create_monomial_basis, create_power_basis
 
 
 def test_dense_to_func_bspline():
