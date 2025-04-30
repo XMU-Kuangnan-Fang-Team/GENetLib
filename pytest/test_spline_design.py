@@ -1,7 +1,5 @@
 import pytest
 import numpy as np
-from scipy.interpolate import BSpline
-import pandas as pd
 from GENetLib.fda_func import spline_design
 
 def test_spline_design_norder_one():
