@@ -3,12 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression, LogisticRegression
 
-from GENetLib.dense_to_func import dense_to_func
-import GENetLib.create_basis as cb
-from GENetLib.inprod import inprod
+from GENetLib.fda_func import dense_to_func
+from GENetLib.fda_func import create_bspline_basis, create_expon_basis, create_fourier_basis
+from GENetLib.fda_func import create_monomial_basis, create_power_basis
+from GENetLib.fda_func import inprod
+from GENetLib.fda_func import eval_fd
+from GENetLib.fda_func import fd
 from GENetLib.grid_scalar_ge import grid_scalar_ge
-from GENetLib.eval_basis_fd import eval_fd
-from GENetLib.fd import fd
 
 
 '''Grid search for func_ge'''
@@ -20,7 +21,7 @@ def grid_func_ge(y, X, location, Z, ytype, btype,
                  ratio = [7, 3], plot_res = True, plot_beta = True):
     # When X is functional input
     if type(X) == dict:
-        fbasis2 = cb.create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
+        fbasis2 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
         # Generate basic coefficient matrix
         U = inprod(fdobj1=X, fdobj2=fbasis2, Lfdobj1=0, Lfdobj2=0)
     # When X are densely measured observations
@@ -29,16 +30,16 @@ def grid_func_ge(y, X, location, Z, ytype, btype,
         funcX = dense_to_func(location, X, btype, nbasis1, params1, Plot=False)
         # Provide different types of basis functions
         if btype == "Bspline":
-            fbasis1 = cb.create_bspline_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, norder=params1)
+            fbasis1 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, norder=params1)
         if btype == "Exponential":
-            fbasis1 = cb.create_expon_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, ratevec=params1)
+            fbasis1 = create_expon_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, ratevec=params1)
         if btype == "Fourier":
-            fbasis1 = cb.create_fourier_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, period=params1)
+            fbasis1 = create_fourier_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, period=params1)
         if btype == "Monomial":
-            fbasis1 = cb.create_monomial_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, exponents=params1)
+            fbasis1 = create_monomial_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, exponents=params1)
         if btype == "Power":
-            fbasis1 = cb.create_power_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, exponents=params1)  
-        fbasis2 = cb.create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
+            fbasis1 = create_power_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, exponents=params1)  
+        fbasis2 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
         n,m = X.shape
         funcCoef = funcX['coefs'].T
         basisint = inprod(fdobj1=fbasis1, fdobj2=fbasis2, Lfdobj1=0, Lfdobj2=0)

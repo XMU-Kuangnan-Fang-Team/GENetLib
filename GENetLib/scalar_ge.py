@@ -2,7 +2,7 @@ import torch
 import pandas as pd
 
 from GENetLib.scalar_mcp_l2train import scalar_mcp_l2train
-from GENetLib.pre_data2 import pre_data2
+from GENetLib.pre_data import pre_data2
 
 
 '''G-E interaction analysis via neural network for scalar data input'''

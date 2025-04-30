@@ -1,7 +1,7 @@
 import pandas as pd
 import torch
 
-from GENetLib.pre_data2 import pre_data2
+from GENetLib.pre_data import pre_data2
 from GENetLib.scalar_l2train import scalar_l2train
 from GENetLib.scalar_mcp_l2train import scalar_mcp_l2train
 
