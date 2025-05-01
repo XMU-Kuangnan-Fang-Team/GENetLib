@@ -51,7 +51,7 @@ We start with the two basic functions ``scalar_ge`` and ``func_ge``.
 ### scalar_ge
 ``scalar_ge`` performs G-E interaction analysis via deep leanring when the input is scalar data.
 ```Python
-from GENetLib.sim_data_scalar import sim_data_scalar
+from GENetLib.sim_data import sim_data_scalar
 from GENetLib.scalar_ge import scalar_ge
 
 # Get example data where input is scalar data and output is survival data
@@ -67,7 +67,7 @@ scalar_ge_res = scalar_ge(y = scalar_survival_linear['y'], G = scalar_survival_l
 ### func_ge
 ``func_ge`` performs G-E interaction analysis via deep leanring when the input is functional data.
 ```Python
-from GENetLib.sim_data_func import sim_data_func
+from GENetLib.sim_data import sim_data_func
 from GENetLib.func_ge import func_ge
 
 # Get example data where input is densely measured functional data and output is survival data
