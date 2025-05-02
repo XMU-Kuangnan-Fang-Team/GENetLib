@@ -63,7 +63,7 @@ Here is a quick example for using this function:
 
 .. code-block:: python
 
-    from GENetLib.sim_data_func import sim_data_func
+    from GENetLib.sim_data import sim_data_func
     func_continuous = sim_data_func(n = 1000, m = 100, ytype = 'Continuous', seed = 1)
     X = func_continuous['X']
     y = func_continuous['y']
