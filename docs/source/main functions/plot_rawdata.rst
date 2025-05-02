@@ -76,8 +76,8 @@ Here is a quick example for using this function:
 
 .. code-block:: python
 
-    from GENetLib.sim_data_func import sim_data_func
-    from GENetLib.plot_rawdata import plot_rawdata
+    from GENetLib.sim_data import sim_data_func
+    from GENetLib.plot_gene import plot_rawdata
     seed = 123
     func_survival = sim_data_func(3, 30, 'Survival', seed = seed)
     location = list(func_survival['location'])

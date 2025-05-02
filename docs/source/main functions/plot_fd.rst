@@ -72,10 +72,10 @@ Here is a quick example for using this function:
 
 .. code-block:: python
 
-  from GENetLib.dense_to_func import dense_to_func
+  from GENetLib.fda_func import dense_to_func
   # dense_to_func: a function to convert densely measured data into functional data
-  from GENetLib.sim_data_func import sim_data_func
-  from GENetLib.plot_fd import plot_fd
+  from GENetLib.sim_data import sim_data_func
+  from GENetLib.plot_gene import plot_fd
   func_continuous = sim_data_func(2, 30, 'Continuous')
   location = list(func_continuous['location'])
   X = func_continuous['X']
