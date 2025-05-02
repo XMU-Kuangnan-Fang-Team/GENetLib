@@ -9,10 +9,10 @@ Introduction
 .. image:: https://img.shields.io/pypi/v/GENetLib?logo=Pypi
    :target: https://pypi.org/project/GENetLib
 .. image:: https://img.shields.io/badge/Python-3.8%2B-lightblue.svg
-.. image:: https://github.com/Barry57/GENetLib/actions/workflows/CI.yml/badge.svg
-   :target: https://github.com/Barry57/GENetLib/actions/workflows/CI.yml/badge.svg
-.. image:: https://codecov.io/github/Barry57/GENetLib/graph/badge.svg?token=9J9QMN7L9Z
-   :target: https://codecov.io/github/Barry57/GENetLib
+.. image:: https://github.com/XMU-Kuangnan-Fang-Team/GENetLib/actions/workflows/CI.yml/badge.svg
+   :target: https://github.com/XMU-Kuangnan-Fang-Team/GENetLib/actions/workflows/CI.yml/badge.svg
+.. image:: https://codecov.io/github/XMU-Kuangnan-Fang-Team/GENetLib/graph/badge.svg?token=9J9QMN7L9Z
+   :target: https://codecov.io/github/XMU-Kuangnan-Fang-Team/GENetLib
 .. image:: https://img.shields.io/badge/License-MIT-darkgreen.svg
    :target: https://opensource.org/licenses/MIT
 .. image:: https://readthedocs.org/projects/genetlib/badge/?version=latest
