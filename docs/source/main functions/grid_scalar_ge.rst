@@ -111,7 +111,7 @@ Here is a quick example for using this function:
 
 .. code-block:: python
 
-    from GENetLib.sim_data_scalar import sim_data_scalar
+    from GENetLib.sim_data import sim_data_scalar
     from GENetLib.grid_scalar_ge import grid_scalar_ge
     ytype = 'Survival'
     num_hidden_layers = 2
