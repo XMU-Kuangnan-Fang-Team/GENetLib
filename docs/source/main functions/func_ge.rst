@@ -132,7 +132,7 @@ Here is a quick example for using this function:
 
 .. code-block:: python
 
-    from GENetLib.sim_data_func import sim_data_func
+    from GENetLib.sim_data import sim_data_func
     from GENetLib.func_ge import func_ge
     num_hidden_layers = 2
     nodes_hidden_layer = [100,10]
