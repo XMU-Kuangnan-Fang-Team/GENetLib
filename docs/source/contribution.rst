@@ -14,7 +14,7 @@ Here we provide some ways to contribute to GENetLib:
 
 **Issue**
 
-- Post on the :ref:`issue<https://github.com/Barry57/GENetLib/issues>` to tell us your questions or something you want to work on.
+- Post on the `issues <https://github.com/Barry57/GENetLib/issues>`_ to tell us your questions or something you want to work on.
 
 - Please remember to add a tag on the issue to post your question types. This will help us clarify your questions.
 
@@ -22,7 +22,7 @@ Here we provide some ways to contribute to GENetLib:
 
 - Create a pull request (PR) with your changes from your fork.
 
-- Once your PR is approved, it will be merged into the **GENetLib** repository, and you will be included in the :ref:`list of contributors<https://github.com/Barry57/GENetLib/graphs/contributors>`.
+- Once your PR is approved, it will be merged into the **GENetLib** repository, and you will be included in the `list of contributors <https://github.com/Barry57/GENetLib/graphs/contributors>`_.
 
 
 Contact us
