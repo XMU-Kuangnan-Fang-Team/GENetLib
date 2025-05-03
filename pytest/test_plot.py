@@ -30,6 +30,6 @@ def test_plot_rawdata():
     location = np.array([0, 1, 2, 3, 4])
     X = np.array([[1, np.nan, 3, np.nan, 5], [5, 4, np.nan, 2, np.nan]])
     plot_rawdata(location, X, color='red', show_legend = False, title = 'plot_rawdata test',
-                 grid = True, figsize = (10,6)))
+                 grid = True, figsize = (10,6))
     assert plt.gcf() is not None
     
