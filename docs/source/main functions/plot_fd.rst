@@ -17,7 +17,8 @@ Usage
 
 .. code-block:: python
 
-    plot_fd(x, y=None, xlab=None, ylab=None)
+    plot_fd(x, y = None, xlab = None, ylab = None, title = None, colors = None,
+            linestyles = None, legend = None, grid = False, figsize = (8, 6))
 
 
 Parameters

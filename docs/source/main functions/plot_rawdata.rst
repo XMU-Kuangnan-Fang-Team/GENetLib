@@ -17,7 +17,8 @@ Usage
 
 .. code-block:: python
 
-    plot_rawdata(location, X, color = None, pch = 4, cex = 0.9, show_legend = True)
+    plot_rawdata(location, X, color = None, pch = 4, cex = 0.9, show_legend = True,
+                 title = None, grid = False, figsize = (8, 6))
 
 
 Parameters
