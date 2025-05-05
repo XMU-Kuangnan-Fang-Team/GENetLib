@@ -24,19 +24,18 @@ def scalar_l2train(train_x, train_clinical, train_interaction, train_y,
     # Training
     for epoch in range(Num_Epochs + 1):
         net.train()
-        regularization_loss = 0
         pred = net(train_x, train_interaction, train_clinical)
         opt.zero_grad()
         # Calculate the loss function
         if ytype == 'Survival':
             loss_fn = neg_par_log_likelihood
-            loss = loss_fn(pred, train_y[0], train_y[1]) + regularization_loss
+            loss = loss_fn(pred, train_y[0], train_y[1])
         elif ytype == 'Binary':
             loss_fn = BCELoss()
-            loss = loss_fn(pred, train_y) + regularization_loss
+            loss = loss_fn(pred, train_y)
         elif ytype == 'Continuous':
             loss_fn = MSELoss()
-            loss = loss_fn(pred, train_y) + regularization_loss
+            loss = loss_fn(pred, train_y)
         else:
             raise ValueError('Invalid ytype')
         loss.backward() # Backpropagate the loss
@@ -46,13 +45,13 @@ def scalar_l2train(train_x, train_clinical, train_interaction, train_y,
         # Calculate the training loss
         if ytype == 'Survival':
             loss_fn = neg_par_log_likelihood
-            loss = loss_fn(train_pred, train_y[0], train_y[1]) + regularization_loss
+            loss = loss_fn(train_pred, train_y[0], train_y[1])
         elif ytype == 'Binary':
             loss_fn = BCELoss()
-            loss = loss_fn(train_pred, train_y) + regularization_loss
+            loss = loss_fn(train_pred, train_y)
         elif ytype == 'Continuous':
             loss_fn = MSELoss()
-            loss = loss_fn(train_pred, train_y) + regularization_loss
+            loss = loss_fn(train_pred, train_y)
         else:
             raise ValueError('Invalid ytype')
         net.eval()
@@ -60,13 +59,13 @@ def scalar_l2train(train_x, train_clinical, train_interaction, train_y,
         # Calculate the evaluation loss
         if ytype == 'Survival':
             loss_fn = neg_par_log_likelihood
-            eval_loss = loss_fn(eval_pred, eval_y[0], eval_y[1]).view(1,) + regularization_loss
+            eval_loss = loss_fn(eval_pred, eval_y[0], eval_y[1]).view(1,)
         elif ytype == 'Binary':
             loss_fn = BCELoss()
-            eval_loss = loss_fn(eval_pred, eval_y).view(1,) + regularization_loss
+            eval_loss = loss_fn(eval_pred, eval_y).view(1,)
         elif ytype == 'Continuous':
             loss_fn = MSELoss()
-            eval_loss = loss_fn(eval_pred, eval_y).view(1,) + regularization_loss
+            eval_loss = loss_fn(eval_pred, eval_y).view(1,)
         else:
             raise ValueError('Invalid ytype')
     # Calculate and return performance metrics
