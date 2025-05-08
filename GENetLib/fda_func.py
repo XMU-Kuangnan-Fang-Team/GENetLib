@@ -987,3 +987,44 @@ def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0
     else:
         return inprodmat
 
+
+def ppbspline(t):
+    norder = len(t) - 1
+    ncoef = 2 * (norder - 1)
+    if norder > 1:
+        adds = np.ones(norder - 1)
+        tt = np.concatenate((adds * t[0], t, adds * t[-1]))
+        gapin = np.where(np.diff(tt) > 0)[0] + 1
+        ngap = len(gapin)
+        iseq = np.arange(2 - norder, norder)
+        ind = np.outer(np.ones(ngap), iseq) + np.outer(gapin, np.ones(ncoef))
+        ind = ind.astype(int)
+        tx = np.reshape(tt[np.ravel(ind - 1)], (ngap, ncoef))
+        ty = tx - np.outer(tt[gapin - 1], np.ones(ncoef))
+        b = np.outer(np.ones(ngap), np.arange(1 - norder, 1)) + np.outer(gapin, np.ones(norder))
+        b = b.astype(int) - 1
+        a = np.concatenate((adds * 0, [1], adds * 0))
+        d = np.reshape(a[b.flatten().tolist()], (ngap, norder))
+        for j in range(norder - 1):
+            for i in range(norder - j - 1):
+                ind1 = i + norder - 1
+                ind2 = i + j
+                d[:, i] = (ty[:, ind1] * d[:, i] - ty[:, ind2] * d[:, i + 1]) / (ty[:, ind1] - ty[:, ind2])
+        Coeff = d
+        for j in range(1, norder):
+            factor = (norder - j) / j
+            ind = list(range(norder - 1, j - 1, -1))
+            for i in ind:
+                Coeff[:, i] = factor * (Coeff[:, i] - Coeff[:, i - 1]) / ty[:, i + norder - j - 1]
+        ind = range(norder - 1, -1, -1)
+        if ngap > 1:
+            Coeff = Coeff[:, ind]
+        else:
+            Coeff = np.reshape(Coeff[:, ind], (1, norder))
+        index = gapin - (norder - 1)
+    else:
+        Coeff = np.array([[1]])
+        index = np.array([[1]])
+    return [Coeff, index]
+
+
