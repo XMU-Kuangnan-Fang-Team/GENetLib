@@ -1,5 +1,5 @@
 import numpy as np
-from GENetLib.fda_func import ycheck
+from GENetLib.fda_func import ycheck, ppbspline
 import pytest
 
 def test_ycheck_valid_2d():
@@ -42,3 +42,38 @@ def test_ycheck_invalid_dimensions():
     n = 3
     with pytest.raises(ValueError, match="Second argument must not have more than 3 dimensions"):
         ycheck(y, n)
+
+def test_ppbspline_single():
+    t = np.array([0])
+    Coeff, index = ppbspline(t)
+    np.testing.assert_array_equal(Coeff, np.array([[1]]))
+    np.testing.assert_array_equal(index, np.array([[1]]))
+
+def test_ppbspline_two():
+    t = np.array([0, 1])
+    Coeff, index = ppbspline(t)
+    np.testing.assert_array_equal(Coeff, np.array([[1]]))
+    np.testing.assert_array_equal(index, np.array([[1]]))
+
+def test_ppbspline_three():
+    t = np.array([0, 0.5, 1])
+    Coeff, index = ppbspline(t)
+    expected_Coeff = np.array([[2, 0], [-2, 1]])
+    expected_index = np.array([1, 2])
+    np.testing.assert_allclose(Coeff, expected_Coeff, rtol=1e-5, atol=1e-8)
+    np.testing.assert_array_equal(index, expected_index)
+
+def test_ppbspline_four():
+    t = np.array([0, 0.25, 0.5, 0.75, 1])
+    Coeff, index = ppbspline(t)
+    expected_index = np.array([1, 2, 3, 4])
+    assert Coeff.shape == (4, 4)
+    np.testing.assert_array_equal(index, expected_index)
+
+def test_ppbspline_list_input():
+    t = [0, 0.5, 1]
+    Coeff, index = ppbspline(t)
+    expected_Coeff = np.array([[2, 0], [-2, 1]])
+    expected_index = np.array([1, 2])
+    np.testing.assert_allclose(Coeff, expected_Coeff, rtol=1e-5, atol=1e-8)
+    np.testing.assert_array_equal(index, expected_index)
