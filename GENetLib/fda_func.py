@@ -1028,3 +1028,21 @@ def ppbspline(t):
     return [Coeff, index]
 
 
+def ycheck(y, n):
+    if isinstance(y, list):
+        y = np.array(y)
+    if not isinstance(y, np.ndarray):
+        raise ValueError("Y is not of class matrix or class array.")
+    ydim = y.shape
+    if ydim[0] != n:
+        raise ValueError("Y is not the same length as ARGVALS.")
+    ndim = len(ydim)
+    if ndim == 2:
+        ncurve = ydim[1]
+        nvar = 1
+    elif ndim == 3:
+        ncurve = ydim[1]
+        nvar = ydim[2]
+    else:
+        raise ValueError("Second argument must not have more than 3 dimensions")
+    return {"y": y, "ncurve": ncurve, "nvar": nvar, "ndim": ndim}
