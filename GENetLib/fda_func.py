@@ -1046,3 +1046,41 @@ def ycheck(y, n):
     else:
         raise ValueError("Second argument must not have more than 3 dimensions")
     return {"y": y, "ncurve": ncurve, "nvar": nvar, "ndim": ndim}
+
+def wtcheck(n, wtvec = None):
+    if not isinstance(n, int) or n != round(n):
+        raise ValueError("n is not an integer.")
+    if n < 1:
+        raise ValueError("n is less than 1.")
+    onewt = False
+    matwt = False
+    if wtvec is not None:
+        if np.any(np.isnan(wtvec)):
+            raise ValueError("WTVEC has NA values.")
+        dimw = wtvec.shape
+        if len(dimw) > 2 or (len(dimw) == 2 and dimw[0] > 1 and dimw[1] > 1):
+            raise ValueError("WTVEC is neither a vector nor a matrix of order n.")
+        if len(dimw) == 2 and dimw[0] == dimw[1] == n:
+            wteig = np.linalg.eigvals(wtvec)
+            if np.any(np.iscomplex(wteig)):
+                raise ValueError("Weight matrix has complex eigenvalues.")
+            if np.min(np.real(wteig)) <= 0:
+                raise ValueError("Weight matrix is not positive definite.")
+            matwt = True
+        else:
+            if len(dimw) == 1:
+                wtvec = wtvec.reshape(-1, 1)
+            if wtvec.size == 1:
+                wtvec = wtvec[0] * np.ones((n, 1))
+            if wtvec.shape[0] != n:
+                raise ValueError("WTVEC of wrong length")
+            if np.min(wtvec) <= 0:
+                raise ValueError("Values in WTVEC are not positive.")
+            matwt = False
+        onewt = np.all(wtvec == 1)
+    else:
+        wtvec = np.ones((n, 1))
+        onewt = True
+        matwt = False
+    return {'wtvec': wtvec, 'onewt': onewt, 'matwt': matwt}
+
