@@ -1058,17 +1058,15 @@ def wtcheck(n, wtvec = None):
         if np.any(np.isnan(wtvec)):
             raise ValueError("WTVEC has NA values.")
         dimw = wtvec.shape
-        if len(dimw) > 2 or (len(dimw) == 2 and dimw[0] > 1 and dimw[1] > 1):
-            raise ValueError("WTVEC is neither a vector nor a matrix of order n.")
-        if len(dimw) == 2 and dimw[0] == dimw[1] == n:
+        if len(dimw) == 2 and dimw[0] == n and dimw[1] == n:
             wteig = np.linalg.eigvals(wtvec)
             if np.any(np.iscomplex(wteig)):
                 raise ValueError("Weight matrix has complex eigenvalues.")
             if np.min(np.real(wteig)) <= 0:
                 raise ValueError("Weight matrix is not positive definite.")
             matwt = True
-        else:
-            if len(dimw) == 1:
+        elif (len(dimw) == 1) or (len(dimw) == 2 and (dimw[0] == 1 or dimw[1] == 1)):
+            if len(dimw) == 2:
                 wtvec = wtvec.reshape(-1, 1)
             if wtvec.size == 1:
                 wtvec = wtvec[0] * np.ones((n, 1))
@@ -1077,6 +1075,8 @@ def wtcheck(n, wtvec = None):
             if np.min(wtvec) <= 0:
                 raise ValueError("Values in WTVEC are not positive.")
             matwt = False
+        else:
+            raise ValueError("WTVEC is neither a vector nor a matrix of order n.")
         onewt = np.all(wtvec == 1)
     else:
         wtvec = np.ones((n, 1))
