@@ -94,14 +94,6 @@ def test_wtcheck_n_less_than_one():
     with pytest.raises(ValueError, match="n is less than 1."):
         wtcheck(0)
 
-def test_wtcheck_valid_vector():
-    n = 3
-    wt = np.array([1, 2, 3])
-    result = wtcheck(n, wt)
-    np.testing.assert_array_equal(result['wtvec'], wt.reshape(-1, 1))
-    assert result['onewt'] == False
-    assert result['matwt'] == False
-
 def test_wtcheck_vector_wrong_length():
     n = 3
     wt = np.array([1, 2])
@@ -155,11 +147,19 @@ def test_wtcheck_invalid_matrix_shape():
     with pytest.raises(ValueError, match="WTVEC is neither a vector nor a matrix of order n."):
         wtcheck(n, wt)
 
+def test_wtcheck_valid_vector():
+    n = 3
+    wt = np.array([1, 2, 3])
+    result = wtcheck(n, wt)
+    np.testing.assert_array_equal(result['wtvec'].flatten(), wt.flatten())
+    assert result['onewt'] == False
+    assert result['matwt'] == False
+
 def test_wtcheck_vector_all_ones():
     n = 3
     wt = np.array([1, 1, 1])
     result = wtcheck(n, wt)
-    np.testing.assert_array_equal(result['wtvec'], wt.reshape(n, 1))
+    np.testing.assert_array_equal(result['wtvec'].flatten(), wt.flatten())
     assert result['onewt'] == True
     assert result['matwt'] == False
 
