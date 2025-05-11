@@ -83,8 +83,8 @@ def test_wtcheck_default():
     result = wtcheck(n)
     expected = np.ones((n, 1))
     np.testing.assert_array_equal(result['wtvec'], expected)
-    assert result['onewt'] is True
-    assert result['matwt'] is False
+    assert result['onewt'] == True
+    assert result['matwt'] == False
 
 def test_wtcheck_non_integer_n():
     with pytest.raises(ValueError, match="n is not an integer."):
@@ -99,8 +99,8 @@ def test_wtcheck_valid_vector():
     wt = np.array([1, 2, 3])
     result = wtcheck(n, wt)
     np.testing.assert_array_equal(result['wtvec'], wt.reshape(-1, 1))
-    assert result['onewt'] is False
-    assert result['matwt'] is False
+    assert result['onewt'] == False
+    assert result['matwt'] == False
 
 def test_wtcheck_vector_wrong_length():
     n = 3
@@ -126,20 +126,20 @@ def test_wtcheck_scalar_wtvec():
     result = wtcheck(n, wt)
     expected = 3 * np.ones((n, 1))
     np.testing.assert_array_equal(result['wtvec'], expected)
-    assert result['onewt'] is False
-    assert result['matwt'] is False
+    assert result['onewt'] == False
+    assert result['matwt'] == False
 
 def test_wtcheck_valid_matrix():
     n = 2
     wt = np.array([[2, 0], [0, 2]])
     result = wtcheck(n, wt)
     np.testing.assert_array_equal(result['wtvec'], wt)
-    assert result['matwt'] is True
-    assert result['onewt'] is False
+    assert result['matwt'] == True
+    assert result['onewt'] == False
 
 def test_wtcheck_matrix_not_positive_definite():
     n = 2
-    wt = np.array([[1, 0], [0, -1]])  # 最小特征值为 -1
+    wt = np.array([[1, 0], [0, -1]])
     with pytest.raises(ValueError, match="Weight matrix is not positive definite."):
         wtcheck(n, wt)
 
@@ -160,6 +160,6 @@ def test_wtcheck_vector_all_ones():
     wt = np.array([1, 1, 1])
     result = wtcheck(n, wt)
     np.testing.assert_array_equal(result['wtvec'], wt.reshape(n, 1))
-    assert result['onewt'] is True
-    assert result['matwt'] is False
+    assert result['onewt'] == True
+    assert result['matwt'] == False
 
