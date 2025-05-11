@@ -1,5 +1,5 @@
 import numpy as np
-from GENetLib.fda_func import ycheck, ppbspline
+from GENetLib.fda_func import ycheck, ppbspline, wtcheck
 import pytest
 
 def test_ycheck_valid_2d():
@@ -77,3 +77,89 @@ def test_ppbspline_list_input():
     expected_index = np.array([1, 2])
     np.testing.assert_allclose(Coeff, expected_Coeff, rtol=1e-5, atol=1e-8)
     np.testing.assert_array_equal(index, expected_index)
+
+def test_wtcheck_default():
+    n = 4
+    result = wtcheck(n)
+    expected = np.ones((n, 1))
+    np.testing.assert_array_equal(result['wtvec'], expected)
+    assert result['onewt'] == True
+    assert result['matwt'] == False
+
+def test_wtcheck_non_integer_n():
+    with pytest.raises(ValueError, match="n is not an integer."):
+        wtcheck(3.5)
+
+def test_wtcheck_n_less_than_one():
+    with pytest.raises(ValueError, match="n is less than 1."):
+        wtcheck(0)
+
+def test_wtcheck_vector_wrong_length():
+    n = 3
+    wt = np.array([1, 2])
+    with pytest.raises(ValueError, match="WTVEC of wrong length"):
+        wtcheck(n, wt)
+
+def test_wtcheck_vector_with_nonpositive_value():
+    n = 3
+    wt = np.array([1, 0, 3])
+    with pytest.raises(ValueError, match="Values in WTVEC are not positive."):
+        wtcheck(n, wt)
+
+def test_wtcheck_vector_with_NaN():
+    n = 3
+    wt = np.array([1, np.nan, 3])
+    with pytest.raises(ValueError, match="WTVEC has NA values."):
+        wtcheck(n, wt)
+
+def test_wtcheck_scalar_wtvec():
+    n = 4
+    wt = np.array([3])
+    result = wtcheck(n, wt)
+    expected = 3 * np.ones((n, 1))
+    np.testing.assert_array_equal(result['wtvec'], expected)
+    assert result['onewt'] == False
+    assert result['matwt'] == False
+
+def test_wtcheck_valid_matrix():
+    n = 2
+    wt = np.array([[2, 0], [0, 2]])
+    result = wtcheck(n, wt)
+    np.testing.assert_array_equal(result['wtvec'], wt)
+    assert result['matwt'] == True
+    assert result['onewt'] == False
+
+def test_wtcheck_matrix_not_positive_definite():
+    n = 2
+    wt = np.array([[1, 0], [0, -1]])
+    with pytest.raises(ValueError, match="Weight matrix is not positive definite."):
+        wtcheck(n, wt)
+
+def test_wtcheck_matrix_complex_eigenvalues():
+    n = 2
+    wt = np.array([[0, -1], [1, 0]])
+    with pytest.raises(ValueError, match="Weight matrix has complex eigenvalues."):
+        wtcheck(n, wt)
+
+def test_wtcheck_invalid_matrix_shape():
+    n = 3
+    wt = np.ones((3, 2))
+    with pytest.raises(ValueError, match="WTVEC is neither a vector nor a matrix of order n."):
+        wtcheck(n, wt)
+
+def test_wtcheck_valid_vector():
+    n = 3
+    wt = np.array([1, 2, 3])
+    result = wtcheck(n, wt)
+    np.testing.assert_array_equal(result['wtvec'].flatten(), wt.flatten())
+    assert result['onewt'] == False
+    assert result['matwt'] == False
+
+def test_wtcheck_vector_all_ones():
+    n = 3
+    wt = np.array([1, 1, 1])
+    result = wtcheck(n, wt)
+    np.testing.assert_array_equal(result['wtvec'].flatten(), wt.flatten())
+    assert result['onewt'] == True
+    assert result['matwt'] == False
+
