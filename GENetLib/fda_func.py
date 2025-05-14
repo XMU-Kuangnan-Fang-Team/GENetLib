@@ -1106,3 +1106,46 @@ def norder_bspline(x):
     return result
 
 
+def fdpar(fdobj = None, Lfdobj = None, lambda_ = 0, estimate = True, penmat = None):
+    if len(fdobj) == 9:
+        nbasis = fdobj['nbasis']
+        dropind = fdobj['dropind']
+        nbasis = nbasis - len(dropind)
+        coefs = np.zeros((nbasis, nbasis))
+        fdnames = ["time", "reps 1", "values"]
+        if fdobj['names'] is not None:
+            if len(dropind) > 0:
+                basisnames = [name for i, name in enumerate(fdobj.names) if i not in dropind]
+            else:
+                basisnames = fdobj['names']
+        fdnames[0] = basisnames
+        fdobj = fd(coefs, fdobj, fdnames)
+    elif len(fdobj) == 3:
+        nbasis = fdobj['basis']['nbasis']
+    if Lfdobj == None:
+        if fdobj['basis']['btype'] == "fourier":
+            rng = fdobj['basis']['rangeval']
+            Lfdobj = vec2lfd([0, (2 * np.pi / (rng[1] - rng[0]))**2, 0], rng)
+        else:
+            if fdobj['basis']['btype'] == "bspline":
+                norder = norder_bspline(fdobj['basis'])
+            else:
+                norder = 2
+            Lfdobj = int2lfd(max(0, norder - 2))
+    else:
+        Lfdobj = int2lfd(Lfdobj)
+    return {'fd':fdobj, 'lfd':Lfdobj, 'lambda':lambda_,
+            'estimate':estimate, 'penmat':penmat}
+
+
+def fdparcheck(fdParobj, ncurve = None):
+    if len(fdParobj) == 9 and ncurve == None:
+        raise ValueError("First argument is basisfd object and second argument is missing.")
+    if len(fdParobj) != 5:
+        if len(fdParobj) == 3:
+            fdParobj = fdpar(fdParobj)
+        if len(fdParobj) == 9:
+            nbasis = fdParobj['nbasis']
+            fdParobj = fdpar(fd(np.zeros((nbasis, ncurve)), fdParobj))
+    return fdParobj
+
