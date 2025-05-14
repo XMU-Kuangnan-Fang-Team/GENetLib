@@ -1047,6 +1047,7 @@ def ycheck(y, n):
         raise ValueError("Second argument must not have more than 3 dimensions")
     return {"y": y, "ncurve": ncurve, "nvar": nvar, "ndim": ndim}
 
+
 def wtcheck(n, wtvec = None):
     if not isinstance(n, int) or n != round(n):
         raise ValueError("n is not an integer.")
@@ -1083,4 +1084,25 @@ def wtcheck(n, wtvec = None):
         onewt = True
         matwt = False
     return {'wtvec': wtvec, 'onewt': onewt, 'matwt': matwt}
+
+
+def vec2lfd(bwtvec, rangeval=[0, 1]):
+    if not isinstance(bwtvec, list):
+        bwtvec = [bwtvec]
+    m = len(bwtvec)
+    if m == 0:
+        bwtlist = None
+    else:
+        conbasis = create_constant_basis(rangeval)
+        bwtlist = [fd([bwtvec[j]], conbasis) for j in range(m)]
+    Lfdobj = lfd(m, bwtlist)
+    return Lfdobj 
+    
+
+def norder_bspline(x):
+    nbasis = x['nbasis']
+    params = x['params']
+    result = nbasis - len(params)
+    return result
+
 
