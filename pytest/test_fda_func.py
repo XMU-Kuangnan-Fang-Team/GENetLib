@@ -1,5 +1,5 @@
 import numpy as np
-from GENetLib.fda_func import ycheck, ppbspline, wtcheck
+from GENetLib.fda_func import ycheck, ppbspline, wtcheck， vec2lfd, norder_bspline
 import pytest
 
 def test_ycheck_valid_2d():
@@ -163,3 +163,24 @@ def test_wtcheck_vector_all_ones():
     assert result['onewt'] == True
     assert result['matwt'] == False
 
+def test_vec2lfd_non_list():
+    result = vec2lfd(3, [0, 1])
+    assert result is not None
+
+def test_vec2lfd_list():
+    result = vec2lfd([10, 20, 30], [5, 15])
+    assert result is not None
+
+def test_vec2lfd_empty():
+    result = vec2lfd([], [5, 10])
+    assert result is not None
+
+def test_norder_bspline():
+    x = {"nbasis": 8, "params": [1, 2, 3]}
+    assert norder_bspline(x) == 5
+    x = {"nbasis": 6, "params": []}
+    assert norder_bspline(x) == 6
+    x = {"nbasis": 4, "params": [1, 2, 3, 4]}
+    assert norder_bspline(x) == 0
+    x = {"nbasis": 3, "params": [1, 2, 3, 4]}
+    assert norder_bspline(x) == -1
