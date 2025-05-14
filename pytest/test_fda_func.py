@@ -1,5 +1,5 @@
 import numpy as np
-from GENetLib.fda_func import ycheck, ppbspline, wtcheck， vec2lfd, norder_bspline
+from GENetLib.fda_func import ycheck, ppbspline, wtcheck, vec2lfd, norder_bspline
 import pytest
 
 def test_ycheck_valid_2d():
