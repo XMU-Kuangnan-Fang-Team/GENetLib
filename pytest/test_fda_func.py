@@ -188,25 +188,55 @@ def test_norder_bspline():
 
 def test_fdpar():
     basisobj = create_bspline_basis(rangeval = [0, 1], nbasis = 4, norder = 3)
-    fdobj = fd(coef = np.zeros((4, 4)), basisobj = basisobj)
-    Lfdobj = int2lfd(2)
-    fdParobj = fdpar(fdobj, None, lambda_ = 0.5, estimate = True)
+    fdParobj = fdpar(fdobj = basisobj, Lfdobj = 2, lambda_ = 0.5, estimate = True)
     assert isinstance(fdParobj, dict)
-    assert 'fd' in fdParobj and fdParobj['fd'] is not None
-    assert 'lfd' in fdParobj and fdParobj['lfd'] is not None
-    assert 'lambda' in fdParobj and isinstance(fdParobj['lambda'], float)
+    assert 'fd' in fdParobj and isinstance(fdParobj['fd'], dict)
+    assert 'lfd' in fdParobj and isinstance(fdParobj['lfd'], dict)
+    assert 'lambda' in fdParobj and fdParobj['lambda'] == 0.5
+    assert 'estimate' in fdParobj and fdParobj['estimate'] == True
+    assert 'penmat' in fdParobj
+    basisobj = create_fourier_basis(rangeval = [0, 1], nbasis = 3)
+    fdobj = fd(coef = np.zeros((3, 3)), basisobj = basisobj)
+    fdParobj = fdpar(fdobj = fdobj, Lfdobj = 1, lambda_ = 0.1)
+    assert isinstance(fdParobj, dict)
+    assert 'fd' in fdParobj and isinstance(fdParobj['fd'], dict)
+    assert 'lfd' in fdParobj and isinstance(fdParobj['lfd'], dict)
+    assert 'lambda' in fdParobj and fdParobj['lambda'] == 0.1
     assert 'estimate' in fdParobj and isinstance(fdParobj['estimate'], bool)
     assert 'penmat' in fdParobj
 
 
 def test_fdparcheck():
-    basisobj = create_fourier_basis(rangeval = [0, 1], nbasis = 3)
-    fdobj = fd(coef = np.zeros((3, 3)), basisobj = basisobj)
-    fdParobj = fdpar(fdobj, lambda_ = 0.1)
+    basisobj = create_bspline_basis(rangeval = [0, 1], nbasis = 4, norder = 3)
+    fdParobj = fdpar(fdobj = basisobj)
     checked_fdParobj = fdparcheck(fdParobj)
     assert isinstance(checked_fdParobj, dict)
-    assert 'fd' in checked_fdParobj and checked_fdParobj['fd'] is not None
-    assert 'lfd' in checked_fdParobj and checked_fdParobj['lfd'] is not None
-    assert 'lambda' in checked_fdParobj and isinstance(checked_fdParobj['lambda'], float)
+    assert 'fd' in checked_fdParobj and isinstance(checked_fdParobj['fd'], dict)
+    assert 'lfd' in checked_fdParobj and isinstance(checked_fdParobj['lfd'], dict)
+    assert 'lambda' in checked_fdParobj
     assert 'estimate' in checked_fdParobj and isinstance(checked_fdParobj['estimate'], bool)
     assert 'penmat' in checked_fdParobj
+    basisobj = create_fourier_basis(rangeval = [0, 1], nbasis = 3)
+    fdobj = fd(coef = np.zeros((3, 3)), basisobj = basisobj)
+    fdParobj = fdpar(fdobj = fdobj)
+    checked_fdParobj = fdparcheck(fdParobj, ncurve = 5)
+    assert isinstance(checked_fdParobj, dict)
+    assert 'fd' in checked_fdParobj and isinstance(checked_fdParobj['fd'], dict)
+    assert 'lfd' in checked_fdParobj and isinstance(checked_fdParobj['lfd'], dict)
+    assert 'lambda' in checked_fdParobj
+    assert 'estimate' in checked_fdParobj and isinstance(checked_fdParobj['estimate'], bool)
+    assert 'penmat' in checked_fdParobj
+    invalid_fdParobj = "Invalid fdParobj"
+    try:
+        fdparcheck(invalid_fdParobj)
+        assert False, "Expected AssertionError for invalid fdParobj type"
+    except AssertionError:
+        assert True
+    basisobj = create_bspline_basis(rangeval = [0, 1], nbasis = 4, norder = 3)
+    fdParobj = fdpar(fdobj = basisobj)
+    try:
+        fdparcheck(fdParobj, ncurve = 5)
+        assert False, "Expected AssertionError for basis type fdParobj with ncurve"
+    except AssertionError:
+        assert True
+
