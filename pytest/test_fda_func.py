@@ -1,5 +1,5 @@
 import numpy as np
-from GENetLib.fda_func import ycheck, ppbspline, wtcheck, vec2lfd, norder_bspline
+from GENetLib.fda_func import ycheck, ppbspline, wtcheck, vec2lfd, norder_bspline, fdpar, fdparcheck, create_bspline_basis, create_fourier_basis, fd, int2lfd
 import pytest
 
 def test_ycheck_valid_2d():
@@ -184,3 +184,29 @@ def test_norder_bspline():
     assert norder_bspline(x) == 0
     x = {"nbasis": 3, "params": [1, 2, 3, 4]}
     assert norder_bspline(x) == -1
+
+
+def test_fdpar():
+    basisobj = create_bspline_basis(rangeval = [0, 1], nbasis = 4, norder = 3)
+    fdobj = fd(coef = np.zeros((4, 4)), basisobj = basisobj)
+    Lfdobj = int2lfd(2)
+    fdParobj = fdpar(fdobj, None, lambda_ = 0.5, estimate = True)
+    assert isinstance(fdParobj, dict)
+    assert 'fd' in fdParobj and fdParobj['fd'] is not None
+    assert 'lfd' in fdParobj and fdParobj['lfd'] is not None
+    assert 'lambda' in fdParobj and isinstance(fdParobj['lambda'], float)
+    assert 'estimate' in fdParobj and isinstance(fdParobj['estimate'], bool)
+    assert 'penmat' in fdParobj
+
+
+def test_fdparcheck():
+    basisobj = create_fourier_basis(rangeval = [0, 1], nbasis = 3)
+    fdobj = fd(coef = np.zeros((3, 3)), basisobj = basisobj)
+    fdParobj = fdpar(fdobj, lambda_ = 0.1)
+    checked_fdParobj = fdparcheck(fdParobj)
+    assert isinstance(checked_fdParobj, dict)
+    assert 'fd' in checked_fdParobj and checked_fdParobj['fd'] is not None
+    assert 'lfd' in checked_fdParobj and checked_fdParobj['lfd'] is not None
+    assert 'lambda' in checked_fdParobj and isinstance(checked_fdParobj['lambda'], float)
+    assert 'estimate' in checked_fdParobj and isinstance(checked_fdParobj['estimate'], bool)
+    assert 'penmat' in checked_fdParobj
