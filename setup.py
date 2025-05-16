@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 setup(
     name='GENetLib',
-    version='1.2.2',
+    version='1.2.3',
     description='A Python Library for Gene–environment Interaction Analysis via Deep Learning',
     author='Yuhao Zhong',
     author_email='Barry57@163.com',
