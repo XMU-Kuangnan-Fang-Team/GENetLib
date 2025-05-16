@@ -1,5 +1,6 @@
 import numpy as np
 from GENetLib.fda_func import ycheck, ppbspline, wtcheck, vec2lfd, norder_bspline, fdpar, fdparcheck, create_bspline_basis, create_fourier_basis, fd, int2lfd
+from GENetLib.BsplineFunc import BsplineFunc
 import pytest
 
 def test_ycheck_valid_2d():
@@ -185,7 +186,6 @@ def test_norder_bspline():
     x = {"nbasis": 3, "params": [1, 2, 3, 4]}
     assert norder_bspline(x) == -1
 
-
 def test_fdpar():
     basisobj = create_bspline_basis(rangeval = [0, 1], nbasis = 4, norder = 3)
     fdParobj = fdpar(fdobj = basisobj, Lfdobj = 2, lambda_ = 0.5, estimate = True)
@@ -204,7 +204,6 @@ def test_fdpar():
     assert 'lambda' in fdParobj and fdParobj['lambda'] == 0.1
     assert 'estimate' in fdParobj and isinstance(fdParobj['estimate'], bool)
     assert 'penmat' in fdParobj
-
 
 def test_fdparcheck():
     basisobj = create_bspline_basis(rangeval = [0, 1], nbasis = 4, norder = 3)
@@ -240,3 +239,80 @@ def test_fdparcheck():
     except AssertionError:
         assert True
 
+def test_penalty_matrix():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    penalty_matrix_spline = bspline_func.penalty_matrix(btype='spline')
+    assert penalty_matrix_spline.shape == (4, 4), "Penalty matrix shape mismatch for spline type"
+    basisobj_fourier = create_fourier_basis()
+    bspline_func_fourier = BsplineFunc(basisobj_fourier, Lfdobj=1)
+    penalty_matrix_fourier = bspline_func_fourier.penalty_matrix(btype='fourier')
+    assert penalty_matrix_fourier.shape == (3, 3), "Penalty matrix shape mismatch for fourier type"
+    try:
+        bspline_func.penalty_matrix(btype='invalid_type')
+    except ValueError as e:
+        assert str(e) == "Wrong basis type", "Invalid btype did not raise ValueError or message incorrect"
+
+def test_smooth_basis():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y)
+    expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
+    for key in expected_keys:
+        assert key in smooth_result, f"Missing key '{key}' in smooth_result"
+    assert isinstance(smooth_result['fd'], dict), "'fd' is not an instance of fd"
+    smooth_result_wt = bspline_func.smooth_basis(argvals, y)
+    for key in expected_keys:
+        assert key in smooth_result_wt, f"Missing key '{key}' in smooth_result_wt"
+    smooth_result_cov = bspline_func.smooth_basis(argvals, y)
+    for key in expected_keys:
+        assert key in smooth_result_cov, f"Missing key '{key}' in smooth_result_cov"
+    try:
+        bspline_func.smooth_basis(argvals, np.random.rand(10, 6))
+    except ValueError as e:
+        assert str(e) == "The number of basis functions = 5 exceeds 10 = the number of points to be smoothed.", "Invalid input dimensions did not raise ValueError or message incorrect"
+
+def test_BsplineFunc_initialization():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    assert hasattr(bspline_func, 'basisobj'), "Missing 'basisobj' attribute"
+    assert hasattr(bspline_func, 'Lfdobj'), "Missing 'Lfdobj' attribute"
+    assert hasattr(bspline_func, 'rng'), "Missing 'rng' attribute"
+    assert hasattr(bspline_func, 'returnMatrix'), "Missing 'returnMatrix' attribute"
+    Lfdobj = 3
+    rng = [0.1, 0.9]
+    bspline_func_custom = BsplineFunc(basisobj, Lfdobj=Lfdobj, rng=rng)
+    assert bspline_func_custom.Lfdobj == 3, "Lfdobj not set correctly"
+    assert np.array_equal(bspline_func_custom.rng, np.array([0.1, 0.9])), "rng not set correctly"
+    try:
+        BsplineFunc({'nbasis': 'invalid', 'params': [0.25, 0.5, 0.75], 'rangeval': [0, 1]})
+    except ValueError as e:
+        assert str(e) == "Value of 'lambda' was negative. 0 used instead.", "Invalid basisobj did not raise ValueError or message incorrect"
+
+def test_BsplineFunc_methods():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    penalty_matrix = bspline_func.penalty_matrix()
+    assert penalty_matrix.shape[0] == penalty_matrix.shape[1], "Penalty matrix is not square"
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y)
+    expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
+    for key in expected_keys:
+        assert key in smooth_result, f"Missing key '{key}' in smooth_result"
+
+def test_BsplineFunc_integration():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    penalty_matrix = bspline_func.penalty_matrix()
+    smooth_result = bspline_func.smooth_basis(argvals, y)
+    assert not np.array_equal(penalty_matrix, smooth_result['penmat']), "Penalty matrix not used in smooth_result"
+    smooth_result_wt_cov = bspline_func.smooth_basis(argvals, y)
+    expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
+    for key in expected_keys:
+        assert key in smooth_result_wt_cov, f"Missing key '{key}' in smooth_result_wt_cov"
+ 
