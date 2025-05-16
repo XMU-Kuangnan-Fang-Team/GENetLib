@@ -20,10 +20,11 @@ from .grid_scalar_ge import grid_scalar_ge
 from .func_ge import func_ge
 from .grid_func_ge import grid_func_ge
 from .plot_gene import plot_fd, plot_rawdata
+from .Bspline_Func import Bspline_Func
 
 
 __all__ = ['basis_fd', 'create_bspline_basis','create_expon_basis','create_fourier_basis',
-           'create_monomial_basis','create_power_basis','create_constant_basis',
+           'create_monomial_basis','create_power_basis','create_constant_basis', 'Bspline_Func'
            'bspline_mat','expon_mat','fourier_mat','monomial_mat','polyg_mat','power_mat',
            'get_basis_matrix','GE_Net','neg_par_log_likelihood','c_index', 'fdpar', 'fdparcheck',
            'inprod','fd','pre_data1','pre_data2','sim_data_scalar','sim_data_func',
