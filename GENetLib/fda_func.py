@@ -3,7 +3,6 @@ import pandas as pd
 from scipy.interpolate import BSpline
 from scipy.linalg import solve
 import matplotlib.pyplot as plt
-from scipy.linalg import cholesky, solve, qr, eigh
 
 
 '''Format for functional data'''
