@@ -359,7 +359,7 @@ def test_smooth_basis_chol_method():
     bspline_func = BsplineFunc(basisobj)
     argvals = np.linspace(0, 1, 10)
     y = np.random.rand(10, 5)
-    smooth_result = bspline_func.smooth_basis(argvals, y, method="chol")
+    smooth_result = bspline_func.smooth_basis(argvals, y)
     expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
     for key in expected_keys:
         assert key in smooth_result, f"Missing key '{key}' in smooth_result"
@@ -389,7 +389,27 @@ def test_smooth_basis_gcv_calculation():
     bspline_func = BsplineFunc(basisobj)
     argvals = np.linspace(0, 1, 10)
     y = np.random.rand(10, 5)
-    smooth_result = bspline_func.smooth_basis(argvals, y)
+    covariates = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y, covariates=covariates)
     assert 'gcv' in smooth_result, "Missing 'gcv' in smooth_result"
     if smooth_result['df'] < 10:
         assert len(smooth_result['gcv']) == 5, "gcv array has incorrect length"
+
+def test_smooth_basis_y2cMap_calculation():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y)
+    assert 'y2cMap' in smooth_result, "Missing 'y2cMap' in smooth_result"
+    assert not smooth_result['y2cMap'].shape[0] == smooth_result['y2cMap'].shape[1], "y2cMap is not square"
+
+def test_smooth_basis_beta_extraction():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    covariates = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y, covariates=covariates)
+    assert smooth_result['beta'] is not None, "Beta should not be None when covariates are provided"
+
