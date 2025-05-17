@@ -201,7 +201,7 @@ class BsplineFunc:
                 ind2 = np.arange(nbasis, nbasis + q)
                 basismat = np.asmatrix(basismat)
                 basismat = np.c_[basismat, np.zeros((basismat.shape[0], q))]
-                basismat[ind1, ind2] = covariates
+                basismat[ind1[:, np.newaxis], ind2] = covariates
             if matwt:
                 wtfac = cholesky(wtvec)
                 basisw = wtvec @ basismat
