@@ -234,14 +234,6 @@ class BsplineFunc:
             Bmat = (Bmat + Bmat.T) / 2
             try:
                 Lmat = cholesky(Bmat)
-            except np.linalg.LinAlgError:
-                Beig = eigh(Bmat)
-                BgoodEig = Beig[0] > 0
-                Brank = np.sum(BgoodEig)
-                if Brank < Bmat.shape[0]:
-                    print(f"Warning: Matrix of basis function values has rank {Brank} < {Bmat.shape[0]}, ignoring null space")
-                goodVec = Beig[1][:, BgoodEig]
-                Bmatinv = goodVec @ np.diag(1 / Beig[0][BgoodEig]) @ goodVec.T
             else:
                 Lmatinv = solve(Lmat, np.eye(Lmat.shape[0]))
                 Bmatinv = Lmatinv @ Lmatinv.T
