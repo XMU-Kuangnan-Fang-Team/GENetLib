@@ -2,6 +2,7 @@ import numpy as np
 from GENetLib.fda_func import ycheck, ppbspline, wtcheck, vec2lfd, norder_bspline, fdpar, fdparcheck, create_bspline_basis, create_fourier_basis, fd, int2lfd
 from GENetLib.BsplineFunc import BsplineFunc
 import pytest
+import unittest
 
 def test_ycheck_valid_2d():
     y = [[1, 2, 3],
@@ -315,4 +316,80 @@ def test_BsplineFunc_integration():
     expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
     for key in expected_keys:
         assert key in smooth_result_wt_cov, f"Missing key '{key}' in smooth_result_wt_cov"
- 
+
+def test_penalty_matrix_uniquebreaks_false():
+    basisobj = create_bspline_basis(nbasis=20, norder=5)
+    basisobj['params'] = np.array([0.2, 0.2, 0.4, 0.4, 0.6, 0.6, 0.8, 0.8])
+    bspline_func = BsplineFunc(basisobj)
+    penalty_matrix = bspline_func.penalty_matrix(btype='spline')
+    assert penalty_matrix.shape[0] == penalty_matrix.shape[1], "Penalty matrix is not square"
+
+def test_smooth_basis_3d_y():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 3, 4)
+    smooth_result = bspline_func.smooth_basis(argvals, y)
+    expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
+    for key in expected_keys:
+        assert key in smooth_result, f"Missing key '{key}' in smooth_result"
+
+def test_smooth_basis_covariates_nonumeric():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    covariates = np.array([['a', 'b'], ['c', 'd']], dtype=object)
+    with pytest.raises(ValueError) as excinfo:
+        bspline_func.smooth_basis(argvals, y, covariates=covariates)
+    assert str(excinfo.value) == "Optional argument COVARIATES is not numeric.", "Non-numeric covariates did not raise ValueError or message incorrect"
+
+def test_smooth_basis_covariates_incorrect_rows():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    covariates = np.random.rand(9, 2)
+    with pytest.raises(ValueError) as excinfo:
+        bspline_func.smooth_basis(argvals, y, covariates=covariates)
+    assert str(excinfo.value) == "Optional argument COVARIATES has incorrect number of rows.", "Incorrect covariates rows did not raise ValueError or message incorrect"
+
+def test_smooth_basis_chol_method():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y, method="chol")
+    expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
+    for key in expected_keys:
+        assert key in smooth_result, f"Missing key '{key}' in smooth_result"
+
+def test_smooth_basis_linalg_error():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    with unittest.mock.patch.object(np.linalg, 'cholesky', side_effect=np.linalg.LinAlgError):
+        smooth_result = bspline_func.smooth_basis(argvals, y)
+        expected_keys = ['fd', 'df', 'gcv', 'beta', 'SSE', 'penmat', 'y2cMap', 'argvals', 'y']
+        for key in expected_keys:
+            assert key in smooth_result, f"Missing key '{key}' in smooth_result"
+
+def test_smooth_basis_lambda_overflow():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    with unittest.mock.patch.object(BsplineFunc, 'penalty_matrix', return_value=np.eye(10)):
+        smooth_result = bspline_func.smooth_basis(argvals, y, dfscale=1e12)
+        assert smooth_result['df'] <= 10, "Degrees of freedom should be limited when lambda is large"
+
+def test_smooth_basis_gcv_calculation():
+    basisobj = create_bspline_basis()
+    bspline_func = BsplineFunc(basisobj)
+    argvals = np.linspace(0, 1, 10)
+    y = np.random.rand(10, 5)
+    smooth_result = bspline_func.smooth_basis(argvals, y)
+    assert 'gcv' in smooth_result, "Missing 'gcv' in smooth_result"
+    if smooth_result['df'] < 10:
+        assert len(smooth_result['gcv']) == 5, "gcv array has incorrect length"

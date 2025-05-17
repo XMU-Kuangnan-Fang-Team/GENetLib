@@ -361,7 +361,7 @@ def get_basis_matrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
     rangeval = basisobj['rangeval']
     dropind = basisobj['dropind']
     if type_ == "bspline":
-        if params == []:
+        if len(params) == 0:
             breaks = [rangeval[0], rangeval[1]]
         else:
             breaks = [rangeval[0], *params, rangeval[1]]
