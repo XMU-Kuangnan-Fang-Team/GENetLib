@@ -34,7 +34,7 @@ class BsplineFunc:
             nderiv = Lfdobj['nderiv']
             norder = nbasis - len(params)
             if nderiv >= norder:
-                raise ValueError()
+                raise ValueError(f'Order {nderiv} is greater than or equal to B-splines of order {norder}')
             if nderiv > 0 and nderiv == norder - 1:
                 raise ValueError(f"Penalty matrix cannot be evaluated for derivative of order {nderiv} for B-splines of order {norder}")
             bwtlist = Lfdobj['bwtlist']
