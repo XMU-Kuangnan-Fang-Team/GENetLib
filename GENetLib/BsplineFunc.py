@@ -141,7 +141,7 @@ class BsplineFunc:
     
     
     def smooth_basis(self, argvals, y, wtvec = None, fdnames = None, covariates = None,
-                     method = "chol", dfscale = 1, returnMatrix = False):
+                     dfscale = 1, returnMatrix = False):
         
         # Check and initialize parameters
         fdParobj = self.basisobj
@@ -195,175 +195,87 @@ class BsplineFunc:
         basismat = eval_basis(argvals, basisobj, 0, returnMatrix)
         
         # Calculation
-        if method == "chol":
-            if n > nbasis + q or lambda_ > 0:
-                if covariates is not None:
-                    ind1 = np.arange(n)
-                    ind2 = np.arange(nbasis, nbasis + q)
-                    basismat = np.asmatrix(basismat)
-                    basismat = np.c_[basismat, np.zeros((basismat.shape[0], q))]
-                    basismat[ind1, ind2] = covariates
-                if matwt:
-                    wtfac = cholesky(wtvec)
-                    basisw = wtvec @ basismat
-                else:
-                    rtwtvec = np.sqrt(wtvec)
-                    basisw = (wtvec @ np.ones((1, nbasis + q))) * np.array(basismat)
-                Bmat = basisw.T @ basismat
-                Bmat0 = Bmat
-                if len(dimy) < 3:
-                    Dmat = basisw.T @ y
-                else:
-                    Dmat = np.zeros((nbasis + q, nrep, nvar))
-                    for ivar in range(nvar):
-                        Dmat[:, :, ivar] = basisw.T @ y[:, :, ivar]
-                if lambda_ > 0:
-                    if penmat is None:
-                        penmat = BsplineFunc(basisobj = basisobj, Lfdobj = Lfdobj).penalty_matrix()
-                    Bnorm = np.sqrt(np.sum(np.diag(Bmat0.T @ Bmat0)))
-                    pennorm = np.sqrt(np.sum(penmat * penmat))
-                    condno = pennorm / Bnorm
-                    if lambda_ * condno > 1e12:
-                        lambda_ = 1e12 / condno
-                        print(f"Warning: lambda reduced to {lambda_} to prevent overflow")
-                    if covariates is not None:
-                        penmat = np.block([[penmat, np.zeros((nbasis, q))], [np.zeros((q, nbasis)), np.zeros((q, q))]])
-                    Bmat = Bmat0 + lambda_ * penmat
-                else:
-                    penmat = None
-                    Bmat = Bmat0
-                Bmat = (Bmat + Bmat.T) / 2
-                try:
-                    Lmat = cholesky(Bmat)
-                except np.linalg.LinAlgError:
-                    Beig = eigh(Bmat)
-                    BgoodEig = Beig[0] > 0
-                    Brank = np.sum(BgoodEig)
-                    if Brank < Bmat.shape[0]:
-                        print(f"Warning: Matrix of basis function values has rank {Brank} < {Bmat.shape[0]}, ignoring null space")
-                    goodVec = Beig[1][:, BgoodEig]
-                    Bmatinv = goodVec @ np.diag(1 / Beig[0][BgoodEig]) @ goodVec.T
-                else:
-                    Lmatinv = solve(Lmat, np.eye(Lmat.shape[0]))
-                    Bmatinv = Lmatinv @ Lmatinv.T
-                
-                if len(dimy) < 3:
-                    coef = Bmatinv @ Dmat
-                    if covariates is not None:
-                        beta_ = coef[nbasis:, :]
-                        coef = coef[:nbasis, :]
-                    else:
-                        beta_ = None
-                else:
-                    coef = np.zeros((nbasis, nrep, nvar))
-                    if covariates is not None:
-                        beta_ = np.zeros((q, nrep, nvar))
-                    else:
-                        beta_ = None
-                    for ivar in range(nvar):
-                        coefi = Bmatinv @ Dmat[:, :, ivar]
-                        if covariates is not None:
-                            beta_[:, :, ivar] = coefi[nbasis:, :]
-                            coef[:, :, ivar] = coefi[:nbasis, :]
-                        else:
-                            coef[:, :, ivar] = coefi
+        if n > nbasis + q or lambda_ > 0:
+            if covariates is not None:
+                ind1 = np.arange(n)
+                ind2 = np.arange(nbasis, nbasis + q)
+                basismat = np.asmatrix(basismat)
+                basismat = np.c_[basismat, np.zeros((basismat.shape[0], q))]
+                basismat[ind1, ind2] = covariates
+            if matwt:
+                wtfac = cholesky(wtvec)
+                basisw = wtvec @ basismat
             else:
-                if n == nbasis + q:
-                    if len(dimy) == 2:
-                        coef = np.linalg.solve(basismat, y)
-                    else:
-                        for ivar in range(nvar):
-                            coef[:, :, ivar] = np.linalg.solve(basismat, y[:, :, ivar])
-                    penmat = None
-                else:
-                    raise ValueError(f"The number of basis functions = {nbasis + q} exceeds {n} = the number of points to be smoothed.")
-        else:
-            if n > nbasis or lambda_ > 0:
-                if not onewt:
-                    if matwt:
-                        wtfac = cholesky(wtvec)
-                        basismat_aug = wtfac @ basismat
-                        if len(dimy) < 3:
-                            y = wtfac @ y
-                        else:
-                            for ivar in range(nvar):
-                                y[:, :, ivar] = wtfac @ y[:, :, ivar]
-                    else:
-                        rtwtvec = np.sqrt(wtvec)
-                        basismat_aug = np.tile(rtwtvec, (nbasis, 1)).T * basismat
-                        if len(dimy) < 3:
-                            y = np.tile(rtwtvec, (nrep, 1)).T * y
-                        else:
-                            for ivar in range(nvar):
-                                y[:, :, ivar] = np.tile(rtwtvec, (nrep, 1)).T * y[:, :, ivar]
-                else:
-                    basismat_aug = basismat
-                if lambda_ > 0:
-                    if penmat is None:
-                        penmat = BsplineFunc(basisobj = basisobj, Lfdobj = Lfdobj).penalty_matrix('fourier')
-                    eiglist = eigh(penmat)
-                    Dvec = eiglist[0]
-                    Vmat = eiglist[1]
-                    neiglow = nbasis - nderiv
-                    if Dvec[neiglow] <= 0:
-                        raise ValueError("Eigenvalue(NBASIS-NDERIV) of penalty matrix is not positive. Check penalty matrix.")
-                    indeig = np.arange(neiglow)
-                    penfac = Vmat[:, indeig] @ np.diag(np.sqrt(Dvec[indeig]))
-                    basismat_aug = np.r_[basismat_aug, np.sqrt(lambda_) * penfac.T]
-                    if len(dimy) < 3:
-                        y = np.r_[y, np.zeros((nbasis - nderiv, nrep))]
-                    else:
-                        y = np.zeros((y.shape[0] + nbasis - nderiv, y.shape[1], y.shape[2]))
-                        y[:y.shape[0], :, :] = y0
-                        ind1 = np.arange(y.shape[0] - (nbasis - nderiv), y.shape[0])
-                        for ivar in range(nvar):
-                            y[ind1, :, ivar] = np.zeros((nbasis - nderiv, nrep))
-                else:
-                    penmat = None
+                rtwtvec = np.sqrt(wtvec)
+                basisw = (wtvec @ np.ones((1, nbasis + q))) * np.array(basismat)
+            Bmat = basisw.T @ basismat
+            Bmat0 = Bmat
+            if len(dimy) < 3:
+                Dmat = basisw.T @ y
+            else:
+                Dmat = np.zeros((nbasis + q, nrep, nvar))
+                for ivar in range(nvar):
+                    Dmat[:, :, ivar] = basisw.T @ y[:, :, ivar]
+            if lambda_ > 0:
+                if penmat is None:
+                    penmat = BsplineFunc(basisobj = basisobj, Lfdobj = Lfdobj).penalty_matrix()
+                Bnorm = np.sqrt(np.sum(np.diag(Bmat0.T @ Bmat0)))
+                pennorm = np.sqrt(np.sum(penmat * penmat))
+                condno = pennorm / Bnorm
+                if lambda_ * condno > 1e12:
+                    lambda_ = 1e12 / condno
+                    print(f"Warning: lambda reduced to {lambda_} to prevent overflow")
                 if covariates is not None:
-                    ind1 = np.arange(n)
-                    ind2 = np.arange(nbasis, nbasis + q)
-                    basismat_aug = np.c_[basismat_aug, np.zeros((basismat_aug.shape[0], q))]
-                    if not onewt:
-                        if matwt:
-                            basismat_aug[ind1, ind2] = wtfac @ covariates
-                        else:
-                            wtfac = np.tile(rtwtvec, (q, 1)).T
-                            basismat_aug[ind1, ind2] = wtfac * covariates
-                    else:
-                        basismat_aug[ind1, ind2] = covariates
                     penmat = np.block([[penmat, np.zeros((nbasis, q))], [np.zeros((q, nbasis)), np.zeros((q, q))]])
-                qr_result = qr(basismat_aug)
-                if len(dimy) < 3:
-                    coef = solve(qr_result, y)
-                    if covariates is not None:
-                        beta_ = coef[ind2, :]
-                        coef = coef[:nbasis, :]
-                    else:
-                        beta_ = None
-                else:
-                    coef = np.zeros((nbasis, nrep, nvar))
-                    if covariates is not None:
-                        beta_ = np.zeros((q, nrep, nvar))
-                    else:
-                        beta_ = None
-                    for ivar in range(nvar):
-                        coefi = solve(qr_result, y[:, :, ivar])
-                        if covariates is not None:
-                            beta_[:, :, ivar] = coefi[ind2, :]
-                            coef[:, :, ivar] = coefi[:nbasis, :]
-                        else:
-                            coef[:, :, ivar] = coefi
+                Bmat = Bmat0 + lambda_ * penmat
             else:
-                if n == nbasis + q:
-                    if len(dimy) == 2:
-                        coef = np.linalg.solve(basismat, y)
-                    else:
-                        for ivar in range(nvar):
-                            coef[:, :, ivar] = np.linalg.solve(basismat, y[:, :, ivar])
-                    penmat = None
+                penmat = None
+                Bmat = Bmat0
+            Bmat = (Bmat + Bmat.T) / 2
+            try:
+                Lmat = cholesky(Bmat)
+            except np.linalg.LinAlgError:
+                Beig = eigh(Bmat)
+                BgoodEig = Beig[0] > 0
+                Brank = np.sum(BgoodEig)
+                if Brank < Bmat.shape[0]:
+                    print(f"Warning: Matrix of basis function values has rank {Brank} < {Bmat.shape[0]}, ignoring null space")
+                goodVec = Beig[1][:, BgoodEig]
+                Bmatinv = goodVec @ np.diag(1 / Beig[0][BgoodEig]) @ goodVec.T
+            else:
+                Lmatinv = solve(Lmat, np.eye(Lmat.shape[0]))
+                Bmatinv = Lmatinv @ Lmatinv.T
+            
+            if len(dimy) < 3:
+                coef = Bmatinv @ Dmat
+                if covariates is not None:
+                    beta_ = coef[nbasis:, :]
+                    coef = coef[:nbasis, :]
                 else:
-                    raise ValueError(f"The number of basis functions = {nbasis} exceeds {n} = the number of points to be smoothed.")
+                    beta_ = None
+            else:
+                coef = np.zeros((nbasis, nrep, nvar))
+                if covariates is not None:
+                    beta_ = np.zeros((q, nrep, nvar))
+                else:
+                    beta_ = None
+                for ivar in range(nvar):
+                    coefi = Bmatinv @ Dmat[:, :, ivar]
+                    if covariates is not None:
+                        beta_[:, :, ivar] = coefi[nbasis:, :]
+                        coef[:, :, ivar] = coefi[:nbasis, :]
+                    else:
+                        coef[:, :, ivar] = coefi
+        else:
+            if n == nbasis + q:
+                if len(dimy) == 2:
+                    coef = np.linalg.solve(basismat, y)
+                else:
+                    for ivar in range(nvar):
+                        coef[:, :, ivar] = np.linalg.solve(basismat, y[:, :, ivar])
+                penmat = None
+            else:
+                raise ValueError(f"The number of basis functions = {nbasis + q} exceeds {n} = the number of points to be smoothed.")
         if onewt:
             temp = basismat.T @ basismat
             if lambda_ > 0:
