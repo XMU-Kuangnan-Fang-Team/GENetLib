@@ -232,11 +232,9 @@ class BsplineFunc:
                 penmat = None
                 Bmat = Bmat0
             Bmat = (Bmat + Bmat.T) / 2
-            try:
-                Lmat = cholesky(Bmat)
-            else:
-                Lmatinv = solve(Lmat, np.eye(Lmat.shape[0]))
-                Bmatinv = Lmatinv @ Lmatinv.T
+            Lmat = cholesky(Bmat)
+            Lmatinv = solve(Lmat, np.eye(Lmat.shape[0]))
+            Bmatinv = Lmatinv @ Lmatinv.T
             
             if len(dimy) < 3:
                 coef = Bmatinv @ Dmat
