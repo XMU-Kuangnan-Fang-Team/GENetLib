@@ -84,12 +84,16 @@ def pre_data1(data, dim_G, dim_E, dim_GE = 0, ytype = 'Survival', split_type = 0
             train = data.iloc[0:n_train]
             valid = data.iloc[n_train:n]
         else:
-            df_0 = data[data.iloc[:, -1] == 0]
-            df_1 = data[data.iloc[:, -1] == 1]
-            train_0, test_0 = train_test_split(df_0, test_size = ratio[0]/(ratio[0] + ratio[1]), random_state = 42)
-            train_1, test_1 = train_test_split(df_1, test_size = ratio[1]/(ratio[0] + ratio[1]), random_state = 42)
-            train = pd.concat([train_0, train_1])
-            valid = pd.concat([test_0, test_1])
+            if ratio[1] == 0:
+                train = data.copy()
+                valid = data.iloc[0:0].copy()
+            else:
+                df_0 = data[data.iloc[:, -1] == 0]
+                df_1 = data[data.iloc[:, -1] == 1]
+                train_0, test_0 = train_test_split(df_0, test_size = ratio[0]/(ratio[0] + ratio[1]), random_state = 42)
+                train_1, test_1 = train_test_split(df_1, test_size = ratio[1]/(ratio[0] + ratio[1]), random_state = 42)
+                train = pd.concat([train_0, train_1])
+                valid = pd.concat([test_0, test_1])
 
     elif split_type == 1:
         n_train = int(n * ratio[0] / (ratio[0] + ratio[1] + ratio[2]))
