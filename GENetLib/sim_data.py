@@ -156,7 +156,7 @@ def sim_data_func(n, m, ytype, input_type = 'SNP', seed = 0):
                     z[i, 0] * (dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint1) + \
                     z[i, 1] * (dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint2) + epsilon[i]
             return value
-        else:
+        elif input_type == 'func':
             basis = create_bspline_basis(rangeval=[min(t), max(t)], nbasis=20, norder=4)
             bspline = BsplineFunc(basis)
             basisint = inprod(fdobj1=dataX[i]['fd']['basis'], fdobj2=basis, Lfdobj1=0, Lfdobj2=0)
@@ -164,6 +164,8 @@ def sim_data_func(n, m, ytype, input_type = 'SNP', seed = 0):
                     z[i, 0] * (dataX[i]['fd']['coefs'].T @ basisint @ bspline.smooth_basis(t, beta1value.reshape(-1, 1))['fd']['coefs']) + \
                     z[i, 1] * (dataX[i]['fd']['coefs'].T @ basisint @ bspline.smooth_basis(t, beta2value.reshape(-1, 1))['fd']['coefs']) + epsilon[i]
             return value
+        else:
+            print('Please enter the correct input type, either func or SNP.')
     
     if ytype == 'Survival':
         
