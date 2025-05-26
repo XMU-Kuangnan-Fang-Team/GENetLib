@@ -5,13 +5,14 @@ from scipy.stats import multivariate_normal
 from scipy import integrate
 from scipy.interpolate import BSpline, UnivariateSpline
 
-from GENetLib.fda_func import bspline_mat
+from GENetLib.fda_func import bspline_mat, create_bspline_basis, inprod
+from GENetLib.BsplineFunc import BsplineFunc
 
 
 '''Example data for method scalar_ge and grid_scalar_ge'''
 
 def sim_data_scalar(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Survival',
-                  n_inter = None, linear = True, seed = 0):
+                    n_inter = None, linear = True, seed = 0):
     if dim_E_Sparse > dim_E:
         raise ValueError("dim_E_Sparse should be less than dim_E")
     
@@ -89,9 +90,9 @@ def sim_data_scalar(rho_G, rho_E, dim_G, dim_E, n, dim_E_Sparse = 0, ytype = 'Su
 
 '''Example data for method func_ge and grid_func_ge'''
 
-def sim_data_func(n, m, ytype, seed = 0):
+def sim_data_func(n, m, ytype, input_type = 'SNP', seed = 0):
 
-    np.random.seed(seed + 123)
+    np.random.seed(seed)
     norder = 4
     nknots = 20
     t = np.linspace(1e-2, 1, m)
@@ -101,15 +102,25 @@ def sim_data_func(n, m, ytype, seed = 0):
     nbasisX = basismat.shape[1]
     coef = multivariate_normal.rvs(mean=np.zeros(nbasisX), cov=np.eye(nbasisX), size=n)
     Rawfvalue = np.dot(coef, basismat.T)
-    fvalue = pd.DataFrame(Rawfvalue)
 
     def func_x(l):
-        x = fvalue.iloc[l, :]
+        x = pd.DataFrame(Rawfvalue).iloc[l, :]
         diffmat = np.array([(x - i)**2 for i in range(3)])
         value = np.argmin(diffmat, axis=0)
         return value
-
-    dataX = np.array([func_x(i) for i in range(n)])
+    
+    if input_type == 'SNP':
+        dataX = np.array([func_x(i) for i in range(n)])
+    else:
+        nbasis = 7
+        basis = create_bspline_basis(rangeval=[min(t), max(t)], nbasis=nbasis, norder=4)
+        bspline = BsplineFunc(basis)
+        dataX = []
+        for i in range(n):
+            y_noisy = np.sin(2 * np.pi * t) + np.random.normal(scale=0.1, size=len(t))
+            smoothed = bspline.smooth_basis(t, y_noisy.reshape(-1, 1))
+            dataX.append(smoothed)
+    
     gamma = np.array([0.4, 0.8])
     np.random.seed(seed + 1234)
     z = multivariate_normal.rvs(mean=np.zeros(2), cov=np.eye(2), size=n)
@@ -118,11 +129,9 @@ def sim_data_func(n, m, ytype, seed = 0):
     region1 = t[t <= 0.3]
     region2 = t[(t > 0.3) & (t <= 0.7)]
     region3 = t[t > 0.7]
-    
     Betapart1 = -36*(region1 - 0.3)**2
     Betapart2 = np.zeros(len(region2))
     Betapart3 = 36*(region3 - 0.7)**2
-    
     beta0value = np.concatenate((Betapart1, Betapart2, Betapart3))
     beta1value = np.concatenate((Betapart1, Betapart2, np.zeros(len(Betapart3))))
     beta2value = np.concatenate((np.zeros(len(Betapart1)), Betapart2, Betapart3))
@@ -141,11 +150,20 @@ def sim_data_func(n, m, ytype, seed = 0):
         basisint1[i] = integrate.quad(lambda x: fbasisX[i](x) * beta1fd(x), rangeval[0], rangeval[1])[0]
         basisint2[i] = integrate.quad(lambda x: fbasisX[i](x) * beta2fd(x), rangeval[0], rangeval[1])[0]
     
-    def func_y(i):
-        value = z[i, :].T @ gamma + dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint0 + \
-                 z[i, 0] * (dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint1) + \
-                 z[i, 1] * (dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint2) + epsilon[i]
-        return value
+    def func_y(i, input_type):
+        if input_type == 'SNP':
+            value = z[i, :].T @ gamma + dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint0 + \
+                    z[i, 0] * (dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint1) + \
+                    z[i, 1] * (dataX[i, :] @ basismat @ np.linalg.inv(basismat.T @ basismat) @ basisint2) + epsilon[i]
+            return value
+        else:
+            basis = create_bspline_basis(rangeval=[min(t), max(t)], nbasis=20, norder=4)
+            bspline = BsplineFunc(basis)
+            basisint = inprod(fdobj1=dataX[i]['fd']['basis'], fdobj2=basis, Lfdobj1=0, Lfdobj2=0)
+            value = z[i, :].T @ gamma + dataX[i]['fd']['coefs'].T @ basisint @ bspline.smooth_basis(t, beta0value.reshape(-1, 1))['fd']['coefs'] + \
+                    z[i, 0] * (dataX[i]['fd']['coefs'].T @ basisint @ bspline.smooth_basis(t, beta1value.reshape(-1, 1))['fd']['coefs']) + \
+                    z[i, 1] * (dataX[i]['fd']['coefs'].T @ basisint @ bspline.smooth_basis(t, beta2value.reshape(-1, 1))['fd']['coefs']) + epsilon[i]
+            return value
     
     if ytype == 'Survival':
         
@@ -158,21 +176,21 @@ def sim_data_func(n, m, ytype, seed = 0):
             Y_EVENT = np.where(TIME > C, 0, 1)
             return Y_TIME.reshape(-1,1), Y_EVENT.reshape(-1,1)
         
-        y_ = np.array([func_y(i) for i in range(n)]).reshape(n)
+        y_ = np.array([func_y(i, input_type) for i in range(n)]).reshape(n)
         y = censor_data(y_, n)
         y = np.array(y).reshape(2,n).T
         simData = {'y': y, 'Z': z, 'location': list(t), 'X': dataX}
         return simData
     
     elif ytype == 'Continuous':
-        y = np.array([func_y(i) for i in range(n)]).reshape(n)
+        y = np.array([func_y(i, input_type) for i in range(n)]).reshape(n)
         simData = {'y': y, 'Z': z, 'location': list(t), 'X': dataX}
         return simData
     
     elif ytype == 'Binary':
         def sigmoid(x):
             return 1 / (1 + np.exp(-x))
-        y_prob = np.array([func_y(i) for i in range(n)]).reshape(n)
+        y_prob = np.array([func_y(i, input_type) for i in range(n)]).reshape(n)
         y_class = np.where(y_prob > 0.5, 1, 0)
         simData = {'y': y_class, 'Z': z, 'location': list(t), 'X': dataX}
         return simData
