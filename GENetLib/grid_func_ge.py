@@ -20,10 +20,15 @@ def grid_func_ge(y, X, location, Z, ytype, btype,
                  Bsplines = 20, norder1 = 4, model = None, split_type = 0, 
                  ratio = [7, 3], plot_res = True, plot_beta = True):
     # When X is functional input
-    if type(X) == dict:
+    if type(X) == list and type(X[0]) == dict:
         fbasis2 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
         # Generate basic coefficient matrix
-        U = inprod(fdobj1=X, fdobj2=fbasis2, Lfdobj1=0, Lfdobj2=0)
+        U_list = []
+        for idx, item in enumerate(X):
+            basisint = inprod(fdobj1=item['fd']['basis'], fdobj2=fbasis2, Lfdobj1=0, Lfdobj2=0)
+            u_val = np.dot(item['fd']['coefs'].reshape(-1), basisint)
+            U_list.append(u_val)
+        U = pd.DataFrame(np.array(U_list).reshape(len(X), -1))
     # When X are densely measured observations
     else:
         # Transfer densely measured observations to a set of basis function
@@ -50,7 +55,7 @@ def grid_func_ge(y, X, location, Z, ytype, btype,
     # Calculate interaction variables
     dim_G = U.shape[1]
     dim_E = Z.shape[1]
-    INTERACTION = np.zeros(shape=(n, dim_G * dim_E))
+    INTERACTION = np.zeros(shape=(U.shape[0], dim_G * dim_E))
     k = 0
     for i in range(dim_E):
         for j in range(dim_G):
