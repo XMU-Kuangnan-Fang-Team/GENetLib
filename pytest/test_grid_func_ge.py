@@ -21,7 +21,7 @@ def test_grid_func_ge():
   num_epochs = 100
   nbasis1 = 7
   params1 = 4
-  func_continuous = sim_data_func(n = 1000, m = 100, ytype = ytype, seed = 1)
+  func_continuous = sim_data_func(n = 1000, m = 100, input_type = 'func', ytype = ytype, seed = 1)
   y = func_continuous['y']
   Z = func_continuous['Z']
   location = func_continuous['location']
