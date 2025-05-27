@@ -21,7 +21,7 @@ def test_grid_func_ge():
   num_epochs = 100
   nbasis1 = 7
   params1 = 4
-  func_continuous = sim_data_func(n = 1000, m = 100, input_type = 'func', ytype = ytype, seed = 1)
+  func_continuous = sim_data_func(n = 1000, m = 30, ytype = 'Continuous', input_type = 'func', seed = 123)
   y = func_continuous['y']
   Z = func_continuous['Z']
   location = func_continuous['location']
@@ -29,7 +29,8 @@ def test_grid_func_ge():
   grid_func_ge_res = grid_func_ge(y, X, location, Z, ytype, 'Bspline', 
                                   num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, 
                                   nbasis1, params1, lambda1 = None, lambda2 = lambda2, Lambda = Lambda,
-                                  Bsplines = 15, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = False, plot_beta = True)
-  pred = predict_func(grid_func_ge_res, y, ytype, X, Z, location)
+                                  Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1],
+                                  plot_res = False, plot_beta = True)
+  pred = predict_func(grid_func_ge_res, y, ytype, X, Z, location, Bsplines = 5)
   assert grid_func_ge_res is not None
   assert pred is not None
