@@ -16,7 +16,7 @@ Usage
 
 .. code-block:: python
 
-    sim_data_func(n, m, ytype, seed = 0)
+    sim_data_func(n, m, ytype, input_type = 'SNP', seed = 0)
 
 Parameters
 ----------
@@ -36,6 +36,8 @@ This part shows the meanings and data types of parameters. Users can check the t
      - numeric, the sequence length of each sample.
    * - **ytype**
      - character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is continuous.
+   * - **input_type**
+     - character, "SNP" or "func" type of the input gene variables. If not specified, the default is "SNP".
    * - **seed**
      - numeric, random seeds each time when data is generated.
 
@@ -50,7 +52,11 @@ The function **sim_data_func** outputs a dictionary including response variable 
 
 2. The event indicator.
 
-- **X**: A matrix representing the sequence data, with the number of rows equal to the number of samples.
+- **X**: A matrix or a list of `fd` objects.
+
+1. When input_type = "SNP", a matrix representing the sequence data, with the number of rows equal to the number of samples.
+
+1. When input_type = "func", a list contains functional objects denoted as `fd`, with the number of rows equal to the number of samples.
 
 - **location**: A list defining the sampling sites of the sequence (genotypes) data.
 
@@ -69,3 +75,14 @@ Here is a quick example for using this function:
     y = func_continuous['y']
     Z = func_continuous['Z']
     location = func_continuous['location']
+
+When users want to generate `fd` objects:
+
+
+    from GENetLib.sim_data import sim_data_func
+    func_continuous = sim_data_func(n = 1000, m = 100, input_type = 'SNP', ytype = 'Continuous', seed = 1)
+    X = func_continuous['X']
+    y = func_continuous['y']
+    Z = func_continuous['Z']
+    location = func_continuous['location']
+
