@@ -37,7 +37,7 @@ This part shows the meanings and data types of parameters. Users can check the t
    * - **y**
      - numeric, an array representing the response variables.
    * - **X**
-     - numeric or dict, a matrix representing the sequence data with the number of rows equal to the number of samples or a "fd" item which represents the functional data.
+     - numeric or list, a matrix representing the sequence data with the number of rows equal to the number of samples or a list of "fd" items which represents the functional data.
    * - **location**
      - list, a list defining the sampling sites of the sequence data.
    * - **Z**
@@ -134,7 +134,7 @@ In terms of visualization, this function can output the plots of reconstructed f
 Examples
 -------------
 
-Here is a quick example for using this function:
+Here is a quick example for using this function when gene variables are discrete observations:
 
 .. code-block:: python
 
@@ -156,3 +156,31 @@ Here is a quick example for using this function:
     X = func_continuous['X']
     grid_func_ge_res = grid_func_ge(y, X, location, Z, 'Continuous', 'Bspline', num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, nbasis1, params1, lambda1 = None, lambda2 = lambda2, Lambda = Lambda, Bsplines = 15, norder1 = 4, split_type = 1, ratio = [3, 1, 1], plot_res = False, plot_beta = True)
 
+When gene variables is a list of `fd` objects, see this example:
+
+.. code-block:: python
+
+    from GENetLib.sim_data import sim_data_func
+    from GENetLib.grid_func_ge import grid_func_ge
+    from GENetLib.predict_ge import predict_func
+    ytype = 'Continuous'
+    num_hidden_layers = 2
+    nodes_hidden_layer = [100, 10]
+    learning_rate2 = [0.008, 0.009, 0.01]
+    Lambda = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+    learning_rate1 = [0.02, 0.03, 0.04, 0.05]
+    lambda2 = [0.05, 0.06, 0.07, 0.08]
+    num_epochs = 100
+    nbasis1 = 7
+    params1 = 4
+    func_continuous = sim_data_func(n = 1000, m = 30, ytype = 'Continuous', input_type = 'func', seed = 123)
+    y = func_continuous['y']
+    Z = func_continuous['Z']
+    location = func_continuous['location']
+    X = func_continuous['X']
+    grid_func_ge_res = grid_func_ge(y, X, location, Z, ytype, 'Bspline', 
+                                    num_hidden_layers, nodes_hidden_layer, num_epochs, learning_rate1, learning_rate2, 
+                                    nbasis1, params1, lambda1 = None, lambda2 = lambda2, Lambda = Lambda,
+                                    Bsplines = 5, norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1],
+                                    plot_res = False, plot_beta = True)
+    pred = predict_func(grid_func_ge_res, y, ytype, X, Z, location, Bsplines = 5)
