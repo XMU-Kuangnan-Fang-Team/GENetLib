@@ -78,6 +78,7 @@ Here is a quick example for using this function:
 
 When users want to generate `fd` objects:
 
+.. code-block:: python
 
     from GENetLib.sim_data import sim_data_func
     func_continuous = sim_data_func(n = 1000, m = 100, input_type = 'SNP', ytype = 'Continuous', seed = 1)
