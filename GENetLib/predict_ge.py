@@ -15,12 +15,15 @@ def predict_scalar(ge_res, y, ytype, G, E, GE = None):
                 GE[:,k] = E[:,i] * G[:,j]
                 k = k + 1
     G, y, E, GE = pre_data2(y, G, E, GE, ytype, split_type = 0, ratio = [1, 0])[:4]
-    pred = ge_res[5](G, GE, E)
+    if len(ge_res) == 5:
+        pred = ge_res[4](G, GE, E)
+    else:
+        pred = ge_res[5](G, GE, E)
     return pred
     
     
-def predict_func(ge_res, y, ytype, G, E, location, nbasis = 15, params = 4,
-                 nbasis1 = 15, params1 = 4, Bsplines = 20, norder1 = 4):
+def predict_func(ge_res, y, ytype, G, E, location, nbasis1 = 15, params1 = 4,
+                 Bsplines = 20, norder1 = 4):
     if type(G) == list and type(G[0]) == dict:
         fbasis2 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
         U_list = []
@@ -30,9 +33,9 @@ def predict_func(ge_res, y, ytype, G, E, location, nbasis = 15, params = 4,
             U_list.append(u_val)
         U = pd.DataFrame(np.array(U_list).reshape(len(G), -1))
     else:
-        funcX = dense_to_func(location, G, btype = "Bspline", nbasis = nbasis, params = params, Plot = False)
+        funcX = dense_to_func(location, G, btype = "Bspline", nbasis = nbasis1, params = params1, Plot = False)
         fbasis1 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=nbasis1, norder=params1)
-        fbasis2 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=15, norder=4)
+        fbasis2 = create_bspline_basis(rangeval=[min(location), max(location)], nbasis=Bsplines, norder=norder1)
         n,m = G.shape
         funcCoef = funcX['coefs'].T
         basisint = inprod(fdobj1=fbasis1, fdobj2=fbasis2, Lfdobj1=0, Lfdobj2=0)
@@ -46,6 +49,9 @@ def predict_func(ge_res, y, ytype, G, E, location, nbasis = 15, params = 4,
             GE[:,k] = E[:,i] * U.iloc[:,j]
             k = k + 1
     U_, y_, E_, GE_ = pre_data2(y, U, E, GE, ytype = ytype, split_type = 0, ratio = [10, 0])[:4]
-    pred = ge_res[0][5](U_, GE_, E_)
+    if len(ge_res[0]) == 5:
+        pred = ge_res[0][4](U_, GE_, E_)
+    else:
+        pred = ge_res[0][5](U_, GE_, E_)
     return pred
 
