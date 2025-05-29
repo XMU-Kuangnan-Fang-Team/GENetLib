@@ -1,5 +1,6 @@
 from GENetLib.sim_data import sim_data_func
 from GENetLib.func_ge import func_ge
+from GENetLib.predict_ge import predict_func
 import matplotlib
 matplotlib.use('Agg')
 
@@ -19,6 +20,8 @@ def test_func_ge():
                           'Survival', 'Power', num_hidden_layers=2, nodes_hidden_layer=[100,10], num_epochs=50,
                           learning_rate1=0.02, learning_rate2=0.035, nbasis1=5, params1=[-1,-0.5,0,0.5,1], lambda2=0.01, Lambda=0.01,
                           threshold=0.01, Bsplines=5, norder1=4, model=None, split_type=1, ratio=[3, 1, 1], plot_res=False, plot_beta = False)
+  pred = predict_func(func_ge_res_3, func_survival['y'], 'Survival', func_survival['X'], func_survival['Z'], func_survival['location'], Bsplines = 5)
   assert func_ge_res_1 is not None
   assert func_ge_res_2 is not None
   assert func_ge_res_3 is not None
+  assert pred is not None
