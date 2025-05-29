@@ -51,7 +51,12 @@ def predict_func(ge_res, y, ytype, G, E, location, nbasis1 = 15, params1 = 4,
     U_, y_, E_, GE_ = pre_data2(y, U, E, GE, ytype = ytype, split_type = 0, ratio = [10, 0])[:4]
     if len(ge_res[0]) == 5:
         pred = ge_res[0][4](U_, GE_, E_)
-    else:
+    elif len(ge_res[0]) == 6:
         pred = ge_res[0][5](U_, GE_, E_)
+    else:
+        if len(ge_res[0][0]) == 5:
+            pred = ge_res[0][0][4](U_, GE_, E_)
+        else:
+            pred = ge_res[0][0][5](U_, GE_, E_)
     return pred
 

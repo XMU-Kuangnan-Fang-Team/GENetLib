@@ -12,6 +12,7 @@ In this section, we introduce the main functions in **GENetLib** detailedly.
    func_ge
    grid_scalar_ge
    grid_func_ge
-   predict_ge
+   predict_scalar
+   predict_func
    plot_fd
    plot_rawdata
