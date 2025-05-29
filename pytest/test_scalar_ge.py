@@ -1,5 +1,6 @@
 from GENetLib.sim_data import sim_data_scalar
 from GENetLib.scalar_ge import scalar_ge
+from GENetLib.predict_ge import predict_scalar
 import matplotlib
 matplotlib.use('Agg')
 
