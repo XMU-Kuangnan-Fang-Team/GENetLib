@@ -18,13 +18,14 @@ def test_grid_scalar_ge():
   G = scalar_survival['G']
   E = scalar_survival['E']
   ytype = 'Survival'
-  pred = predict_scalar(grid_scalar_ge_res_1, y, ytype, G, E, GE = None)
+  pred1 = predict_scalar(grid_scalar_ge_res_1, y, ytype, G, E, GE = None)
   grid_scalar_ge_res_2 = grid_scalar_ge(scalar_binary['y'], scalar_binary['G'], scalar_binary['E'], ytype='Binary',
                                         num_hidden_layers=1, nodes_hidden_layer=[50], num_epochs=50,
                                         learning_rate1=[0.04, 0.05, 0.06], learning_rate2=[0.035,0.045],
                                         lambda1 = None, lambda2 = [0.08, 0.09], Lambda = [0.1],
-                                        threshold = 0.01, model = None, split_type = 1, ratio = [7, 2, 1], 
+                                        model = None, split_type = 1, ratio = [7, 2, 1], 
                                         important_feature = True, plot = False, model_reg = None, isfunc = False)
+  pred2 = predict_scalar(grid_scalar_ge_res_2, scalar_binary['y'], 'Binary', scalar_binary['G'], scalar_binary['E'], GE = None)
   grid_scalar_ge_res_3 = grid_scalar_ge(scalar_survival['y'], scalar_survival['G'], scalar_survival['E'], ytype='Survival',
                                         num_hidden_layers=2, nodes_hidden_layer=[1000,100], num_epochs=50,
                                         learning_rate1=[0.02, 0.04, 0.06], learning_rate2=[0.035,0.045],
@@ -34,4 +35,5 @@ def test_grid_scalar_ge():
   assert grid_scalar_ge_res_1 is not None
   assert grid_scalar_ge_res_2 is not None
   assert grid_scalar_ge_res_3 is not None
-  assert pred is not None
+  assert pred1 is not None
+  assert pred2 is not None
