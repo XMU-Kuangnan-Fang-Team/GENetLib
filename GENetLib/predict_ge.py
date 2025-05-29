@@ -64,4 +64,3 @@ def predict_func(ge_res, y, ytype, G, E, location, nbasis1 = 15, params1 = 4,
         else:
             pred = ge_res[0][0][5](U_, GE_, E_)
     return pred
-
