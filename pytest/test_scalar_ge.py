@@ -11,6 +11,7 @@ def test_scalar_ge():
                               num_hidden_layers=2, nodes_hidden_layer=[1000,100], num_epochs=50, learning_rate1=0.06, learning_rate2=0.035,
                               lambda1 = 0.1, lambda2=0.09, Lambda=0.01, threshold = 0.01, model = None, split_type = 0, ratio = [7, 3],
                               important_feature = True, plot = True, model_reg = None, isfunc = False)
+  pred = predict_scalar(scalar_ge_res_1, scalar_continuous['y'], 'Continuous', scalar_continuous['G'], scalar_continuous['E'], GE = None)
   scalar_ge_res_2 = scalar_ge(scalar_binary['y'], scalar_binary['G'], scalar_binary['E'], ytype='Binary',
                               num_hidden_layers=2, nodes_hidden_layer=[1000,100], num_epochs=50, learning_rate1=0.06, learning_rate2=0.035,
                               lambda1 = 0.1, lambda2=0.09, Lambda=0.01, threshold = 0.01, model = None, split_type = 1, ratio = [7, 2, 1],
