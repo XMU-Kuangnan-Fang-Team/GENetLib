@@ -17,8 +17,13 @@ def predict_scalar(ge_res, y, ytype, G, E, GE = None):
     G, y, E, GE = pre_data2(y, G, E, GE, ytype, split_type = 0, ratio = [1, 0])[:4]
     if len(ge_res) == 5:
         pred = ge_res[4](G, GE, E)
-    else:
+    elif len(ge_res) == 6:
         pred = ge_res[5](G, GE, E)
+    else:
+        if len(ge_res[0]) == 5:
+            pred = ge_res[0][4](G, GE, E)
+        else:
+            pred = ge_res[0][5](G, GE, E)
     return pred
     
     
