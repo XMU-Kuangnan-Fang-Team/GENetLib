@@ -62,7 +62,8 @@ def scalar_mcp_l2train(train_x, train_clinical, train_interaction, train_y,
         opt.zero_grad()
         # Calculate the loss function
         if ytype == 'Survival':
-            loss = neg_par_log_likelihood(pred, train_y[0], train_y[1]) + regularization_loss
+            loss_fn = neg_par_log_likelihood
+            loss = loss_fn(pred, train_y[0], train_y[1]) + regularization_loss
         elif ytype == 'Binary':
             loss_fn = BCELoss()
             loss = loss_fn(pred, train_y) + regularization_loss
