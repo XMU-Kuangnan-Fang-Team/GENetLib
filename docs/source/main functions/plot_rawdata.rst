@@ -45,6 +45,12 @@ This part shows the meanings and data types of parameters. Users can check the t
      - float, a numerical value giving the amount by which plotting text and symbols should be magnified relative to the default. 
    * - **show_legend**
      - bool, whether to show the legend of the plot. When you plot many sequnces, it is recommended to set the option to False.
+   * - **title**
+     - str, specifies the title of the plot. If set to a string, the plot will have that title; if None, no title is displayed.
+   * - **grid**
+     - bool, a boolean for displaying grid lines. Set to True to show them, aiding in data value estimation.
+   * - **figsize**
+     - tuple, a tuple defining the figure's width and height in inches. Adjust these values to change the figure's size.
 
 
 Value
