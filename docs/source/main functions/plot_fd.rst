@@ -41,6 +41,18 @@ This part shows the meanings and data types of parameters. Users can check the t
      - str, a label for the horizontal axis.
    * - **ylab**
      - str, a label for the vertical axis.
+   * - **title**
+     - str, a label for the vertical axis.
+   * - **colors**
+     - str, determines the colors of elements in the plot. If a color (e.g., "blue") or a list of colors is provided, the plot will use those colors instead of the defaults.
+   * - **linestyles**
+     - str, sets the line styles in the plot. Options include solid ("-"), dashed ("--"), dash-dot ("-."), and dotted (":").
+   * - **legend**
+     - str, a boolean indicating whether to show the plot's legend. Set to False if the plot has many sequences to avoid clutter.
+   * - **grid**
+     - bool, a boolean for displaying grid lines. Set to True to show them, aiding in data value estimation.
+   * - **figsize**
+     - tuple, a tuple defining the figure's width and height in inches. Adjust these values to change the figure's size.
 
 
 Value
