@@ -28,7 +28,7 @@ By integrating minimax concave penalty (MCP) and $L_2$-norm regularization withi
 </div>
 
 We provide a web-based documentation which introduces the meaning of function parameters, the usage of functions, detailed information about methods, and gives examples for each. The web page is available at
-[documentations](https://open-box.readthedocs.io/en/latest/).
+[documentations](https://genetlib.readthedocs.io/en/latest/).
 This package has been uploaded to PyPI with previous versions, and the web page is available at
 [PyPI package](https://pypi.org/project/genetlib/). Users can also check [releases](https://github.com/Barry57/GENetLib/releases) to get historical versions.
 
