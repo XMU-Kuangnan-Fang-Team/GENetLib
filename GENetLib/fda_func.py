@@ -385,11 +385,11 @@ def get_basis_matrix(evalarg, basisobj, nderiv=0, returnMatrix=False):
     if len(dropind) > 0:
         basismat = np.delete(basismat, dropind, axis=1)
     if len(evalarg) == 1:
-        basismat = np.asmatrix(basismat)
+        basismat = np.asarray(basismat)
     if len(basismat.shape) == 2:
-        return np.asmatrix(basismat)
+        return np.asarray(basismat)
     else:
-        return np.asmatrix(basismat)
+        return np.asarray(basismat)
 
 
 '''Create different types of basic functions for functional data'''
@@ -743,7 +743,7 @@ def eval_basis(evalarg, basisobj, Lfdobj = 0, returnMatrix = False):
                     Dbasismat = get_basis_matrix(evalarg, basisobj, j, returnMatrix)
                     basismat = basismat + (np.array(wjarray).T @ oneb) * np.array(Dbasismat)
     if not returnMatrix and len(basismat.shape) == 2:
-        return np.asmatrix(basismat)
+        return np.asarray(basismat)
     else:
         return basismat
 
@@ -788,7 +788,7 @@ def eval_fd(evalarg, fdobj, Lfdobj = 0, returnMatrix = False):
         if ndim <= 2:
             evalarray = np.dot(basismat, coef)
     if len(np.shape(evalarray)) == 2 and not returnMatrix:
-        return np.asmatrix(evalarray)
+        return np.asarray(evalarray)
     else:
         return evalarray
 
@@ -983,7 +983,7 @@ def inprod(fdobj1, fdobj2 = None, Lfdobj1 = 0, Lfdobj2 = 0, rng = None, wtfd = 0
                 print("Warning: Failure to converge.")
         inprodmat += ss
     if len(inprodmat.shape) == 2:
-        return np.asmatrix(inprodmat)
+        return np.asarray(inprodmat)
     else:
         return inprodmat
 
@@ -1148,4 +1148,5 @@ def fdparcheck(fdParobj, ncurve = None):
             nbasis = fdParobj['nbasis']
             fdParobj = fdpar(fd(np.zeros((nbasis, ncurve)), fdParobj))
     return fdParobj
+
 
