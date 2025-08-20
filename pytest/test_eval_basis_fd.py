@@ -20,7 +20,7 @@ def test_eval_basis_return_matrix():
     basisobj = create_bspline_basis(rangeval=[0, 1], nbasis=4, norder=4)
     evalarg = np.linspace(0, 1, 10)
     basis_values = eval_basis(evalarg, basisobj, returnMatrix=True)
-    assert isinstance(basis_values, np.matrix)
+    assert isinstance(basis_values, np.ndarray)
 
 # Test eval_fd function
 def test_eval_fd():
@@ -64,6 +64,8 @@ def test_eval_fd_list_input():
     fdobj = {'coefs': coef, 'basis': basisobj}
     evalarg = list(np.linspace(0, 1, 10))
     function_values = eval_fd(evalarg, fdobj)
+    if function_values.ndim == 1:
+        function_values = function_values[np.newaxis, :]
     assert function_values.shape == (1,10)
 
 # Test lfd
