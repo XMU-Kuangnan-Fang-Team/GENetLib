@@ -81,9 +81,10 @@ def grid_func_ge(y, X, location, Z, ytype, btype,
     b = {f'b{i}': basisCoef[i,] for i in range(Z.shape[1]+1)}
     if plot_beta:
         for i in range(Z.shape[1]+1):
-            plt.plot(location, np.array(eval_fd(location, fd(coef = basisCoef[i,], basisobj = fbasis2)))[0])
+            plt.plot(location, eval_fd(location, fd(coef = basisCoef[i,], basisobj = fbasis2)))
             plt.axhline(0, color='black', linestyle='--', linewidth=0.5)
             plt.xlabel('location')
             plt.ylabel(f'beta{i}(t)')
             plt.show()
     return GridFuncGE_res, b, betat
+
