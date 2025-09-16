@@ -4,19 +4,36 @@ import matplotlib.pyplot as plt
 from GENetLib.fda_func import eval_fd
 
 
-'''Plot functions fitting from densely measured observations'''
+"""Plot functions fitting from densely measured observations"""
 
-def plot_rawdata(location, X, color = None, pch = 4, cex = 0.9, show_legend = True,
-                 title = None, grid = False, figsize = (8, 6)):
+
+def plot_rawdata(
+    location,
+    X,
+    color=None,
+    pch=4,
+    cex=0.9,
+    show_legend=True,
+    title=None,
+    grid=False,
+    figsize=(8, 6),
+):
     n, m = X.shape
-    type_ = 'o'
+    type_ = "o"
     truelengths = np.sum(~np.isnan(X))
     plt.figure(figsize=figsize)
     if truelengths == n * m:
         if color is None:
-            plt.plot(location, X.T, marker=type_, markersize=pch, label='X')
+            plt.plot(location, X.T, marker=type_, markersize=pch, label="X")
         else:
-            plt.plot(location, X.T, marker=type_, markersize=pch, color=color, label='X')
+            plt.plot(
+                location,
+                X.T,
+                marker=type_,
+                markersize=pch,
+                color=color,
+                label="X",
+            )
     else:
         location_list = []
         X_list = []
@@ -26,10 +43,23 @@ def plot_rawdata(location, X, color = None, pch = 4, cex = 0.9, show_legend = Tr
             X_list.append(X[i, mask])
         if color is None:
             for i in range(n):
-                plt.plot(location_list[i], X_list[i], marker=type_, markersize=pch, label=f'X{i+1}')
+                plt.plot(
+                    location_list[i],
+                    X_list[i],
+                    marker=type_,
+                    markersize=pch,
+                    label=f"X{i+1}",
+                )
         else:
             for i in range(n):
-                plt.plot(location_list[i], X_list[i], marker=type_, markersize=pch, color=color, label=f'X{i+1}')
+                plt.plot(
+                    location_list[i],
+                    X_list[i],
+                    marker=type_,
+                    markersize=pch,
+                    color=color,
+                    label=f"X{i+1}",
+                )
     plt.xlabel("Location")
     plt.ylabel("X")
     if title is not None:
@@ -41,18 +71,29 @@ def plot_rawdata(location, X, color = None, pch = 4, cex = 0.9, show_legend = Tr
     plt.show()
 
 
-'''Plot functional objects'''
+"""Plot functional objects"""
 
-def plot_fd(x, y = None, xlab = None, ylab = None, title = None, colors = None,
-            linestyles = None, legend = None, grid = False, figsize = (8, 6)):
+
+def plot_fd(
+    x,
+    y=None,
+    xlab=None,
+    ylab=None,
+    title=None,
+    colors=None,
+    linestyles=None,
+    legend=None,
+    grid=False,
+    figsize=(8, 6),
+):
     fdobj = x
-    coef = fdobj['coefs']
+    coef = fdobj["coefs"]
     coefd = coef.shape
     nbasis = coefd[0]
     nx = np.max([501, 10 * nbasis + 1])
     nrep = coefd[1]
-    basisobj = fdobj['basis']
-    rangex = basisobj['rangeval']
+    basisobj = fdobj["basis"]
+    rangex = basisobj["rangeval"]
     if y is None:
         y = nx
     if y >= 1:
@@ -65,10 +106,26 @@ def plot_fd(x, y = None, xlab = None, ylab = None, title = None, colors = None,
     ylim = rangey
     plt.figure(figsize=figsize)
     for irep in range(nrep):
-        color = colors[irep] if colors is not None and irep < len(colors) else None
-        linestyle = linestyles[irep] if linestyles is not None and irep < len(linestyles) else "-"
-        plt.plot(y, fdmat[:, irep], color=color, linestyle=linestyle, label=legend[irep] if legend is not None and irep < len(legend) else None)
-    plt.axhline(0, linestyle='--', color='black')
+        color = (
+            colors[irep] if colors is not None and irep < len(colors) else None
+        )
+        linestyle = (
+            linestyles[irep]
+            if linestyles is not None and irep < len(linestyles)
+            else "-"
+        )
+        plt.plot(
+            y,
+            fdmat[:, irep],
+            color=color,
+            linestyle=linestyle,
+            label=(
+                legend[irep]
+                if legend is not None and irep < len(legend)
+                else None
+            ),
+        )
+    plt.axhline(0, linestyle="--", color="black")
     plt.xlim(xlim)
     plt.ylim(ylim)
     plt.xlabel(xlab)
