@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 
-
 '''The structure of G-E nueral network'''
 
 # Define sparse layer
@@ -80,3 +79,4 @@ class GE_Net(nn.Module):
         else:
             lin_pred = self.hidden_layers[-1](x)
         return lin_pred
+
