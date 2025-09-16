@@ -3,11 +3,11 @@ name: Black
 on:
   push:
     branches:
-      - main   # 只在 main 分支 push 时触发
+      - main
 
 jobs:
   format:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
