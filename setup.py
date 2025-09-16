@@ -29,4 +29,3 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
 )
-
