@@ -3,28 +3,40 @@ name: Black
 on:
   push:
     branches:
-      - main
+      - main   # 只在 main 分支 push 时触发
 
 jobs:
   format:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: pip install black
-      - run: black . --line-length 80
+      - name: Install Black
+        run: pip install black
+
+      - name: Run Black
+        run: black . --line-length 80
 
       - name: Check for changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --exit-code || echo "changes_detected=true" >> $GITHUB_ENV
+          if git diff --quiet; then
+            echo "changes_detected=false" >> $GITHUB_ENV
+          else
+            echo "changes_detected=true" >> $GITHUB_ENV
+            echo "Detected changes:"
+            git status
+            git diff --stat
+          fi
 
       - name: Create Pull Request with formatted code
         if: env.changes_detected == 'true'
