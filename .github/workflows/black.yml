@@ -44,7 +44,7 @@ jobs:
         if: env.changes_detected == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN2 }}
           commit-message: ":art: Format Python code with Black"
           title: "Auto-format Python code with Black"
           body: |
