@@ -38,7 +38,7 @@ This part shows the meanings and data types of parameters. Users can check the t
      - character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is continuous.
    * - **input_type**
      - character, "SNP" or "func" type of the input gene variables. If not specified, the default is "SNP".
-   * - **input_type**
+   * - **linear**
      - bool, True or False, whether or not to generate linear data. The default is True.
    * - **seed**
      - numeric, random seeds each time when data is generated.
