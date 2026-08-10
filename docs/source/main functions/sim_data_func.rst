@@ -16,7 +16,7 @@ Usage
 
 .. code-block:: python
 
-    sim_data_func(n, m, ytype, input_type = 'SNP', seed = 0)
+    sim_data_func(n, m, ytype, input_type = 'SNP', linear = True, seed = 0)
 
 Parameters
 ----------
@@ -38,6 +38,8 @@ This part shows the meanings and data types of parameters. Users can check the t
      - character, "Survival", "Binary" or "Continuous" type of the output y. If not specified, the default is continuous.
    * - **input_type**
      - character, "SNP" or "func" type of the input gene variables. If not specified, the default is "SNP".
+   * - **input_type**
+     - bool, True or False, whether or not to generate linear data. The default is True.
    * - **seed**
      - numeric, random seeds each time when data is generated.
 
@@ -81,7 +83,7 @@ When users want to generate `fd` objects:
 .. code-block:: python
 
     from GENetLib.sim_data import sim_data_func
-    func_continuous = sim_data_func(n = 1000, m = 100, input_type = 'SNP', ytype = 'Continuous', seed = 1)
+    func_continuous = sim_data_func(n = 1000, m = 100, ytype = 'Continuous', input_type = 'SNP', linear = False, seed = 1)
     X = func_continuous['X']
     y = func_continuous['y']
     Z = func_continuous['Z']
