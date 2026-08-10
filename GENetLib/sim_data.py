@@ -64,30 +64,15 @@ def sim_data_scalar(
         for i in range(dim_E):
             pos += list(range(dim_G * i, dim_G * i + n_inter))
         interactionPos = np.random.choice(pos, size=n_inter, replace=False)
-
+        coef = np.random.uniform(0.5, 0.8, size=n_inter * 2 + dim_E)
+        h_ini = (np.sum(X[:, 0:n_inter] * coef[0:n_inter], axis=1) + 
+                 np.sum(INTERACTION[:, interactionPos] * coef[n_inter : n_inter * 2], axis=1,) + 
+                 np.sum(CLINICAL * coef[n_inter * 2 : n_inter * 2 + dim_E], axis=1,))
         if ytype == "Survival":
             if linear == True:
-                coef = np.random.uniform(0.5, 0.8, size=n_inter * 2 + dim_E)
-                h = (
-                    np.sum(X[:, 0:n_inter] * coef[0:n_inter], axis=1)
-                    + np.sum(
-                        INTERACTION[:, interactionPos]
-                        * coef[n_inter : n_inter * 2],
-                        axis=1,
-                    )
-                    + np.sum(
-                        CLINICAL * coef[n_inter * 2 : n_inter * 2 + dim_E],
-                        axis=1,
-                    )
-                )
+                h = h_ini
             elif linear == False:
-                h = (
-                    np.sum(np.sin(X[:, 0:n_inter]), axis=1)
-                    + np.sum(np.sin(INTERACTION[:, interactionPos]), axis=1)
-                    + np.sum(np.sin(CLINICAL), axis=1)
-                )
-            else:
-                raise ValueError("Please enter True or False")
+                h = np.log(1+np.exp(h_ini))
             Y = pd.DataFrame(censor_data(h, n))
             X = StandardScaler().fit(X).transform(X)
             CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
@@ -98,17 +83,11 @@ def sim_data_scalar(
         elif ytype == "Continuous":
             coef = np.random.uniform(0.5, 0.8, size=n_inter * 2 + dim_E)
             bias = np.random.rand(n).reshape(-1, 1)
-            Y = (
-                np.sum(X[:, 0:n_inter] * coef[0:n_inter], axis=1)
-                + np.sum(
-                    INTERACTION[:, interactionPos]
-                    * coef[n_inter : n_inter * 2],
-                    axis=1,
-                )
-                + np.sum(
-                    CLINICAL * coef[n_inter * 2 : n_inter * 2 + dim_E], axis=1
-                )
-            ).reshape(-1, 1) + bias
+            Y_ini = h_ini.reshape(-1, 1)
+            if linear == True:
+                Y = Y_ini + bias
+            elif linear == False:
+                Y = np.log(1+np.exp(Y_ini)) + bias 
             X = StandardScaler().fit(X).transform(X)
             CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
             INTERACTION = (
@@ -118,17 +97,11 @@ def sim_data_scalar(
         elif ytype == "Binary":
             coef = np.random.uniform(0.5, 0.8, size=n_inter * 2 + dim_E)
             bias = np.random.rand(n).reshape(-1, 1)
-            Y_ = (
-                np.sum(X[:, 0:n_inter] * coef[0:n_inter], axis=1)
-                + np.sum(
-                    INTERACTION[:, interactionPos]
-                    * coef[n_inter : n_inter * 2],
-                    axis=1,
-                )
-                + np.sum(
-                    CLINICAL * coef[n_inter * 2 : n_inter * 2 + dim_E], axis=1
-                )
-            ).reshape(-1, 1) + bias
+            Y_ini = h_ini.reshape(-1, 1)
+            if linear == True:
+                Y_ = Y_ini + bias
+            elif linear == False:
+                Y_ = np.log(1+np.exp(Y_ini)) + bias 
             Y = (Y_ >= np.mean(Y_)).astype(int)
             X = StandardScaler().fit(X).transform(X)
             CLINICAL = StandardScaler().fit(CLINICAL).transform(CLINICAL)
@@ -150,7 +123,7 @@ def sim_data_scalar(
 """Example data for method func_ge and grid_func_ge"""
 
 
-def sim_data_func(n, m, ytype, input_type="SNP", seed=0):
+def sim_data_func(n, m, ytype, input_type="SNP", linear = True, seed=0):
 
     np.random.seed(seed)
     norder = 4
@@ -231,7 +204,7 @@ def sim_data_func(n, m, ytype, input_type="SNP", seed=0):
             lambda x: fbasisX[i](x) * beta2fd(x), rangeval[0], rangeval[1]
         )[0]
 
-    def func_y(i, input_type):
+    def func_y(i, input_type, linear):
         if input_type == "SNP":
             value = (
                 z[i, :].T @ gamma
@@ -255,7 +228,11 @@ def sim_data_func(n, m, ytype, input_type="SNP", seed=0):
                 )
                 + epsilon[i]
             )
-            return value
+            if linear == True:
+                return value
+            elif linear == False:
+                return np.log(1+np.exp(value)) 
+            
         elif input_type == "func":
             basis = create_bspline_basis(
                 rangeval=[min(t), max(t)], nbasis=20, norder=4
@@ -292,7 +269,10 @@ def sim_data_func(n, m, ytype, input_type="SNP", seed=0):
                 )
                 + epsilon[i]
             )
-            return value
+            if linear == True:
+                return value
+            elif linear == False:
+                return np.log(1+np.exp(value)) 
         else:
             print("Please enter the correct input type, either func or SNP.")
 
@@ -307,14 +287,14 @@ def sim_data_func(n, m, ytype, input_type="SNP", seed=0):
             Y_EVENT = np.where(TIME > C, 0, 1)
             return Y_TIME.reshape(-1, 1), Y_EVENT.reshape(-1, 1)
 
-        y_ = np.array([func_y(i, input_type) for i in range(n)]).reshape(n)
+        y_ = np.array([func_y(i, input_type, linear) for i in range(n)]).reshape(n)
         y = censor_data(y_, n)
         y = np.array(y).reshape(2, n).T
         simData = {"y": y, "Z": z, "location": list(t), "X": dataX}
         return simData
 
     elif ytype == "Continuous":
-        y = np.array([func_y(i, input_type) for i in range(n)]).reshape(n)
+        y = np.array([func_y(i, input_type, linear) for i in range(n)]).reshape(n)
         simData = {"y": y, "Z": z, "location": list(t), "X": dataX}
         return simData
 
@@ -323,7 +303,7 @@ def sim_data_func(n, m, ytype, input_type="SNP", seed=0):
         def sigmoid(x):
             return 1 / (1 + np.exp(-x))
 
-        y_prob = np.array([func_y(i, input_type) for i in range(n)]).reshape(n)
+        y_prob = np.array([func_y(i, input_type, linear) for i in range(n)]).reshape(n)
         y_class = np.where(y_prob > 0.5, 1, 0)
         simData = {"y": y_class, "Z": z, "location": list(t), "X": dataX}
         return simData
