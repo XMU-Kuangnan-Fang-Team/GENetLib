@@ -266,9 +266,9 @@ def fourier_mat(x, nbasis=None, period=None, nderiv=0):
     onen = np.ones(n)
     xrange = [np.min(x), np.max(x)]
     span = xrange[1] - xrange[0]
-    if nbasis == None:
+    if nbasis is None:
         nbasis = n
-    if period == None:
+    if period is None:
         period = span
     if period <= 0:
         raise ValueError("PERIOD not positive.")
@@ -595,8 +595,8 @@ def create_fourier_basis(
     axes=None,
 ):
 
-    if period == None:
-        period = float(np.diff(rangeval))
+    if period is None:
+        period = float(np.diff(rangeval)[0])
     btype = "fourier"
     if period is not None and period <= 0:
         raise ValueError(f"'period' must be positive, is {period}")
@@ -921,7 +921,7 @@ def lfd(nderiv=0, bwtlist=None):
         raise ValueError("Order of operator is not numeric.")
     if nderiv < 0:
         raise ValueError("Order of operator is negative.")
-    if bwtlist == None:
+    if bwtlist is None:
         bwtlist = [None] * nderiv
         if nderiv > 0:
             conbasis = create_constant_basis()
@@ -1120,7 +1120,7 @@ def inprod(fdobj1, fdobj2=None, Lfdobj1=0, Lfdobj2=0, rng=None, wtfd=0):
     basisobj1 = fdobj1["basis"]
     btype1 = basisobj1["btype"]
     range1 = basisobj1["rangeval"]
-    if rng == None:
+    if rng is None:
         rng = range1
     if fdobj2 is None:
         tempfd = fdobj1
@@ -1390,7 +1390,7 @@ def fdpar(fdobj=None, Lfdobj=None, lambda_=0, estimate=True, penmat=None):
         fdobj = fd(coefs, fdobj, fdnames)
     elif len(fdobj) == 3:
         nbasis = fdobj["basis"]["nbasis"]
-    if Lfdobj == None:
+    if Lfdobj is None:
         if fdobj["basis"]["btype"] == "fourier":
             rng = fdobj["basis"]["rangeval"]
             Lfdobj = vec2lfd([0, (2 * np.pi / (rng[1] - rng[0])) ** 2, 0], rng)
@@ -1412,7 +1412,7 @@ def fdpar(fdobj=None, Lfdobj=None, lambda_=0, estimate=True, penmat=None):
 
 
 def fdparcheck(fdParobj, ncurve=None):
-    if len(fdParobj) == 9 and ncurve == None:
+    if len(fdParobj) == 9 and ncurve is None:
         raise ValueError(
             "First argument is basisfd object and second argument is missing."
         )
