@@ -47,7 +47,7 @@ This part shows the meanings and data types of parameters. Users can check the t
    * - **n_inter**
      - numeric, number of interaction effect variables.
    * - **linear**
-     - bool, "True" or "False", whether or not to generate linear data. The default is True.
+     - bool, True or False, whether or not to generate linear data. The default is True.
    * - **seed**
      - numeric, random seeds each time when data is generated.
 
