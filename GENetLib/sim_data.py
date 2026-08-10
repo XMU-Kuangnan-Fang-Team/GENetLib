@@ -68,6 +68,7 @@ def sim_data_scalar(
         h_ini = (np.sum(X[:, 0:n_inter] * coef[0:n_inter], axis=1) + 
                  np.sum(INTERACTION[:, interactionPos] * coef[n_inter : n_inter * 2], axis=1,) + 
                  np.sum(CLINICAL * coef[n_inter * 2 : n_inter * 2 + dim_E], axis=1,))
+        bias = np.random.rand(n).reshape(-1, 1)
         if ytype == "Survival":
             if linear == True:
                 h = h_ini
@@ -81,8 +82,6 @@ def sim_data_scalar(
             )
 
         elif ytype == "Continuous":
-            coef = np.random.uniform(0.5, 0.8, size=n_inter * 2 + dim_E)
-            bias = np.random.rand(n).reshape(-1, 1)
             Y_ini = h_ini.reshape(-1, 1)
             if linear == True:
                 Y = Y_ini + bias
@@ -95,8 +94,6 @@ def sim_data_scalar(
             )
 
         elif ytype == "Binary":
-            coef = np.random.uniform(0.5, 0.8, size=n_inter * 2 + dim_E)
-            bias = np.random.rand(n).reshape(-1, 1)
             Y_ini = h_ini.reshape(-1, 1)
             if linear == True:
                 Y_ = Y_ini + bias
