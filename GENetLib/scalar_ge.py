@@ -117,13 +117,13 @@ def scalar_ge(
         print(
             "Accuracy of train:",
             ScalarMCP_L2trainRes[0],
-            "Accuracy of test:",
+            "Accuracy of valid:",
             ScalarMCP_L2trainRes[1],
         )
         print(
             "AUC of train:",
             ScalarMCP_L2trainRes[2],
-            "AUC of test:",
+            "AUC of valid:",
             ScalarMCP_L2trainRes[3],
         )
         if threshold != None and important_feature == True:
@@ -133,13 +133,13 @@ def scalar_ge(
         print(
             "MSE of train:",
             ScalarMCP_L2trainRes[0].detach().numpy()[0],
-            "MSE of test:",
+            "MSE of valid:",
             ScalarMCP_L2trainRes[1].detach().numpy()[0],
         )
         print(
             "R2 of train:",
             ScalarMCP_L2trainRes[2],
-            "R2 of test:",
+            "R2 of valid:",
             ScalarMCP_L2trainRes[3],
         )
         if threshold != None and important_feature == True:
@@ -149,13 +149,13 @@ def scalar_ge(
         print(
             "Loss of train:",
             ScalarMCP_L2trainRes[0].detach().numpy()[0],
-            "Loss of test:",
+            "Loss of valid:",
             ScalarMCP_L2trainRes[1].detach().numpy()[0],
         )
         print(
             "C_index of train:",
             ScalarMCP_L2trainRes[2].detach().numpy(),
-            "C_index of test:",
+            "C_index of valid:",
             ScalarMCP_L2trainRes[3].detach().numpy(),
         )
         if threshold != None and important_feature == True:
