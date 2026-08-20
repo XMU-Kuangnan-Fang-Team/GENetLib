@@ -167,9 +167,9 @@ def grid_scalar_ge(
             opt_l,
         )
         print(
-            "Accuracy of train:", opt_loss_train, "Accuracy of test:", opt_loss
+            "Accuracy of train:", opt_loss_train, "Accuracy of valid:", opt_loss
         )
-        print("AUC of train:", opt_index_tr, "AUC of test:", opt_index_va)
+        print("AUC of train:", opt_index_tr, "AUC of valid:", opt_index_va)
         if threshold != None and important_feature == True:
             print("Important feature of gene:", ifs_G)
             print("Important feature of GE:", ifs_GE)
@@ -187,10 +187,10 @@ def grid_scalar_ge(
         print(
             "MSE of train:",
             opt_loss_train.detach().numpy()[0],
-            "MSE of test:",
+            "MSE of valid:",
             opt_loss.detach().numpy()[0],
         )
-        print("R2 of train:", opt_index_tr, "R2 of test:", opt_index_va)
+        print("R2 of train:", opt_index_tr, "R2 of valid:", opt_index_va)
         if threshold != None and important_feature == True:
             print("Important feature of gene:", ifs_G)
             print("Important feature of GE:", ifs_GE)
@@ -208,13 +208,13 @@ def grid_scalar_ge(
         print(
             "Loss of train:",
             opt_loss_train.detach().numpy(),
-            "Loss of test:",
+            "Loss of valid:",
             opt_loss.detach().numpy(),
         )
         print(
             "C_index of train:",
             opt_index_tr.detach().numpy(),
-            "C_index of test:",
+            "C_index of valid:",
             opt_index_va.detach().numpy(),
         )
         if threshold != None and important_feature == True:
