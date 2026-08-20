@@ -44,6 +44,7 @@ def grid_func_ge(
     ratio=[7, 3],
     plot_res=True,
     plot_beta=True,
+    param_ini=False,
 ):
     # When X is functional input
     if type(X) == list and type(X[0]) == dict:
@@ -148,7 +149,7 @@ def grid_func_ge(
         False,
         plot_res,
         model_reg,
-        True,
+        param_ini,
     )
     tensor1 = GridFuncGE_res[5].sparse1.weight.data.numpy()
     tensor2 = GridFuncGE_res[5].sparse2.weight.data.numpy()

@@ -44,6 +44,7 @@ def func_ge(
     ratio=[7, 3],
     plot_res=True,
     plot_beta=True,
+    param_ini=False,
 ):
     if lambda2 == None:
         print("Please enter lambda2")
@@ -152,7 +153,7 @@ def func_ge(
         False,
         plot_res,
         model_reg,
-        True,
+        param_ini,
     )
 
     if threshold == None:
