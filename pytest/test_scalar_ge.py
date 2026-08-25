@@ -65,8 +65,6 @@ def test_scalar_ge():
     )
     pred = predict_scalar(
         scalar_ge_res_1,
-        scalar_continuous["y"],
-        "Continuous",
         scalar_continuous["G"],
         scalar_continuous["E"],
         GE=None,
