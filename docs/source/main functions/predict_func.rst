@@ -17,7 +17,7 @@ Usage
 
 .. code-block:: python
 
-    predict_func(ge_res, y, ytype, G, E, location, nbasis = 15, params = 4, nbasis1 = 15, params1 = 4, Bsplines = 20, norder1 = 4)
+    predict_func(ge_res, G, E, location, nbasis = 15, params = 4, nbasis1 = 15, params1 = 4, Bsplines = 20, norder1 = 4)
 
 Parameters
 ----------
@@ -33,10 +33,6 @@ This part shows the meanings and data types of parameters. Users can check the t
      - Description
    * - **ge_res**
      - tuple, contains the trained G-E network results.
-   * - **y**
-     - numeric, an array representing the response variables.
-   * - **ytype**
-     - character, "Survival", "Binary" or "Continuous" type of the output y.
    * - **G**
      - numeric or list, a matrix representing the sequence data with the number of rows equal to the number of samples or a list of "fd" items which represents the functional data.
    * - **E**
@@ -92,4 +88,4 @@ Here is a quick example for using this function:
                                   lambda1 = None, lambda2 = lambda2, Lambda = Lambda, Bsplines = 15,  
                                   norder1 = 4, model = None, split_type = 1, ratio = [3, 1, 1], plot_res = False,
                                   plot_beta = True)
-  pred = predict_func(grid_func_ge_res, y, ytype, X, Z, location)
+  pred = predict_func(grid_func_ge_res, X, Z, location)
