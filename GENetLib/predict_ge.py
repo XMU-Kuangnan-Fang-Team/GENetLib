@@ -40,6 +40,7 @@ def predict_func(
     Bsplines=20,
     norder1=4,
 ):
+    E = E.detach().numpy()
     if type(G) == list and type(G[0]) == dict:
         fbasis2 = create_bspline_basis(
             rangeval=[min(location), max(location)],
@@ -55,6 +56,7 @@ def predict_func(
             U_list.append(u_val)
         U = pd.DataFrame(np.array(U_list).reshape(len(G), -1))
     else:
+        G = G.detach().numpy()
         funcX = dense_to_func(
             location,
             G,
