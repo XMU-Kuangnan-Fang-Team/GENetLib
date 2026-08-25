@@ -35,8 +35,6 @@ def test_grid_func_ge():
     )
     pred1 = predict_func(
         func_ge_res,
-        func_continuous["y"],
-        "Continuous",
         func_continuous["X"],
         func_continuous["Z"],
         func_continuous["location"],
