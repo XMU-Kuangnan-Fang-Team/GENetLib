@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
-from GENetLib.pre_data import pre_data2
+import torch
 from GENetLib.fda_func import dense_to_func, create_bspline_basis, inprod
 
 
 """Make predictions for scalar_ge and func_ge"""
 
 
-def predict_scalar(ge_res, y, ytype, G, E, GE=None):
+def predict_scalar(ge_res, G, E, GE=None):
     if GE == None:
         GE = np.zeros(shape=(G.shape[0], G.shape[1] * E.shape[1]))
         k = 0
@@ -15,7 +15,9 @@ def predict_scalar(ge_res, y, ytype, G, E, GE=None):
             for j in range(G.shape[1]):
                 GE[:, k] = E[:, i] * G[:, j]
                 k = k + 1
-    G, y, E, GE = pre_data2(y, G, E, GE, ytype, split_type=0, ratio=[1, 0])[:4]
+    G = G if torch.is_tensor(G) else torch.tensor(G if not hasattr(G, 'values') else G.values, dtype=torch.float32)
+    E = E if torch.is_tensor(E) else torch.tensor(E if not hasattr(E, 'values') else E.values, dtype=torch.float32)
+    GE = GE if torch.is_tensor(GE) else torch.tensor(GE if not hasattr(GE, 'values') else GE.values, dtype=torch.float32)
     if len(ge_res) == 5:
         pred = ge_res[4](G, GE, E)
     elif len(ge_res) == 6 or len(ge_res) == 8:
@@ -30,8 +32,6 @@ def predict_scalar(ge_res, y, ytype, G, E, GE=None):
 
 def predict_func(
     ge_res,
-    y,
-    ytype,
     G,
     E,
     location,
@@ -87,9 +87,9 @@ def predict_func(
         for j in range(U.shape[1]):
             GE[:, k] = E[:, i] * U.iloc[:, j]
             k = k + 1
-    U_, y_, E_, GE_ = pre_data2(
-        y, U, E, GE, ytype=ytype, split_type=0, ratio=[10, 0]
-    )[:4]
+    E_ = E if torch.is_tensor(E) else torch.tensor(E if not hasattr(E, 'values') else E.values, dtype=torch.float32)
+    GE_ = GE if torch.is_tensor(GE) else torch.tensor(GE if not hasattr(GE, 'values') else GE.values, dtype=torch.float32)
+    U_ = U if torch.is_tensor(U) else torch.tensor(U if not hasattr(U, 'values') else U.values, dtype=torch.float32)
     if len(ge_res[0]) == 5:
         pred = ge_res[0][4](U_, GE_, E_)
     elif len(ge_res[0]) == 6 or len(ge_res[0]) == 8:
