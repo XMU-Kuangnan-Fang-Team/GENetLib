@@ -35,8 +35,6 @@ def test_func_ge():
     )
     pred1 = predict_func(
         func_ge_res_1,
-        func_continuous["y"],
-        "Continuous",
         func_continuous["X"],
         func_continuous["Z"],
         func_continuous["location"],
@@ -94,8 +92,6 @@ def test_func_ge():
     )
     pred2 = predict_func(
         func_ge_res_3,
-        func_survival["y"],
-        "Survival",
         func_survival["X"],
         func_survival["Z"],
         func_survival["location"],
