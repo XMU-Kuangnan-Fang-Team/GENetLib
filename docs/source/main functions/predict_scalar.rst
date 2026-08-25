@@ -17,7 +17,7 @@ Usage
 
 .. code-block:: python
 
-    predict_scalar(ge_res, y, ytype, G, E, GE = None)
+    predict_scalar(ge_res, G, E, GE = None)
 
 Parameters
 ----------
@@ -33,10 +33,6 @@ This part shows the meanings and data types of parameters. Users can check the t
      - Description
    * - **ge_res**
      - tuple, contains the trained G-E network results.
-   * - **y**
-     - array or dataframe, the response variable.
-   * - **ytype**
-     - character, "Survival", "Binary" or "Continuous" type of the output y.
    * - **G**
      - array or dataframe, the scalar genetic variable.
    * - **E**
@@ -76,4 +72,4 @@ Here is a quick example for using this function:
   grid_scalar_ge_res = grid_scalar_ge(y, G, E, ytype, num_hidden_layers, nodes_hidden_layer, num_epochs,
                                       learning_rate1, learning_rate2, lambda1 = None, lambda2 = lambda2,
                                       Lambda = Lambda, threshold = 0.01)
-  pred = predict_scalar(grid_scalar_ge_res, y, ytype, G, E, GE = None)
+  pred = predict_scalar(grid_scalar_ge_res, G, E, GE = None)
