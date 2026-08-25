@@ -86,6 +86,6 @@ def test_grid_func_ge():
         plot_res=False,
         plot_beta=True,
     )
-    pred2 = predict_func(grid_func_ge_res, y, ytype, X, Z, location, Bsplines=5)
+    pred2 = predict_func(grid_func_ge_res, X, Z, location, Bsplines=5)
     assert grid_func_ge_res is not None
     assert pred2 is not None
