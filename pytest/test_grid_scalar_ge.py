@@ -67,7 +67,7 @@ def test_grid_scalar_ge():
     G = scalar_survival["G"]
     E = scalar_survival["E"]
     ytype = "Survival"
-    pred1 = predict_scalar(grid_scalar_ge_res_1, y, ytype, G, E, GE=None)
+    pred1 = predict_scalar(grid_scalar_ge_res_1, G, E, GE=None)
     grid_scalar_ge_res_2 = grid_scalar_ge(
         scalar_binary["y"],
         scalar_binary["G"],
@@ -91,8 +91,6 @@ def test_grid_scalar_ge():
     )
     pred2 = predict_scalar(
         grid_scalar_ge_res_2,
-        scalar_binary["y"],
-        "Binary",
         scalar_binary["G"],
         scalar_binary["E"],
         GE=None,
