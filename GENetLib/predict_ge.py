@@ -8,7 +8,7 @@ from GENetLib.fda_func import dense_to_func, create_bspline_basis, inprod
 
 
 def predict_scalar(ge_res, G, E, GE=None):
-    if GE == None:
+    if GE is None:
         GE = np.zeros(shape=(G.shape[0], G.shape[1] * E.shape[1]))
         k = 0
         for i in range(E.shape[1]):
