@@ -126,7 +126,7 @@ Here we present the variable selection results of the ScalarGE model in the appl
    "TMEM241", "", "", "", ""
    "PTH2", "", "", "", "\*"
    "SLC4A8", "", "", "", ""
-   "DDX59", """, "", "", ""
+   "DDX59", "", "", "", ""
    "NXPH1", "", "", "", ""
    "OR2T33", "", "", "", ""
    "SHC1", "", "", "", ""
