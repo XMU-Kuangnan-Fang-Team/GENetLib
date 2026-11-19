@@ -13,6 +13,7 @@ from GENetLib.fda_func import create_monomial_basis, create_power_basis
 from GENetLib.fda_func import inprod
 from GENetLib.fda_func import eval_fd
 from GENetLib.fda_func import fd
+from GENetLib.pre_data import pre_data2
 from GENetLib.grid_scalar_ge import grid_scalar_ge
 
 
@@ -121,13 +122,32 @@ def grid_func_ge(
             INTERACTION[:, k] = Z[:, i] * U.iloc[:, j]
             k = k + 1
     # Model for parameter initialization
-    data_reg = pd.DataFrame(np.hstack((U, INTERACTION, Z)))
+    U_train, y_train, Z_train, INTERACTION_train = pre_data2(
+        y, U, Z,
+        ytype=ytype,
+        split_type=split_type,
+        ratio=ratio
+    )[:4]
+    data_reg = pd.DataFrame(np.hstack((
+        U_train.detach().cpu().numpy(),
+        INTERACTION_train.detach().cpu().numpy(),
+        Z_train.detach().cpu().numpy()
+    )))
     if ytype == "Survival":
-        model_reg = LinearRegression().fit(data_reg, y[:, 0])
-    if ytype == "Binary":
-        model_reg = LogisticRegression(max_iter=200).fit(data_reg, y)
+        model_reg = LinearRegression().fit(
+            data_reg,
+            y_train[0].detach().cpu().numpy().ravel()
+        )
+    elif ytype == "Binary":
+        model_reg = LogisticRegression(max_iter=200).fit(
+            data_reg,
+            y_train.detach().cpu().numpy().ravel()
+        )
     else:
-        model_reg = LinearRegression().fit(data_reg, y)
+        model_reg = LinearRegression().fit(
+            data_reg,
+            y_train.detach().cpu().numpy().ravel()
+        )
     # Put basic coefficient matrix into modeling, grid search for parameters
     GridFuncGE_res = grid_scalar_ge(
         y,
