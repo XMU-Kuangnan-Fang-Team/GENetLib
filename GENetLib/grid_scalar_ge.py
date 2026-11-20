@@ -1,9 +1,15 @@
+import copy
+from itertools import product
+import math
+import warnings
+
 import pandas as pd
 import torch
 
 from GENetLib.pre_data import pre_data2
 from GENetLib.scalar_l2train import scalar_l2train
 from GENetLib.scalar_mcp_l2train import scalar_mcp_l2train
+from GENetLib.survival_costfunc_cindex import neg_par_log_likelihood
 
 
 """Grid search for scalar_ge"""
@@ -33,11 +39,31 @@ def grid_scalar_ge(
     model_reg=None,
     isfunc=False,
 ):
-    # Define dimensions for gene, environment and gene-environment features
-    if lambda2 == None:
-        print("Please enter lambda2")
-    if Lambda == None:
-        print("Please enter Lambda")
+    # Grid candidates are complete two-stage training procedures. Pretraining
+    # supplies a starting point; its validation loss does not eliminate a pair
+    # of hidden-layer learning rate and ridge parameters before fine-tuning.
+    def nonempty_grid(values, name):
+        try:
+            candidates = list(values)
+        except TypeError as exc:
+            raise ValueError(f"{name} must be a nonempty iterable") from exc
+        if not candidates:
+            raise ValueError(f"{name} must be a nonempty iterable")
+        return candidates
+
+    learning_rate1 = nonempty_grid(learning_rate1, "learning_rate1")
+    learning_rate2 = nonempty_grid(learning_rate2, "learning_rate2")
+    lambda2 = nonempty_grid(lambda2, "lambda2")
+    Lambda = nonempty_grid(Lambda, "Lambda")
+    metric_names = {
+        "Continuous": "mse",
+        "Binary": "bce",
+        "Survival": "neg_partial_log_likelihood",
+    }
+    if ytype not in metric_names:
+        raise ValueError("Invalid ytype")
+    entry_rng_state = torch.get_rng_state().clone()
+    # Define dimensions for gene, environment and gene-environment features.
     In_Nodes = G.shape[1]
     Clinical_Nodes = E.shape[1]
     Interaction_Nodes = G.shape[1] * E.shape[1]
@@ -71,11 +97,46 @@ def grid_scalar_ge(
             clinical_valid,
             interaction_valid,
         ) = pre_data2(y, x, clinical, interaction, ytype, split_type, ratio)
-    # Grid search for learning rate of L2 penalty
-    opt_loss = torch.Tensor([float("Inf")])
-    for lr2 in learning_rate2:
-        for l2 in Lambda:
-            loss_train, loss_valid, index_tr, index_va, model = scalar_l2train(
+    else:
+        raise ValueError("split_type must be 0 or 1")
+
+    def validation_score(candidate):
+        # Hyperparameters are compared by prediction error, without adding a
+        # candidate-specific training penalty. Binary's legacy returned metric
+        # remains accuracy, while its search criterion is minimized BCE.
+        candidate.eval()
+        with torch.no_grad():
+            prediction = candidate(x_valid, interaction_valid, clinical_valid)
+            if ytype == "Continuous":
+                score = torch.nn.functional.mse_loss(prediction, y_valid)
+            elif ytype == "Binary":
+                score = torch.nn.functional.binary_cross_entropy(
+                    prediction, y_valid
+                )
+            else:
+                score = neg_par_log_likelihood(
+                    prediction, y_valid[0], y_valid[1]
+                )
+        return float(score.detach().cpu().item())
+
+    def parameters(lr2, ridge, mcp, lr_sparse):
+        return {
+            "learning_rate1": lr_sparse,
+            "learning_rate2": lr2,
+            "lambda1": lambda1,
+            "lambda2": mcp,
+            "Lambda": ridge,
+        }
+
+    search_results = []
+    best_score = float("inf")
+    GENet = None
+    # Enumerate the full Cartesian product, reusing each (lr2, ridge)
+    # pretraining fit for all independent (MCP, sparse-learning-rate) trials.
+    for lr2, l2 in product(learning_rate2, Lambda):
+        torch.set_rng_state(entry_rng_state)
+        try:
+            _, _, _, _, pretrained_model = scalar_l2train(
                 x_train,
                 clinical_train,
                 interaction_train,
@@ -96,18 +157,24 @@ def grid_scalar_ge(
                 num_epochs,
                 model_reg,
             )
-            if loss_valid < opt_loss:
-                opt_L2 = l2
-                opt_Learning_Rate2 = lr2
-                best_model = model
-                opt_loss = loss_valid
-    # Grid search for learning rate of MCP penalty
-    opt_loss = torch.Tensor([float("Inf")])
-    GENet = None
-    for l in lambda2:
-        for lrMCP in learning_rate1:
-            loss_train, loss_valid, index_tr, index_va, MCPNet = (
-                scalar_mcp_l2train(
+        except Exception as exc:
+            message = f"Pretraining failed for lr2={lr2}, Lambda={l2}: {exc}"
+            warnings.warn(message, RuntimeWarning, stacklevel=2)
+            for l, lrMCP in product(lambda2, learning_rate1):
+                search_results.append({
+                    "params": parameters(lr2, l2, l, lrMCP),
+                    "score": None,
+                    "status": "failed",
+                    "error": message,
+                })
+            continue
+
+        fine_tuning_rng_state = torch.get_rng_state().clone()
+        for l, lrMCP in product(lambda2, learning_rate1):
+            trial_parameters = parameters(lr2, l2, l, lrMCP)
+            torch.set_rng_state(fine_tuning_rng_state)
+            try:
+                loss_train, loss_valid, index_tr, index_va, MCPNet = scalar_mcp_l2train(
                     x_train,
                     clinical_train,
                     interaction_train,
@@ -123,18 +190,40 @@ def grid_scalar_ge(
                     nodes_hidden_layer,
                     ytype,
                     isfunc,
-                    opt_Learning_Rate2,
-                    opt_L2,
+                    lr2,
+                    l2,
                     lrMCP,
                     l,
                     num_epochs,
                     lambda1,
                     plot,
-                    best_model,
+                    copy.deepcopy(pretrained_model),
                     model_reg,
                 )
-            )
-            if loss_valid < opt_loss:
+                score = validation_score(MCPNet)
+                if not math.isfinite(score):
+                    raise ValueError(f"Non-finite validation score: {score}")
+            except Exception as exc:
+                message = f"Fine-tuning failed for {trial_parameters}: {exc}"
+                warnings.warn(message, RuntimeWarning, stacklevel=2)
+                search_results.append({
+                    "params": trial_parameters,
+                    "score": None,
+                    "status": "failed",
+                    "error": message,
+                })
+                continue
+
+            search_results.append({
+                "params": trial_parameters,
+                "score": score,
+                "status": "ok",
+            })
+            if score < best_score:
+                best_score = score
+                best_parameters = trial_parameters.copy()
+                opt_L2 = l2
+                opt_Learning_Rate2 = lr2
                 opt_loss = loss_valid
                 GENet = MCPNet
                 opt_l = l
@@ -142,6 +231,19 @@ def grid_scalar_ge(
                 opt_loss_train = loss_train
                 opt_index_tr = index_tr
                 opt_index_va = index_va
+
+    if GENet is None:
+        error = ValueError(
+            "No parameter combination produced a finite validation score; "
+            "inspect the search_results_ attribute on this exception."
+        )
+        error.search_results_ = search_results
+        raise error
+
+    GENet.search_results_ = search_results
+    GENet.best_params_ = best_parameters
+    GENet.selection_metric_ = metric_names[ytype]
+    GENet.selection_score_ = best_score
 
     # Define a function to identify important features based on a threshold t
     def important_features(tensor_, t):

@@ -139,7 +139,6 @@ def scalar_mcp_l2train(
                 loss_fn(train_pred, train_y[0], train_y[1]).view(
                     1,
                 )
-                + regularization_loss
             )
             loss_train_list.append(train_loss.detach().numpy())
         elif ytype == "Binary":
@@ -148,7 +147,6 @@ def scalar_mcp_l2train(
                 loss_fn(train_pred, train_y).view(
                     1,
                 )
-                + regularization_loss
             )
             loss_train_list.append(train_loss.detach().numpy())
         elif ytype == "Continuous":
@@ -157,7 +155,6 @@ def scalar_mcp_l2train(
                 loss_fn(train_pred, train_y).view(
                     1,
                 )
-                + regularization_loss
             )
             loss_train_list.append(train_loss.detach().numpy())
         else:
@@ -171,7 +168,6 @@ def scalar_mcp_l2train(
                 loss_fn(eval_pred, eval_y[0], eval_y[1]).view(
                     1,
                 )
-                + regularization_loss
             )
             loss_test_list.append(eval_loss.detach().numpy())
         elif ytype == "Binary":
@@ -180,7 +176,6 @@ def scalar_mcp_l2train(
                 loss_fn(eval_pred, eval_y).view(
                     1,
                 )
-                + regularization_loss
             )
             loss_test_list.append(eval_loss.detach().numpy())
         elif ytype == "Continuous":
@@ -189,7 +184,6 @@ def scalar_mcp_l2train(
                 loss_fn(eval_pred, eval_y).view(
                     1,
                 )
-                + regularization_loss
             )
             loss_test_list.append(eval_loss.detach().numpy())
         else:
