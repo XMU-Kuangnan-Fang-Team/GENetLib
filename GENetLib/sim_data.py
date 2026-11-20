@@ -264,12 +264,11 @@ def sim_data_func(n, m, ytype, input_type="SNP", linear = True, seed=0):
                         "coefs"
                     ]
                 )
-                + epsilon[i]
             )
             if linear == True:
-                return value
+                return value + epsilon[i]
             elif linear == False:
-                return np.log(1+np.exp(value)) 
+                return np.log(1+np.exp(value)) + epsilon[i]
         else:
             print("Please enter the correct input type, either func or SNP.")
 
