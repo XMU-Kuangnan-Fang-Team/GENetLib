@@ -223,12 +223,11 @@ def sim_data_func(n, m, ytype, input_type="SNP", linear = True, seed=0):
                     @ np.linalg.inv(basismat.T @ basismat)
                     @ basisint2
                 )
-                + epsilon[i]
             )
             if linear == True:
-                return value
+                return value + epsilon[i]
             elif linear == False:
-                return np.log(1+np.exp(value)) 
+                return np.log(1+np.exp(value)) + epsilon[i]
             
         elif input_type == "func":
             basis = create_bspline_basis(
