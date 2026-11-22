@@ -26,7 +26,7 @@ class Weight_Sparse1(nn.Module):
         # Initialize weights
         self.weight = nn.Parameter(torch.Tensor(self.in_nodes))
         coef = model_reg.coef_.reshape(-1)
-        self.weight.data = torch.from_numpy(coef[: self.in_nodes]).float()
+        self.weight.data = torch.from_numpy(coef[: self.in_nodes]).float().clone()
 
     # Linear forward propagation
     def forward(self, input_):
@@ -49,7 +49,7 @@ class Weight_Sparse2(nn.Module):
                 self.in_nodes : self.in_nodes * self.clinical_nodes
                 + self.in_nodes
             ]
-        ).float()
+        ).float().clone()
 
     # Linear forward propagation
     def forward(self, input_):
