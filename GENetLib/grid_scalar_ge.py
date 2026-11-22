@@ -225,7 +225,7 @@ def grid_scalar_ge(
                 opt_L2 = l2
                 opt_Learning_Rate2 = lr2
                 opt_loss = loss_valid
-                GENet = MCPNet
+                GENet = copy.deepcopy(MCPNet)
                 opt_l = l
                 opt_lr = lrMCP
                 opt_loss_train = loss_train
